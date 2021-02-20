@@ -7,7 +7,7 @@
 #include "chainparams.h"
 
 bool AllowDigishieldMinDifficultyForBlock(const CBlockIndex* pindexLast, const CBlockHeader *pblock, const Consensus::Params& params);
-CAmount GetEarthcoinBlockSubsidy(int nHeight, const Consensus::Params& consensusParams, uint256 prevHash);
+CAmount GetEarthcoinBlockSubsidy(int nHeight, const Consensus::Params& consensusParams);
 unsigned int CalculateEarthcoinNextWorkRequired(const CBlockIndex* pindexLast, int64_t nLastRetargetTime, const Consensus::Params& params);
 
 /**
