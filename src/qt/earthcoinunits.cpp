@@ -43,9 +43,9 @@ QString EarthcoinUnits::longName(int unit)
     switch(unit)
     {
     case EAC: return QString("Earthcoins");
-    case mEAC: return QString("mili-Earthcoins");
-    case uEAC: return QString::fromUtf8("micro-Earthcoins");
-    case SAT: return QString("sato-Earthcoins");
+    case mEAC: return QString("miliEarthcoins");
+    case uEAC: return QString("microEarthcoins");
+    case SAT: return QString("satoEarthcoins");
     default: return QString("???");
     }
 }
@@ -65,9 +65,9 @@ QString EarthcoinUnits::description(int unit)
     switch(unit)
     {
     case EAC: return QString("Earthcoins");
-    case mEAC: return QString("mili-Earthcoins (1 / 1" THIN_SP_UTF8 "000)");
-    case uEAC: return QString("micro-Earthcoins (1 / 1" THIN_SP_UTF8 "000" THIN_SP_UTF8 "000)");
-    case SAT: return QString("sato-Earthcoins (1 / 100" THIN_SP_UTF8 "000" THIN_SP_UTF8 "000)");
+    case mEAC: return QString("miliEarthcoins (1 / 1" THIN_SP_UTF8 "000)");
+    case uEAC: return QString("microEarthcoins (1 / 1" THIN_SP_UTF8 "000" THIN_SP_UTF8 "000)");
+    case SAT: return QString("satoEarthcoins (sat) (1 / 100" THIN_SP_UTF8 "000" THIN_SP_UTF8 "000)");
     default: return QString("???");
     }
 }

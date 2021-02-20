@@ -67,11 +67,11 @@
     </message>
     <message>
         <source>These are your Earthcoin addresses for sending payments. Always check the amount and the receiving address before sending coins.</source>
-        <translation>Тут знаходзяцца Біткойн-адрасы для высылання плацяжоў. Заўсёды спраўджвайце колькасць і адрас прызначэння перад здзяйсненнем транзакцыі.</translation>
+        <translation>Тут знаходзяцца Earthcoin-адрасы для высылання плацяжоў. Заўсёды спраўджвайце колькасць і адрас прызначэння перад здзяйсненнем транзакцыі.</translation>
     </message>
     <message>
         <source>These are your Earthcoin addresses for receiving payments. It is recommended to use a new receiving address for each transaction.</source>
-        <translation>Тут знаходзяцца Біткойн-адрасы для прымання плацяжоў. Пажадана выкарыстоўваць новы адрас для кожнай транзакцыі.</translation>
+        <translation>Тут знаходзяцца Earthcoin-адрасы для прымання плацяжоў. Пажадана выкарыстоўваць новы адрас для кожнай транзакцыі.</translation>
     </message>
     <message>
         <source>&amp;Copy Address</source>
@@ -172,7 +172,7 @@
         <translation>Пацвердзіце шыфраванне гаманца</translation>
     </message>
     <message>
-        <source>Warning: If you encrypt your wallet and lose your passphrase, you will &lt;b&gt;LOSE ALL OF YOUR EARTHCOINS&lt;/b&gt;!</source>
+        <source>Warning: If you encrypt your wallet and lose your passphrase, you will &lt;b&gt;LOSE ALL OF YOUR LITECOINS&lt;/b&gt;!</source>
         <translation>Увага: калі вы зашыфруеце свой гаманец і страціце парольную фразу, то &lt;b&gt;СТРАЦІЦЕ ЎСЕ СВАЕ БІТКОЙНЫ&lt;/b&gt;!</translation>
     </message>
     <message>
@@ -303,7 +303,7 @@
     </message>
     <message>
         <source>Send coins to a Earthcoin address</source>
-        <translation>Даслаць манеты на Біткойн-адрас</translation>
+        <translation>Даслаць манеты на Earthcoin-адрас</translation>
     </message>
     <message>
         <source>Backup wallet to another location</source>
@@ -327,7 +327,7 @@
     </message>
     <message>
         <source>Earthcoin</source>
-        <translation>Біткойн</translation>
+        <translation>Earthcoin</translation>
     </message>
     <message>
         <source>Wallet</source>
@@ -355,11 +355,11 @@
     </message>
     <message>
         <source>Sign messages with your Earthcoin addresses to prove you own them</source>
-        <translation>Падпісаць паведамленне з дапамогай Біткойн-адраса каб даказаць, што яно належыць вам</translation>
+        <translation>Падпісаць паведамленне з дапамогай Earthcoin-адраса каб даказаць, што яно належыць вам</translation>
     </message>
     <message>
         <source>Verify messages to ensure they were signed with specified Earthcoin addresses</source>
-        <translation>Спраўдзіць паведамленне з дапамогай Біткойн-адраса каб даказаць, што яно належыць вам</translation>
+        <translation>Спраўдзіць паведамленне з дапамогай Earthcoin-адраса каб даказаць, што яно належыць вам</translation>
     </message>
     <message>
         <source>&amp;File</source>
@@ -375,7 +375,7 @@
     </message>
     <message>
         <source>Request payments (generates QR codes and earthcoin: URIs)</source>
-        <translation>Запатрабаваць плацёж (генеруецца QR-код для біткойн URI)</translation>
+        <translation>Запатрабаваць плацёж (генеруецца QR-код для earthcoin URI)</translation>
     </message>
     <message>
         <source>Show the list of used sending addresses and labels</source>
@@ -387,7 +387,7 @@
     </message>
     <message>
         <source>Open a earthcoin: URI or payment request</source>
-        <translation>Адкрыць біткойн: URI ці запыт плацяжу</translation>
+        <translation>Адкрыць earthcoin: URI ці запыт плацяжу</translation>
     </message>
     <message>
         <source>&amp;Command-line options</source>
@@ -660,7 +660,7 @@
     </message>
     <message>
         <source>Earthcoin</source>
-        <translation>Біткойн</translation>
+        <translation>Earthcoin</translation>
     </message>
     <message>
         <source>Error</source>

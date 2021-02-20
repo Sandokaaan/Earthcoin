@@ -319,7 +319,7 @@
     </message>
     <message>
         <source>Send coins to a Earthcoin address</source>
-        <translation>ارسال وجه به نشانی بیت‌کوین</translation>
+        <translation>ارسال وجه به نشانی Earthcoin</translation>
     </message>
     <message>
         <source>Backup wallet to another location</source>
@@ -343,7 +343,7 @@
     </message>
     <message>
         <source>Earthcoin</source>
-        <translation>بیت‌کوین</translation>
+        <translation>Earthcoin</translation>
     </message>
     <message>
         <source>Wallet</source>
@@ -371,11 +371,11 @@
     </message>
     <message>
         <source>Sign messages with your Earthcoin addresses to prove you own them</source>
-        <translation>برای اثبات اینکه پیام‌ها به شما تعلق دارند، آن‌ها را با نشانی بیت‌کوین خود امضا کنید</translation>
+        <translation>برای اثبات اینکه پیام‌ها به شما تعلق دارند، آن‌ها را با نشانی Earthcoin خود امضا کنید</translation>
     </message>
     <message>
         <source>Verify messages to ensure they were signed with specified Earthcoin addresses</source>
-        <translation>برای حصول اطمینان از اینکه پیام با نشانی بیت‌کوین مشخص شده امضا است یا خیر، پیام را شناسایی کنید</translation>
+        <translation>برای حصول اطمینان از اینکه پیام با نشانی Earthcoin مشخص شده امضا است یا خیر، پیام را شناسایی کنید</translation>
     </message>
     <message>
         <source>&amp;File</source>
@@ -395,7 +395,7 @@
     </message>
     <message>
         <source>Request payments (generates QR codes and earthcoin: URIs)</source>
-        <translation>درخواست پرداخت ( تولید کد کیوار و ادرس بیت کوین)</translation>
+        <translation>درخواست پرداخت ( تولید کد کیوار و ادرس earthcoin)</translation>
     </message>
     <message>
         <source>Show the list of used sending addresses and labels</source>
@@ -407,7 +407,7 @@
     </message>
     <message>
         <source>Open a earthcoin: URI or payment request</source>
-        <translation>بازکردن یک بیت کوین: آدرس یا درخواست پرداخت</translation>
+        <translation>بازکردن یک earthcoin: آدرس یا درخواست پرداخت</translation>
     </message>
     <message>
         <source>&amp;Command-line options</source>
@@ -415,7 +415,7 @@
     </message>
     <message numerus="yes">
         <source>%n active connection(s) to Earthcoin network</source>
-        <translation><numerusform>%n ارتباط فعال با شبکهٔ بیت‌کوین</numerusform><numerusform>%n ارتباط فعال با شبکهٔ بیت‌کوین</numerusform></translation>
+        <translation><numerusform>%n ارتباط فعال با شبکهٔ Earthcoin</numerusform><numerusform>%n ارتباط فعال با شبکهٔ Earthcoin</numerusform></translation>
     </message>
     <message>
         <source>Processing blocks on disk...</source>
@@ -659,7 +659,7 @@
     </message>
     <message>
         <source>The entered address "%1" is not a valid Earthcoin address.</source>
-        <translation>نشانی وارد شده "%1" یک نشانی معتبر بیت‌کوین نیست.</translation>
+        <translation>نشانی وارد شده "%1" یک نشانی معتبر Earthcoin نیست.</translation>
     </message>
     <message>
         <source>Could not unlock wallet.</source>
@@ -732,7 +732,7 @@
     </message>
     <message>
         <source>Earthcoin</source>
-        <translation>بیت‌کوین</translation>
+        <translation>Earthcoin</translation>
     </message>
     <message>
         <source>Error</source>
@@ -837,7 +837,7 @@
     </message>
     <message>
         <source>Automatically open the Earthcoin client port on the router. This only works when your router supports UPnP and it is enabled.</source>
-        <translation>باز کردن خودکار درگاه شبکهٔ بیت‌کوین روی روترها. تنها زمانی کار می‌کند که روتر از پروتکل UPnP پشتیبانی کند و این پروتکل فعال باشد.</translation>
+        <translation>باز کردن خودکار درگاه شبکهٔ Earthcoin روی روترها. تنها زمانی کار می‌کند که روتر از پروتکل UPnP پشتیبانی کند و این پروتکل فعال باشد.</translation>
     </message>
     <message>
         <source>Map port using &amp;UPnP</source>
@@ -940,7 +940,7 @@
     </message>
     <message>
         <source>The displayed information may be out of date. Your wallet automatically synchronizes with the Earthcoin network after a connection is established, but this process has not completed yet.</source>
-        <translation>اطلاعات نمایش‌داده شده ممکن است قدیمی باشند. بعد از این که یک اتصال با شبکه برقرار شد، کیف پول شما به‌صورت خودکار با شبکهٔ بیت‌کوین همگام‌سازی می‌شود. اما این روند هنوز کامل نشده است.</translation>
+        <translation>اطلاعات نمایش‌داده شده ممکن است قدیمی باشند. بعد از این که یک اتصال با شبکه برقرار شد، کیف پول شما به‌صورت خودکار با شبکهٔ Earthcoin همگام‌سازی می‌شود. اما این روند هنوز کامل نشده است.</translation>
     </message>
     <message>
         <source>Available:</source>
@@ -1013,7 +1013,7 @@
     </message>
     <message>
         <source>Enter a Earthcoin address (e.g. %1)</source>
-        <translation>یک آدرس بیت‌کوین وارد کنید (مثلاً %1)</translation>
+        <translation>یک آدرس Earthcoin وارد کنید (مثلاً %1)</translation>
     </message>
     <message>
         <source>%1 d</source>
@@ -1493,7 +1493,7 @@
     </message>
     <message>
         <source>The Earthcoin address to send the payment to</source>
-        <translation>نشانی بیت‌کوین برای ارسال پرداخت به آن</translation>
+        <translation>نشانی Earthcoin برای ارسال پرداخت به آن</translation>
     </message>
     <message>
         <source>Alt+A</source>
@@ -1546,7 +1546,7 @@
     </message>
     <message>
         <source>The Earthcoin address to sign the message with</source>
-        <translation>نشانی بیت‌کوین برای امضاء پیغام با آن</translation>
+        <translation>نشانی Earthcoin برای امضاء پیغام با آن</translation>
     </message>
     <message>
         <source>Choose previously used address</source>
@@ -1598,11 +1598,11 @@
     </message>
     <message>
         <source>The Earthcoin address the message was signed with</source>
-        <translation>نشانی بیت‌کوین که پیغام با آن امضاء شده</translation>
+        <translation>نشانی Earthcoin که پیغام با آن امضاء شده</translation>
     </message>
     <message>
         <source>Verify the message to ensure it was signed with the specified Earthcoin address</source>
-        <translation>برای حصول اطمینان از اینکه پیام با نشانی بیت‌کوین مشخص شده امضا است یا خیر، پیام را شناسایی کنید</translation>
+        <translation>برای حصول اطمینان از اینکه پیام با نشانی Earthcoin مشخص شده امضا است یا خیر، پیام را شناسایی کنید</translation>
     </message>
     <message>
         <source>Verify &amp;Message</source>

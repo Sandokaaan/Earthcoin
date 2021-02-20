@@ -176,8 +176,8 @@
         <translation>تأكيد تشفير المحفظة</translation>
     </message>
     <message>
-        <source>Warning: If you encrypt your wallet and lose your passphrase, you will &lt;b&gt;LOSE ALL OF YOUR EARTHCOINS&lt;/b&gt;!</source>
-        <translation>تحذير: إذا قمت بتشفير محفظتك وفقدت كلمة المرور الخاص بك, ستفقد كل عملات EARTHCOINS الخاصة بك.</translation>
+        <source>Warning: If you encrypt your wallet and lose your passphrase, you will &lt;b&gt;LOSE ALL OF YOUR LITECOINS&lt;/b&gt;!</source>
+        <translation>تحذير: إذا قمت بتشفير محفظتك وفقدت كلمة المرور الخاص بك, ستفقد كل عملات LITECOINS الخاصة بك.</translation>
     </message>
     <message>
         <source>Are you sure you wish to encrypt your wallet?</source>
@@ -347,7 +347,7 @@
     </message>
     <message>
         <source>Send coins to a Earthcoin address</source>
-        <translation>ارسل عملات الى عنوان بيتكوين</translation>
+        <translation>ارسل عملات الى عنوان Earthcoin</translation>
     </message>
     <message>
         <source>Backup wallet to another location</source>
@@ -551,7 +551,7 @@
     </message>
     <message>
         <source>A fatal error occurred. Earthcoin can no longer continue safely and will quit.</source>
-        <translation>خطأ فادح حدث . لا يمكن اتمام بيتكوين بامان سيتم الخروج</translation>
+        <translation>خطأ فادح حدث . لا يمكن اتمام Earthcoin بامان سيتم الخروج</translation>
     </message>
 </context>
 <context>
@@ -857,7 +857,7 @@
     </message>
     <message>
         <source>Recent transactions may not yet be visible, and therefore your wallet's balance might be incorrect. This information will be correct once your wallet has finished synchronizing with the earthcoin network, as detailed below.</source>
-        <translation>قد لا تكون المعاملات الأخيرة مرئية بعد، وبالتالي قد يكون رصيد محفظتك غير صحيح. ستكون هذه المعلومات صحيحة بمجرد الانتهاء من محفظتك مع شبكة البيتكوين، كما هو مفصل أدناه.</translation>
+        <translation>قد لا تكون المعاملات الأخيرة مرئية بعد، وبالتالي قد يكون رصيد محفظتك غير صحيح. ستكون هذه المعلومات صحيحة بمجرد الانتهاء من محفظتك مع شبكة الEarthcoin، كما هو مفصل أدناه.</translation>
     </message>
     <message>
         <source>Attempting to spend earthcoins that are affected by not-yet-displayed transactions will not be accepted by the network.</source>
@@ -2921,7 +2921,7 @@
     </message>
     <message>
         <source>Earthcoin Core</source>
-        <translation>جوهر بيتكوين</translation>
+        <translation>جوهر Earthcoin</translation>
     </message>
     <message>
         <source>Cannot obtain a lock on data directory %s. %s is probably already running.</source>

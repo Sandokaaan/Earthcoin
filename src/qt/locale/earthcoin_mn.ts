@@ -131,7 +131,7 @@
     </message>
     <message>
         <source>Earthcoin</source>
-        <translation>Биткойн</translation>
+        <translation>Earthcoin</translation>
     </message>
     <message>
         <source>Wallet</source>
@@ -234,7 +234,7 @@
     <name>Intro</name>
     <message>
         <source>Earthcoin</source>
-        <translation>Биткойн</translation>
+        <translation>Earthcoin</translation>
     </message>
     <message>
         <source>Error</source>

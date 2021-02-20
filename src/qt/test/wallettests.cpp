@@ -60,10 +60,12 @@ uint256 SendCoins(CWallet& wallet, SendCoinsDialog& sendCoinsDialog, const CTxDe
     SendCoinsEntry* entry = qobject_cast<SendCoinsEntry*>(entries->itemAt(0)->widget());
     entry->findChild<QValidatedLineEdit*>("payTo")->setText(QString::fromStdString(EncodeDestination(address)));
     entry->findChild<EarthcoinAmountField*>("payAmount")->setValue(amount);
+    /* Litecon: Disabled RBF UI
     sendCoinsDialog.findChild<QFrame*>("frameFee")
         ->findChild<QFrame*>("frameFeeSelection")
         ->findChild<QCheckBox*>("optInRBF")
         ->setCheckState(rbf ? Qt::Checked : Qt::Unchecked);
+    */
     uint256 txid;
     boost::signals2::scoped_connection c(wallet.NotifyTransactionChanged.connect([&txid](CWallet*, const uint256& hash, ChangeType status) {
         if (status == CT_NEW) txid = hash;
@@ -88,6 +90,7 @@ QModelIndex FindTx(const QAbstractItemModel& model, const uint256& txid)
 }
 
 //! Invoke bumpfee on txid and check results.
+/* Earthcoin: Disable RBF
 void BumpFee(TransactionView& view, const uint256& txid, bool expectDisabled, std::string expectError, bool cancel)
 {
     QTableView* table = view.findChild<QTableView*>("transactionView");
@@ -112,6 +115,7 @@ void BumpFee(TransactionView& view, const uint256& txid, bool expectDisabled, st
     action->trigger();
     QVERIFY(text.indexOf(QString::fromStdString(expectError)) != -1);
 }
+*/
 
 //! Simple qt wallet tests.
 //
@@ -128,8 +132,8 @@ void BumpFee(TransactionView& view, const uint256& txid, bool expectDisabled, st
 //     src/qt/test/test_earthcoin-qt -platform cocoa    # macOS
 void TestGUI()
 {
-    // Set up wallet and chain with 245 blocks (5 mature blocks for spending).
-    TestChain240Setup test;
+    // Set up wallet and chain with 105 blocks (5 mature blocks for spending).
+    TestChain100Setup test;
     for (int i = 0; i < 5; ++i) {
         test.CreateAndProcessBlock({}, GetScriptForRawPubKey(test.coinbaseKey.GetPubKey()));
     }
@@ -171,10 +175,11 @@ void TestGUI()
     QVERIFY(FindTx(*transactionTableModel, txid2).isValid());
 
     // Call bumpfee. Test disabled, canceled, enabled, then failing cases.
-    BumpFee(transactionView, txid1, true /* expect disabled */, "not BIP 125 replaceable" /* expected error */, false /* cancel */);
-    BumpFee(transactionView, txid2, false /* expect disabled */, {} /* expected error */, true /* cancel */);
-    BumpFee(transactionView, txid2, false /* expect disabled */, {} /* expected error */, false /* cancel */);
-    BumpFee(transactionView, txid2, true /* expect disabled */, "already bumped" /* expected error */, false /* cancel */);
+    // Earthcoin: Disable BumpFee tests
+    // BumpFee(transactionView, txid1, true /* expect disabled */, "not BIP 125 replaceable" /* expected error */, false /* cancel */);
+    // BumpFee(transactionView, txid2, false /* expect disabled */, {} /* expected error */, true /* cancel */);
+    // BumpFee(transactionView, txid2, false /* expect disabled */, {} /* expected error */, false /* cancel */);
+    // BumpFee(transactionView, txid2, true /* expect disabled */, "already bumped" /* expected error */, false /* cancel */);
 
     // Check current balance on OverviewPage
     OverviewPage overviewPage(platformStyle.get());

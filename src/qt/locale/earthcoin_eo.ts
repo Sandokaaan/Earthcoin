@@ -67,11 +67,11 @@
     </message>
     <message>
         <source>These are your Earthcoin addresses for sending payments. Always check the amount and the receiving address before sending coins.</source>
-        <translation>Jen viaj Bitmon-adresoj por sendi pagojn. Zorge kontrolu la sumon kaj la alsendan adreson antaŭ ol sendi.</translation>
+        <translation>Jen viaj Earthcoin-adresoj por sendi pagojn. Zorge kontrolu la sumon kaj la alsendan adreson antaŭ ol sendi.</translation>
     </message>
     <message>
         <source>These are your Earthcoin addresses for receiving payments. It is recommended to use a new receiving address for each transaction.</source>
-        <translation>Jen viaj bitmonaj adresoj por ricevi pagojn. Estas konsilinde uzi apartan ricevan adreson por ĉiu transakcio.</translation>
+        <translation>Jen viaj earthcoinj adresoj por ricevi pagojn. Estas konsilinde uzi apartan ricevan adreson por ĉiu transakcio.</translation>
     </message>
     <message>
         <source>&amp;Copy Address</source>
@@ -168,7 +168,7 @@
         <translation>Tajpu la malnovan pasvorton kaj la novan pasvorton por la monujo.</translation>
     </message>
     <message>
-        <source>Warning: If you encrypt your wallet and lose your passphrase, you will &lt;b&gt;LOSE ALL OF YOUR EARTHCOINS&lt;/b&gt;!</source>
+        <source>Warning: If you encrypt your wallet and lose your passphrase, you will &lt;b&gt;LOSE ALL OF YOUR LITECOINS&lt;/b&gt;!</source>
         <translation>Atentu! Se vi ĉifras vian monujon kaj perdas la pasfrazon, vi &lt;b&gt;PERDOS LA TUTON DE VIA BITMONO&lt;b&gt;!</translation>
     </message>
     <message>
@@ -275,7 +275,7 @@
     </message>
     <message>
         <source>Send coins to a Earthcoin address</source>
-        <translation>Sendi monon al Bitmon-adreso</translation>
+        <translation>Sendi monon al Earthcoin-adreso</translation>
     </message>
     <message>
         <source>Backup wallet to another location</source>
@@ -299,7 +299,7 @@
     </message>
     <message>
         <source>Earthcoin</source>
-        <translation>Bitmono</translation>
+        <translation>Earthcoin</translation>
     </message>
     <message>
         <source>Wallet</source>
@@ -327,11 +327,11 @@
     </message>
     <message>
         <source>Sign messages with your Earthcoin addresses to prove you own them</source>
-        <translation>Subskribi mesaĝojn per via Bitmon-adresoj por pravigi, ke vi estas la posedanto</translation>
+        <translation>Subskribi mesaĝojn per via Earthcoin-adresoj por pravigi, ke vi estas la posedanto</translation>
     </message>
     <message>
         <source>Verify messages to ensure they were signed with specified Earthcoin addresses</source>
-        <translation>Kontroli mesaĝojn por kontroli ĉu ili estas subskribitaj per specifaj Bitmon-adresoj</translation>
+        <translation>Kontroli mesaĝojn por kontroli ĉu ili estas subskribitaj per specifaj Earthcoin-adresoj</translation>
     </message>
     <message>
         <source>&amp;File</source>
@@ -592,7 +592,7 @@
     </message>
     <message>
         <source>Earthcoin</source>
-        <translation>Bitmono</translation>
+        <translation>Earthcoin</translation>
     </message>
     <message>
         <source>Error</source>
@@ -673,7 +673,7 @@
     </message>
     <message>
         <source>Automatically open the Earthcoin client port on the router. This only works when your router supports UPnP and it is enabled.</source>
-        <translation>Aŭtomate malfermi la kursilan pordon por Bitmono. Tio funkcias nur se via kursilo havas la UPnP-funkcion, kaj se tiu ĉi estas ŝaltita.</translation>
+        <translation>Aŭtomate malfermi la kursilan pordon por Earthcoin. Tio funkcias nur se via kursilo havas la UPnP-funkcion, kaj se tiu ĉi estas ŝaltita.</translation>
     </message>
     <message>
         <source>Map port using &amp;UPnP</source>
@@ -729,7 +729,7 @@
     </message>
     <message>
         <source>Choose the default subdivision unit to show in the interface and when sending coins.</source>
-        <translation>Elekti la defaŭltan manieron por montri bitmonajn sumojn en la interfaco, kaj kiam vi sendos bitmonon.</translation>
+        <translation>Elekti la defaŭltan manieron por montri earthcoinjn sumojn en la interfaco, kaj kiam vi sendos bitmonon.</translation>
     </message>
     <message>
         <source>Whether to show coin control features or not.</source>
@@ -772,7 +772,7 @@
     </message>
     <message>
         <source>The displayed information may be out of date. Your wallet automatically synchronizes with the Earthcoin network after a connection is established, but this process has not completed yet.</source>
-        <translation>Eblas, ke la informoj videblaj ĉi tie estas eksdataj. Via monujo aŭtomate sinkoniĝas kun la bitmona reto kiam ili konektiĝas, sed tiu procezo ankoraŭ ne finfariĝis.</translation>
+        <translation>Eblas, ke la informoj videblaj ĉi tie estas eksdataj. Via monujo aŭtomate sinkoniĝas kun la earthcoin reto kiam ili konektiĝas, sed tiu procezo ankoraŭ ne finfariĝis.</translation>
     </message>
     <message>
         <source>Your current spendable balance</source>
@@ -1130,7 +1130,7 @@
     <name>SendCoinsDialog</name>
     <message>
         <source>Send Coins</source>
-        <translation>Sendi Bitmonon</translation>
+        <translation>Sendi Earthcoinn</translation>
     </message>
     <message>
         <source>Coin Control Features</source>
@@ -1270,7 +1270,7 @@
     </message>
     <message>
         <source>Warning: Invalid Earthcoin address</source>
-        <translation>Averto: Nevalida Bitmon-adreso</translation>
+        <translation>Averto: Nevalida Earthcoin-adreso</translation>
     </message>
     <message>
         <source>(no label)</source>
@@ -1386,7 +1386,7 @@
     </message>
     <message>
         <source>Sign the message to prove you own this Earthcoin address</source>
-        <translation>Subskribi la mesaĝon por pravigi, ke vi estas la posedanto de tiu Bitmon-adreso</translation>
+        <translation>Subskribi la mesaĝon por pravigi, ke vi estas la posedanto de tiu Earthcoin-adreso</translation>
     </message>
     <message>
         <source>Sign &amp;Message</source>
@@ -1406,7 +1406,7 @@
     </message>
     <message>
         <source>Verify the message to ensure it was signed with the specified Earthcoin address</source>
-        <translation>Kontroli la mesaĝon por pravigi, ke ĝi ja estas subskribita per la specifa Bitmon-adreso</translation>
+        <translation>Kontroli la mesaĝon por pravigi, ke ĝi ja estas subskribita per la specifa Earthcoin-adreso</translation>
     </message>
     <message>
         <source>Verify &amp;Message</source>
@@ -1809,7 +1809,7 @@
     <name>WalletModel</name>
     <message>
         <source>Send Coins</source>
-        <translation>Sendi Bitmonon</translation>
+        <translation>Sendi Earthcoinn</translation>
     </message>
     </context>
 <context>
@@ -1843,7 +1843,7 @@
     <name>earthcoin-core</name>
     <message>
         <source>Earthcoin Core</source>
-        <translation>Kerno de Bitmono</translation>
+        <translation>Kerno de Earthcoino</translation>
     </message>
     <message>
         <source>This is a pre-release test build - use at your own risk - do not use for mining or merchant applications</source>
