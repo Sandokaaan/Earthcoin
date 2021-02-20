@@ -79,7 +79,7 @@ public:
         strNetworkID = "main";
         consensus.nSubsidyHalvingInterval = 525600;
         consensus.BIP16Exception = uint256();
-        consensus.BIP16Height = 0; // October 1, 2012 it was before EAC genesis // int64 nBIP16SwitchTime = 1349049600
+        //consensus.BIP16Height = 0; // October 1, 2012 it was before EAC genesis // int64 nBIP16SwitchTime = 1349049600
         consensus.BIP34Height = 710000;      // EAC dev note: after this height only block version 2 are allowed;
         consensus.BIP34Hash = uint256S("0xfa09d204a83a768ed5a7c8d441fa62f2043abf420cff1226c7b4329aeb9d51cf");
         consensus.BIP65Height = 99999999; // EAC dev note: disabled for now     // OP_CHECKLOCKTIMEVERIFY
@@ -245,7 +245,7 @@ public:
         strNetworkID = "test";
         consensus.nSubsidyHalvingInterval = 525600;
         consensus.BIP16Exception = uint256();
-        consensus.BIP16Height = 0; // always enforce P2SH BIP16 on testnet
+        //consensus.BIP16Height = 0; // always enforce P2SH BIP16 on testnet
         consensus.BIP34Height = 76;
         consensus.BIP34Hash = uint256S("8075c771ed8b495ffd943980a95f702ab34fce3c8c54e379548bda33cc8c0573");
         consensus.BIP65Height = 76; // 8075c771ed8b495ffd943980a95f702ab34fce3c8c54e379548bda33cc8c0573
