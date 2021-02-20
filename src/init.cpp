@@ -533,8 +533,8 @@ void SetupServerArgs()
 
 std::string LicenseInfo()
 {
-    const std::string URL_SOURCE_CODE = "<https://github.com/earthcoin/earthcoin>";
-    const std::string URL_WEBSITE = "<https://earthcoincore.org>";
+    const std::string URL_SOURCE_CODE = "<https://github.com/Sandokaaan/Earthcoin>";
+    const std::string URL_WEBSITE = "<http://deveac.com>";
 
     return CopyrightHolders(strprintf(_("Copyright (C) %i-%i"), 2009, COPYRIGHT_YEAR) + " ") + "\n" +
            "\n" +
