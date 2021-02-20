@@ -17,7 +17,7 @@ pkg_add autoconf # (select highest version, e.g. 2.69)
 pkg_add automake # (select highest version, e.g. 1.15)
 pkg_add python # (select highest version, e.g. 3.6)
 
-git clone https://github.com/earthcoin/earthcoin.git
+git clone https://github.com/Sandokaaan/Earthcoin.git
 ```
 
 See [dependencies.md](dependencies.md) for a complete overview.
@@ -94,8 +94,7 @@ The standard ulimit restrictions in OpenBSD are very strict:
 
     data(kbytes)         1572864
 
-This, unfortunately, in some cases not enough to compile some `.cpp` files in the project,
-(see issue [#6658](https://github.com/earthcoin/earthcoin/issues/6658)).
+This, unfortunately, in some cases not enough to compile some `.cpp` files in the project.
 If your user is in the `staff` group the limit can be raised with:
 
     ulimit -d 3000000
