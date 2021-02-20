@@ -112,7 +112,8 @@ public:
         // By default assume that the signatures in ancestors of this block are valid.
         consensus.defaultAssumeValid = uint256S("0x98b01e772f0ca3b3ac875857e4f3b6571f8f18b8b896d0cb2feefeca90b69583"); //534292 - ????
 
-        consensus.nAuxpowChainId = 0x205d;     // 0x2000 | 0x005d = v2.0.x blockID + EAC_key_Prefix!
+        // AuxPoW parameters
+	consensus.nAuxpowChainId = 0x205d;     // 0x2000 | 0x005d = v2.0.x blockID + EAC_key_Prefix!
         consensus.nAuxpowStartHeight = 1;	   // start AUX-POW SANDO: For a test purposes - start immediatelly, the change to 3400000
         consensus.fStrictChainId = true;
         consensus.nLegacyBlocksBefore = 1;     // the same as nAuxpowStartHeight ?
@@ -277,7 +278,9 @@ public:
         // By default assume that the signatures in ancestors of this block are valid.
         consensus.defaultAssumeValid = uint256S("0x14b1da80b3d734d36a4a2be97ed2c9d49e79c47213d5bcc15b475a1115d28918"); //0
 
-        consensus.nAuxpowStartHeight = 1;
+	// AuxPoW parameters
+        consensus.nAuxpowChainId = 0x205d;     // 0x2000 | 0x005d = v2.0.x blockID + EAC_key_Prefix!
+	consensus.nAuxpowStartHeight = 1;
         consensus.fStrictChainId = false;
         consensus.nLegacyBlocksBefore = 1;
         
