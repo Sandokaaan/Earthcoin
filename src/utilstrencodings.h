@@ -19,6 +19,12 @@
 #define UEND(a)             ((unsigned char*)&((&(a))[1]))
 #define ARRAYLEN(array)     (sizeof(array)/sizeof((array)[0]))
 
+// The maximal length of txComment
+const int TX_COMMENT_LIMIT = 252;
+const int TX_COMPOSED_COMMENT_LIMIT = 400;
+// Check txComment in UTF-8 and limit it to 252 bytes
+std::string ValidateUnicodeString(const std::string& input);
+
 /** Used by SanitizeString() */
 enum SafeChars
 {
