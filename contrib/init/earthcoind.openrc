@@ -1,0 +1,92 @@
+#!/sbin/openrc-run
+
+# backward compatibility for existing gentoo layout 
+#
+if [ -d "/var/lib/earthcoin/.earthcoin" ]; then
+	EARTHCOIND_DEFAULT_DATADIR="/var/lib/earthcoin/.earthcoin"
+else
+	EARTHCOIND_DEFAULT_DATADIR="/var/lib/earthcoind"
+fi
+
+EARTHCOIND_CONFIGFILE=${EARTHCOIND_CONFIGFILE:-/etc/earthcoin/earthcoin.conf}
+EARTHCOIND_PIDDIR=${EARTHCOIND_PIDDIR:-/var/run/earthcoind}
+EARTHCOIND_PIDFILE=${EARTHCOIND_PIDFILE:-${EARTHCOIND_PIDDIR}/earthcoind.pid}
+EARTHCOIND_DATADIR=${EARTHCOIND_DATADIR:-${EARTHCOIND_DEFAULT_DATADIR}}
+EARTHCOIND_USER=${EARTHCOIND_USER:-${EARTHCOIN_USER:-earthcoin}}
+EARTHCOIND_GROUP=${EARTHCOIND_GROUP:-earthcoin}
+EARTHCOIND_BIN=${EARTHCOIND_BIN:-/usr/bin/earthcoind}
+EARTHCOIND_NICE=${EARTHCOIND_NICE:-${NICELEVEL:-0}}
+EARTHCOIND_OPTS="${EARTHCOIND_OPTS:-${EARTHCOIN_OPTS}}"
+
+name="Earthcoin Core Daemon"
+description="Earthcoin cryptocurrency P2P network daemon"
+
+command="/usr/bin/earthcoind"
+command_args="-pid=\"${EARTHCOIND_PIDFILE}\" \
+		-conf=\"${EARTHCOIND_CONFIGFILE}\" \
+		-datadir=\"${EARTHCOIND_DATADIR}\" \
+		-daemon \
+		${EARTHCOIND_OPTS}"
+
+required_files="${EARTHCOIND_CONFIGFILE}"
+start_stop_daemon_args="-u ${EARTHCOIND_USER} \
+			-N ${EARTHCOIND_NICE} -w 2000"
+pidfile="${EARTHCOIND_PIDFILE}"
+
+# The retry schedule to use when stopping the daemon. Could be either
+# a timeout in seconds or multiple signal/timeout pairs (like
+# "SIGKILL/180 SIGTERM/300")
+retry="${EARTHCOIND_SIGTERM_TIMEOUT}"
+
+depend() {
+	need localmount net
+}
+
+# verify
+# 1) that the datadir exists and is writable (or create it)
+# 2) that a directory for the pid exists and is writable
+# 3) ownership and permissions on the config file
+start_pre() {
+	checkpath \
+	-d \
+	--mode 0750 \
+	--owner "${EARTHCOIND_USER}:${EARTHCOIND_GROUP}" \
+	"${EARTHCOIND_DATADIR}"
+
+	checkpath \
+	-d \
+	--mode 0755 \
+	--owner "${EARTHCOIND_USER}:${EARTHCOIND_GROUP}" \
+	"${EARTHCOIND_PIDDIR}"
+
+	checkpath -f \
+	-o ${EARTHCOIND_USER}:${EARTHCOIND_GROUP} \
+	-m 0660 \
+	${EARTHCOIND_CONFIGFILE}
+
+	checkconfig || return 1
+}
+
+checkconfig()
+{
+	if ! grep -qs '^rpcpassword=' "${EARTHCOIND_CONFIGFILE}" ; then
+		eerror ""
+		eerror "ERROR: You must set a secure rpcpassword to run earthcoind."
+		eerror "The setting must appear in ${EARTHCOIND_CONFIGFILE}"
+		eerror ""
+		eerror "This password is security critical to securing wallets "
+		eerror "and must not be the same as the rpcuser setting."
+		eerror "You can generate a suitable random password using the following "
+		eerror "command from the shell:"
+		eerror ""
+		eerror "bash -c 'tr -dc a-zA-Z0-9 < /dev/urandom | head -c32 && echo'"
+		eerror ""
+		eerror "It is recommended that you also set alertnotify so you are "
+		eerror "notified of problems:"
+		eerror ""
+		eerror "ie: alertnotify=echo %%s | mail -s \"Earthcoin Alert\"" \
+			"admin@foo.com"
+		eerror ""
+		return 1
+	fi
+}

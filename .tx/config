@@ -1,0 +1,7 @@
+[main]
+host = https://www.transifex.com
+
+[earthcoin.qt-translation-017x]
+file_filter = src/qt/locale/earthcoin_<lang>.ts
+source_file = src/qt/locale/earthcoin_en.ts
+source_lang = en
