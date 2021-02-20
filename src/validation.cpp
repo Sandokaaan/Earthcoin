@@ -3306,7 +3306,7 @@ static bool ContextualCheckBlockHeader(const CBlockHeader& block, CValidationSta
     // check for version 2, 3 and 4 upgrades
     // Earthcoin: Version 2 enforcement was never used
     // SANDO: do it only for non-legacy blocks
-    if(!bloc.isLegacy())
+    if(!block.isLegacy())
     	if((block.GetBaseVersion() < 3 && nHeight >= consensusParams.BIP66Height) ||
        	   (block.GetBaseVersion() < 4 && nHeight >= consensusParams.BIP65Height))
            	return state.Invalid(false, REJECT_OBSOLETE, strprintf("bad-version(0x%08x)", block.GetBaseVersion()),
