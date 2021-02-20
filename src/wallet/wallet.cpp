@@ -2662,6 +2662,11 @@ OutputType CWallet::TransactionChangeType(OutputType change_type, const std::vec
 bool CWallet::CreateTransaction(const std::vector<CRecipient>& vecSend, CTransactionRef& tx, CReserveKey& reservekey, CAmount& nFeeRet,
                          int& nChangePosInOut, std::string& strFailReason, const CCoinControl& coin_control, bool sign)
 {
+    // SANDO hook to pass txComment here
+    std::string txComment = ValidateUnicodeString(strFailReason);    // safe shortening to 90 bytes
+    strFailReason.clear();
+    // end of the hook
+
     CAmount nValue = 0;
     int nChangePosRequest = nChangePosInOut;
     unsigned int nSubtractFeeFromAmount = 0;
@@ -2684,6 +2689,12 @@ bool CWallet::CreateTransaction(const std::vector<CRecipient>& vecSend, CTransac
     }
 
     CMutableTransaction txNew;
+
+    // SANDO - add txComment, if set
+    if ( txComment.length()>0 ) {
+	    txNew.nVersion = 2;
+	    txNew.strTxComment = txComment;
+    }
 
     // Discourage fee sniping.
     //
