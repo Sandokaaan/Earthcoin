@@ -116,7 +116,7 @@ public:
 	consensus.nAuxpowChainId = 0x205d;     // 0x2000 | 0x005d = v2.0.x blockID + EAC_key_Prefix!
         consensus.nAuxpowStartHeight = 1;	   // start AUX-POW SANDO: For a test purposes - start immediatelly, the change to 3400000
         consensus.fStrictChainId = true;
-        consensus.nLegacyBlocksBefore = 1;     // the same as nAuxpowStartHeight ?
+        consensus.nLegacyBlocksBefore = -1;     // SANDO: allow legacy blocks after auxpow activation - for test purposes, change later
         /** 
          * The message start string is designed to be unlikely to occur in normal data.
          * The characters are rarely used upper ASCII, not valid as UTF-8, and produce
@@ -282,7 +282,7 @@ public:
         consensus.nAuxpowChainId = 0x205d;     // 0x2000 | 0x005d = v2.0.x blockID + EAC_key_Prefix!
 	consensus.nAuxpowStartHeight = 1;
         consensus.fStrictChainId = false;
-        consensus.nLegacyBlocksBefore = 1;
+	consensus.nLegacyBlocksBefore = -1;     // SANDO: allow legacy blocks after auxpow activation - for test purposes, change later    
         
         pchMessageStart[0] = 0xfd;
         pchMessageStart[1] = 0xc2;
