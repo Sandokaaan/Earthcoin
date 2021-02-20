@@ -25,7 +25,7 @@ python27
 
 Download the source code:
 ```
-git clone https://github.com/earthcoin/earthcoin
+git clone https://github.com/Sandokaaan/Earthcoin
 ```
 
 See [dependencies.md](dependencies.md) for a complete overview.
