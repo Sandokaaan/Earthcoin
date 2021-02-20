@@ -1193,7 +1193,7 @@ bool ReadRawBlockFromDisk(std::vector<uint8_t>& block, const CBlockIndex* pindex
 CAmount GetBlockSubsidy(int nHeight, const Consensus::Params& consensusParams)
 {
     // block rewards are now defined in src/earthcoin.cpp
-    return GetEarthcoinBlockSubsidy(nHeight, consensusParams)
+    return GetEarthcoinBlockSubsidy(nHeight, consensusParams);
 }
 
 bool IsInitialBlockDownload()
