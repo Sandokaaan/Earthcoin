@@ -462,7 +462,7 @@ static UniValue getaddressesbyaccount(const JSONRPCRequest& request)
     return ret;
 }
 
-static CTransactionRef SendMoney(CWallet * const pwallet, const CTxDestination &address, CAmount nValue, bool fSubtractFeeFromAmount, const CCoinControl& coin_control, mapValue_t mapValue, std::string fromAccount)
+static CTransactionRef SendMoney(CWallet * const pwallet, const CTxDestination &address, CAmount nValue, bool fSubtractFeeFromAmount, const CCoinControl& coin_control, mapValue_t mapValue, std::string fromAccount, std::string txComment = "")
 {
     CAmount curBalance = pwallet->GetBalance();
 
@@ -477,19 +477,19 @@ static CTransactionRef SendMoney(CWallet * const pwallet, const CTxDestination &
         throw JSONRPCError(RPC_CLIENT_P2P_DISABLED, "Error: Peer-to-peer functionality missing or disabled");
     }
 
-    // Parse Earthcoin address
+    // Parse Bitcoin address
     CScript scriptPubKey = GetScriptForDestination(address);
 
     // Create and send the transaction
     CReserveKey reservekey(pwallet);
     CAmount nFeeRequired;
-    std::string strError;
+    std::string strError = txComment;  //SANDO hook
     std::vector<CRecipient> vecSend;
     int nChangePosRet = -1;
     CRecipient recipient = {scriptPubKey, nValue, fSubtractFeeFromAmount};
     vecSend.push_back(recipient);
     CTransactionRef tx;
-    if (!pwallet->CreateTransaction(vecSend, tx, reservekey, nFeeRequired, nChangePosRet, strError, coin_control)) {
+    if (!pwallet->CreateTransaction(vecSend, tx, reservekey, nFeeRequired, nChangePosRet, strError, coin_control, true)) {
         if (!fSubtractFeeFromAmount && nValue + nFeeRequired > curBalance)
             strError = strprintf("Error: This transaction requires a transaction fee of at least %s", FormatMoney(nFeeRequired));
         throw JSONRPCError(RPC_WALLET_ERROR, strError);
@@ -519,8 +519,8 @@ static UniValue sendtoaddress(const JSONRPCRequest& request)
             "\nArguments:\n"
             "1. \"address\"            (string, required) The earthcoin address to send to.\n"
             "2. \"amount\"             (numeric or string, required) The amount in " + CURRENCY_UNIT + " to send. eg 0.1\n"
-            "3. \"comment\"            (string, optional) A comment used to store what the transaction is for. \n"
-            "                             This is not part of the transaction, just kept in your wallet.\n"
+            "3. \"comment\"            (string, optional) A comment used to store what the transaction is for. \n"   // SANDO: LIMIT IT TO 30 bytes
+            "                             Only the first 90 bytes of this message will be stored in the blockchain\n"
             "4. \"comment_to\"         (string, optional) A comment to store the name of the person or organization \n"
             "                             to which you're sending the transaction. This is not part of the \n"
             "                             transaction, just kept in your wallet.\n"
@@ -535,10 +535,10 @@ static UniValue sendtoaddress(const JSONRPCRequest& request)
             "\nResult:\n"
             "\"txid\"                  (string) The transaction id.\n"
             "\nExamples:\n"
-            + HelpExampleCli("sendtoaddress", "\"1M72Sfpbz1BPpXFHz9m3CdqATR44Jvaydd\" 0.1")
-            + HelpExampleCli("sendtoaddress", "\"1M72Sfpbz1BPpXFHz9m3CdqATR44Jvaydd\" 0.1 \"donation\" \"seans outpost\"")
-            + HelpExampleCli("sendtoaddress", "\"1M72Sfpbz1BPpXFHz9m3CdqATR44Jvaydd\" 0.1 \"\" \"\" true")
-            + HelpExampleRpc("sendtoaddress", "\"1M72Sfpbz1BPpXFHz9m3CdqATR44Jvaydd\", 0.1, \"donation\", \"seans outpost\"")
+            + HelpExampleCli("sendtoaddress", "\"LEr4HnaefWYHbMGXcFp2Po1NPRUeIk8km2\" 0.1")
+            + HelpExampleCli("sendtoaddress", "\"LEr4HnaefWYHbMGXcFp2Po1NPRUeIk8km2\" 0.1 \"donation\" \"seans outpost\"")
+            + HelpExampleCli("sendtoaddress", "\"LEr4HnaefWYHbMGXcFp2Po1NPRUeIk8km2\" 0.1 \"\" \"\" true")
+            + HelpExampleRpc("sendtoaddress", "\"LEr4HnaefWYHbMGXcFp2Po1NPRUeIk8km2\", 0.1, \"donation\", \"seans outpost\"")
         );
 
     // Make sure the results are valid at least up to the most recent block
@@ -559,8 +559,11 @@ static UniValue sendtoaddress(const JSONRPCRequest& request)
 
     // Wallet comments
     mapValue_t mapValue;
-    if (!request.params[2].isNull() && !request.params[2].get_str().empty())
+    std::string txComment = "";
+    if (!request.params[2].isNull() && !request.params[2].get_str().empty()) {
+	txComment = ValidateUnicodeString(request.params[2].get_str());	        // Check the input and limit it to 90 bytes.
         mapValue["comment"] = request.params[2].get_str();
+    }
     if (!request.params[3].isNull() && !request.params[3].get_str().empty())
         mapValue["to"] = request.params[3].get_str();
 
@@ -587,7 +590,7 @@ static UniValue sendtoaddress(const JSONRPCRequest& request)
 
     EnsureWalletIsUnlocked(pwallet);
 
-    CTransactionRef tx = SendMoney(pwallet, dest, nAmount, fSubtractFeeFromAmount, coin_control, std::move(mapValue), {} /* fromAccount */);
+    CTransactionRef tx = SendMoney(pwallet, dest, nAmount, fSubtractFeeFromAmount, coin_control, std::move(mapValue), {} /* fromAccount */, txComment);
     return tx->GetHash().GetHex();
 }
 
