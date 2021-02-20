@@ -139,7 +139,7 @@ bool CheckAuxPowProofOfWork(const CBlockHeader& block, const Consensus::Params& 
     return true;
 }
 
-CAmount GetEarthcoinBlockSubsidy(int nHeight, const Consensus::Params& consensusParams, uint256 prevHash)
+CAmount GetEarthcoinBlockSubsidy(int nHeight, const Consensus::Params& consensusParams)
 {
     const CAmount nMinSubsidy = 1 * COIN;
     // base payout
