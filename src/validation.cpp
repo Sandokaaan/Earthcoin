@@ -2293,7 +2293,7 @@ void static UpdateTip(const CBlockIndex *pindexNew, const CChainParams& chainPar
         for (int i = 0; i < 100 && pindex != nullptr; i++)
         {
             int32_t nExpectedVersion = ComputeBlockVersion(pindex->pprev, chainParams.GetConsensus());
-            if (pindex->nVersion > VERSIONBITS_LAST_OLD_BLOCK_VERSION && (pindex->nVersion & ~nExpectedVersion) != 0)
+            if ( ((pindex->nVersion & 0xff) > VERSIONBITS_LAST_OLD_BLOCK_VERSION) && ((pindex->nVersion & ~nExpectedVersion) != 0) )
                 ++nUpgraded;
             pindex = pindex->pprev;
         }
@@ -3263,33 +3263,15 @@ static bool ContextualCheckBlockHeader(const CBlockHeader& block, CValidationSta
     const int nHeight = pindexPrev->nHeight + 1;
 
     // SANDO: Disallow legacy blocks after legacy mining period ended.
-    if (!Params().GetConsensus().AllowLegacyBlocks(nHeight)
-        && block.IsLegacy())
+    if ( (!Params().GetConsensus().AllowLegacyBlocks(nHeight))
+        && (!block.IsAuxpow()) )
         return state.DoS(100, error("%s : legacy block after auxpow start",
                                     __func__),
                          REJECT_INVALID, "late-legacy-block");
 
     // Earthcoin: Disallow AuxPow blocks before it is activated.
     // SANDO: mixed mining period
-    if (!Params().GetConsensus().AllowAuxpowBlocks(nHeight)
-        && block.IsAuxpow())
-        return state.DoS(100, error("%s : auxpow blocks are not allowed at height %d",
-                                    __func__, pindexPrev->nHeight + 1),
-                         REJECT_INVALID, "early-auxpow-block");
-
-	
-	
-    // Disallow legacy blocks after merge-mining start.
-    if (!Params().GetConsensus().AllowLegacyBlocks(nHeight)
-        && block.IsLegacy())
-        return state.DoS(100, error("%s : legacy block after auxpow start",
-                                    __func__),
-                         REJECT_INVALID, "late-legacy-block");
-
-    // Earthcoin: Disallow AuxPow blocks before it is activated.
-    // TODO: Remove this test, as checkpoints will enforce this for us now
-    // NOTE: Previously this had its own fAllowAuxPoW flag, but that's always the opposite of fAllowLegacyBlocks
-    if (Params().GetConsensus().AllowLegacyBlocks(nHeight)
+    if ( (!Params().GetConsensus().AllowAuxpowBlocks(nHeight))
         && block.IsAuxpow())
         return state.DoS(100, error("%s : auxpow blocks are not allowed at height %d",
                                     __func__, pindexPrev->nHeight + 1),
@@ -3322,11 +3304,10 @@ static bool ContextualCheckBlockHeader(const CBlockHeader& block, CValidationSta
     // Reject outdated version blocks when 95% (75% on testnet) of the network has upgraded:
     // check for version 2, 3 and 4 upgrades
     // Earthcoin: Version 2 enforcement was never used
-    // SANDO: do it only for non-legacy blocks - SANDO: test all blocks as BIP66 and BIP66 are not active
-    // if(!block.IsLegacy())
-    	if((block.GetBaseVersion() < 3 && nHeight >= consensusParams.BIP66Height) ||
-       	   (block.GetBaseVersion() < 4 && nHeight >= consensusParams.BIP65Height))
-           	return state.Invalid(false, REJECT_OBSOLETE, strprintf("bad-version(0x%08x)", block.GetBaseVersion()),
+    // SANDO: test all blocks as BIP66 and BIP66 are not active
+    if((block.GetBaseVersion() < 3 && nHeight >= consensusParams.BIP66Height) ||
+    	(block.GetBaseVersion() < 4 && nHeight >= consensusParams.BIP65Height))
+        	return state.Invalid(false, REJECT_OBSOLETE, strprintf("bad-version(0x%08x)", block.GetBaseVersion()),
                     strprintf("rejected nVersion=0x%08x block", block.GetBaseVersion()));
     return true;
 }
