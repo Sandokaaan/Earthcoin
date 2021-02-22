@@ -1469,8 +1469,8 @@ bool CheckInputs(const CTransaction& tx, CValidationState &state, const CCoinsVi
                     // as to the correct behavior - we may want to continue
                     // peering with non-upgraded nodes even after soft-fork
                     // super-majority signaling has occurred.
-                    // EAC-DEV note: that softfork is not the case of EAC network
-                    //return state.DoS(100,false, REJECT_INVALID, strprintf("mandatory-script-verify-flag-failed (%s)", ScriptErrorString(check.GetScriptError())));
+                    // EAC-DEV note: that softfork is not the case of EAC network - SANDO re-enabled
+                    return state.DoS(100,false, REJECT_INVALID, strprintf("mandatory-script-verify-flag-failed (%s)", ScriptErrorString(check.GetScriptError())));
                 }
             }
 
@@ -3262,6 +3262,23 @@ static bool ContextualCheckBlockHeader(const CBlockHeader& block, CValidationSta
     assert(pindexPrev != nullptr);
     const int nHeight = pindexPrev->nHeight + 1;
 
+    // SANDO: Disallow legacy blocks after legacy mining period ended.
+    if (!Params().GetConsensus().AllowLegacyBlocks(nHeight)
+        && block.IsLegacy())
+        return state.DoS(100, error("%s : legacy block after auxpow start",
+                                    __func__),
+                         REJECT_INVALID, "late-legacy-block");
+
+    // Earthcoin: Disallow AuxPow blocks before it is activated.
+    // SANDO: mixed mining period
+    if (!Params().GetConsensus().AllowAuxpowBlocks(nHeight)
+        && block.IsAuxpow())
+        return state.DoS(100, error("%s : auxpow blocks are not allowed at height %d",
+                                    __func__, pindexPrev->nHeight + 1),
+                         REJECT_INVALID, "early-auxpow-block");
+
+	
+	
     // Disallow legacy blocks after merge-mining start.
     if (!Params().GetConsensus().AllowLegacyBlocks(nHeight)
         && block.IsLegacy())
@@ -3305,8 +3322,8 @@ static bool ContextualCheckBlockHeader(const CBlockHeader& block, CValidationSta
     // Reject outdated version blocks when 95% (75% on testnet) of the network has upgraded:
     // check for version 2, 3 and 4 upgrades
     // Earthcoin: Version 2 enforcement was never used
-    // SANDO: do it only for non-legacy blocks
-    if(!block.IsLegacy())
+    // SANDO: do it only for non-legacy blocks - SANDO: test all blocks as BIP66 and BIP66 are not active
+    // if(!block.IsLegacy())
     	if((block.GetBaseVersion() < 3 && nHeight >= consensusParams.BIP66Height) ||
        	   (block.GetBaseVersion() < 4 && nHeight >= consensusParams.BIP65Height))
            	return state.Invalid(false, REJECT_OBSOLETE, strprintf("bad-version(0x%08x)", block.GetBaseVersion()),
