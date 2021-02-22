@@ -93,6 +93,16 @@ struct Params {
             return true;
         return static_cast<int> (nHeight) < nLegacyBlocksBefore;
     }
+    
+    // SANDO - define an interval in which both mining methods will be possible 
+    bool AllowAuxpowBlocks(unsigned nHeight) const
+    {
+        if (nAuxpowStartHeight < 0)
+            return false;
+        return static_cast<int> (nHeight) >= nAuxpowStartHeight;
+    }
+
+    
 };
 } // namespace Consensus
 
