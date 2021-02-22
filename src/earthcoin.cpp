@@ -103,16 +103,16 @@ unsigned int CalculateEarthcoinNextWorkRequired(const CBlockIndex* pindexLast, i
 
 bool CheckAuxPowProofOfWork(const CBlockHeader& block, const Consensus::Params& params)
 {
-    // do not check legacy blocks
-    if (block.IsLegacy()) {
-        if (block.IsAuxpow() || block.auxpow)
+    // check legacy blocks
+    if (!block.IsAuxpow()) {
+        if (block.auxpow)
             return error("%s : legacy block with auxpow properties",
                          __func__);
         return CheckProofOfWork(block.GetPoWHash(), block.nBits, params);
     }
 
     /* We have auxpow.  Check it.  */
-    if (!block.auxpow || !block.IsAuxpow())
+    if (!block.auxpow)
             return error("%s : auxpow block without auxpow properties",
                          __func__);
 
