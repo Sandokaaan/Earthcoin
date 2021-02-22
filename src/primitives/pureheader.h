@@ -9,6 +9,8 @@
 #include "serialize.h"
 #include "uint256.h"
 
+#include <auxpowforkparams.h>
+
 /**
  * A block header without auxpow information.  This "intermediate step"
  * in constructing the full header is useful, because it breaks the cyclic
@@ -148,9 +150,8 @@ public:
      */
     inline bool IsLegacy() const
     {
-	    int32_t chID = GetChainId();
-        // Earthcoin: We have many v2 blocks with no AuxPoW, treat as legacy
-        return (nVersion == 1) || ( chID == 0 || chID == 8192 );           
+        // Earthcoin: We have many v1, v2 and v=0x20000000 blocks with no AuxPoW, treat as legacy
+        return ( (nVersion <= 2) || ( GetChainId() != AUXPOW_CHAIN_ID ) );           
     }
 };
 
