@@ -129,6 +129,8 @@ public:
      */
     inline bool IsAuxpow() const
     {
+        if (GetChainId() != AUXPOW_CHAIN_ID)
+            return false;
         return nVersion & VERSION_AUXPOW;
     }
 
@@ -148,11 +150,13 @@ public:
      * Check whether this is a "legacy" block without chain ID.
      * @return True iff it is.
      */
+    /* not required, use !IsAuxpow() instead
     inline bool IsLegacy() const
     {
         // Earthcoin: We have many v1, v2 and v=0x20000000 blocks with no AuxPoW, treat as legacy
         return ( (nVersion <= 2) || ( GetChainId() != AUXPOW_CHAIN_ID ) );           
     }
+    */
 };
 
 #endif // EARTHCOIN_PRIMITIVES_PUREHEADER_H
