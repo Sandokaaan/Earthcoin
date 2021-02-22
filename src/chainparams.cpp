@@ -16,6 +16,7 @@
 #include <assert.h>
 
 #include <chainparamsseeds.h>
+#include <auxpowforkparams.h>
 
 static CBlock CreateGenesisBlock(const char* pszTimestamp, const CScript& genesisOutputScript, uint32_t nTime, uint32_t nNonce, uint32_t nBits, int32_t nVersion, const CAmount& genesisReward)
 {
@@ -82,8 +83,8 @@ public:
         //consensus.BIP16Height = 0; // October 1, 2012 it was before EAC genesis // int64 nBIP16SwitchTime = 1349049600
         consensus.BIP34Height = 710000;      // EAC dev note: after this height only block version 2 are allowed;
         consensus.BIP34Hash = uint256S("0xfa09d204a83a768ed5a7c8d441fa62f2043abf420cff1226c7b4329aeb9d51cf");
-        consensus.BIP65Height = 99999999; // EAC dev note: disabled for now     // OP_CHECKLOCKTIMEVERIFY
-        consensus.BIP66Height = 99999999; // EAC dev note: disabled for now
+        consensus.BIP65Height = 999999999; // EAC dev note: disabled for now     // OP_CHECKLOCKTIMEVERIFY
+        consensus.BIP66Height = 999999999; // EAC dev note: disabled for now
         consensus.powLimit = uint256S("0x00000fffffffffffffffffffffffffffffffffffffffffffffffffffffffffff"); // ~uint256(0) >> 20;
         consensus.nPowTargetTimespan = 30 * 60;  // 30 minutes
         consensus.nPowTargetSpacing = 60;        // 60 seconds
@@ -113,10 +114,10 @@ public:
         consensus.defaultAssumeValid = uint256S("0x98b01e772f0ca3b3ac875857e4f3b6571f8f18b8b896d0cb2feefeca90b69583"); //534292 - ????
 
         // AuxPoW parameters
-	consensus.nAuxpowChainId = 0x205d;     // 0x2000 | 0x005d = v2.0.x blockID + EAC_key_Prefix!
-        consensus.nAuxpowStartHeight = 1;	   // start AUX-POW SANDO: For a test purposes - start immediatelly, the change to 3400000
+	consensus.nAuxpowChainId = AUXPOW_CHAIN_ID;
+        consensus.nAuxpowStartHeight = AUXPOW_START_HEIGHT;
         consensus.fStrictChainId = true;
-        consensus.nLegacyBlocksBefore = -1;     // SANDO: allow legacy blocks after auxpow activation - for test purposes, change later
+        consensus.nLegacyBlocksBefore = REGULAR_POW_END_HEIGHT;     
         /** 
          * The message start string is designed to be unlikely to occur in normal data.
          * The characters are rarely used upper ASCII, not valid as UTF-8, and produce
@@ -144,7 +145,7 @@ public:
 
         base58Prefixes[PUBKEY_ADDRESS] = std::vector<unsigned char>(1,93);
         base58Prefixes[SCRIPT_ADDRESS] = std::vector<unsigned char>(1,5);
-        //base58Prefixes[SCRIPT_ADDRESS2] = std::vector<unsigned char>(1,33);  // segwit addresses will start with E
+        base58Prefixes[SCRIPT_ADDRESS2] = std::vector<unsigned char>(1,33);  // segwit addresses will start with E
         base58Prefixes[SECRET_KEY] =     std::vector<unsigned char>(1,221);
         base58Prefixes[EXT_PUBLIC_KEY] = {0x04, 0x88, 0xB2, 0x1E};
         base58Prefixes[EXT_SECRET_KEY] = {0x04, 0x88, 0xAD, 0xE4};
@@ -286,10 +287,10 @@ public:
         consensus.defaultAssumeValid = uint256S("0x14b1da80b3d734d36a4a2be97ed2c9d49e79c47213d5bcc15b475a1115d28918"); //0
 
 	// AuxPoW parameters
-        consensus.nAuxpowChainId = 0x205d;     // 0x2000 | 0x005d = v2.0.x blockID + EAC_key_Prefix!
-	consensus.nAuxpowStartHeight = 1;
-        consensus.fStrictChainId = false;
-	consensus.nLegacyBlocksBefore = -1;     // SANDO: allow legacy blocks after auxpow activation - for test purposes, change later    
+        consensus.nAuxpowChainId = AUXPOW_CHAIN_ID;
+	consensus.nAuxpowStartHeight = 5;            // test-net only	
+        consensus.fStrictChainId = true;
+	consensus.nLegacyBlocksBefore = 20;          // test-net only
         
         pchMessageStart[0] = 0xfd;
         pchMessageStart[1] = 0xc2;
@@ -311,7 +312,7 @@ public:
 
         base58Prefixes[PUBKEY_ADDRESS] = std::vector<unsigned char>(1,111);
         base58Prefixes[SCRIPT_ADDRESS] = std::vector<unsigned char>(1,196);
-        //base58Prefixes[SCRIPT_ADDRESS2] = std::vector<unsigned char>(1,58);
+        base58Prefixes[SCRIPT_ADDRESS2] = std::vector<unsigned char>(1,58);
         base58Prefixes[SECRET_KEY] =     std::vector<unsigned char>(1,239);
         base58Prefixes[EXT_PUBLIC_KEY] = {0x04, 0x35, 0x87, 0xCF};
         base58Prefixes[EXT_SECRET_KEY] = {0x04, 0x35, 0x83, 0x94};
@@ -413,7 +414,7 @@ public:
 
         base58Prefixes[PUBKEY_ADDRESS] = std::vector<unsigned char>(1,111);
         base58Prefixes[SCRIPT_ADDRESS] = std::vector<unsigned char>(1,196);
-        //base58Prefixes[SCRIPT_ADDRESS2] = std::vector<unsigned char>(1,58);
+        base58Prefixes[SCRIPT_ADDRESS2] = std::vector<unsigned char>(1,58);
         base58Prefixes[SECRET_KEY] =     std::vector<unsigned char>(1,239);
         base58Prefixes[EXT_PUBLIC_KEY] = {0x04, 0x35, 0x87, 0xCF};
         base58Prefixes[EXT_SECRET_KEY] = {0x04, 0x35, 0x83, 0x94};
