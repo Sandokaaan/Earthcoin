@@ -9,6 +9,8 @@
 #include "hash.h"
 #include "utilstrencodings.h"
 
+#include <auxpowforkparams.h>
+
 void CPureBlockHeader::SetBaseVersion(int32_t nBaseVersion, int32_t nChainId)
 {
     assert(nBaseVersion >= 1 && nBaseVersion < VERSION_AUXPOW);
@@ -35,7 +37,7 @@ bool CPureBlockHeader::IsAuxpow() const
 
 bool CPureBlockHeader::IsLegacy() const
 {
-    return ((nVersion & 0xff) < 4);
+    return ((nVersion & 0xff) < 4) || (GetChainId() != AUXPOW_CHAIN_ID);
 }
 
 
