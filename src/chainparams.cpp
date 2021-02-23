@@ -117,7 +117,7 @@ public:
 	consensus.nAuxpowChainId = AUXPOW_CHAIN_ID;
         consensus.nAuxpowStartHeight = AUXPOW_START_HEIGHT;
         consensus.fStrictChainId = true;
-        consensus.nLegacyBlocksBefore = REGULAR_POW_END_HEIGHT;     
+        consensus.nLegacyBlocksBefore = AUXPOW_START_HEIGHT;     
         /** 
          * The message start string is designed to be unlikely to occur in normal data.
          * The characters are rarely used upper ASCII, not valid as UTF-8, and produce
@@ -290,7 +290,7 @@ public:
         consensus.nAuxpowChainId = AUXPOW_CHAIN_ID;
 	consensus.nAuxpowStartHeight = 5;            // test-net only	
         consensus.fStrictChainId = true;
-	consensus.nLegacyBlocksBefore = 20;          // test-net only
+	consensus.nLegacyBlocksBefore = 5;           // test-net only
         
         pchMessageStart[0] = 0xfd;
         pchMessageStart[1] = 0xc2;
