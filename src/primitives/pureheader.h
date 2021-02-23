@@ -127,9 +127,10 @@ public:
      */
     bool IsAuxpow() const;
     
-    **
+    /**
      * Check if the block version is lower then the current version.
      * @return True if this block version equals some previous block versions
+     *         or if the chainID is not set    
      */
     bool IsLegacy() const;
     
