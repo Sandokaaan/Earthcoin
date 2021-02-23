@@ -27,3 +27,16 @@ uint256 CPureBlockHeader::GetPoWHash() const
     scrypt_1024_1_1_256(BEGIN(nVersion), BEGIN(thash));
     return thash;
 }
+
+bool CPureBlockHeader::IsAuxpow() const
+{
+    return nVersion & VERSION_AUXPOW;
+}
+
+bool CPureBlockHeader::IsLegacy() const
+{
+    return ((nVersion & 0xff) < 4);
+}
+
+
+
