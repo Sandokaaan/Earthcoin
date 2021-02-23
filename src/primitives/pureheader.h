@@ -9,8 +9,6 @@
 #include "serialize.h"
 #include "uint256.h"
 
-#include <auxpowforkparams.h>
-
 /**
  * A block header without auxpow information.  This "intermediate step"
  * in constructing the full header is useful, because it breaks the cyclic
@@ -127,14 +125,14 @@ public:
      * Check if the auxpow flag is set in the version.
      * @return True iff this block version is marked as auxpow.
      */
-    inline bool IsAuxpow() const
-    {
-        if ( ((GetChainId() & AUXPOW_CHAIN_ID) != AUXPOW_CHAIN_ID)
-            || ((nVersion & 0xff) < 4) ) 
-            return false;
-        return nVersion & VERSION_AUXPOW;
-    }
-
+    bool IsAuxpow() const;
+    
+    **
+     * Check if the block version is lower then the current version.
+     * @return True if this block version equals some previous block versions
+     */
+    bool IsLegacy() const;
+    
     /**
      * Set the auxpow flag.  This is used for testing.
      * @param auxpow Whether to mark auxpow as true.
@@ -147,17 +145,6 @@ public:
             nVersion &= ~VERSION_AUXPOW;
     }
 
-    /**
-     * Check whether this is a "legacy" block without chain ID.
-     * @return True iff it is.
-     */
-    /* not required, use !IsAuxpow() instead
-    inline bool IsLegacy() const
-    {
-        // Earthcoin: We have many v1, v2 and v=0x20000000 blocks with no AuxPoW, treat as legacy
-        return ( (nVersion <= 2) || ( GetChainId() != AUXPOW_CHAIN_ID ) );           
-    }
-    */
 };
 
 #endif // EARTHCOIN_PRIMITIVES_PUREHEADER_H
