@@ -5,7 +5,7 @@
 #ifndef EARTHCOIN_AUXPOW_FORK_PARAMS_H
 #define EARTHCOIN_AUXPOW_FORK_PARAMS_H
 
-const int AUXPOW_CHAIN_ID = 0x205d;         // 0x2000 | 0x005d = v2.0.x blockID + EAC_key_Prefix!
+const int AUXPOW_CHAIN_ID = 0x5d;           // EAC_key_Prefix
 const int AUXPOW_START_HEIGHT = 3500000;    // May 2021 ?
 const int REGULAR_POW_END_HEIGHT = -1;      // Never ?
 
