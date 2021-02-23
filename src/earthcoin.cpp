@@ -24,87 +24,18 @@ bool AllowDigishieldMinDifficultyForBlock(const CBlockIndex* pindexLast, const C
 {
     // never allow minimal difficulty, EAC retarget works fine	
     return false;
-/*    
-    // check if the chain allows minimum difficulty blocks
-    if (!params.fPowAllowMinDifficultyBlocks)
-        return false;
-
-    // check if the chain allows minimum difficulty blocks on recalc blocks
-    if (pindexLast->nHeight < 157500)
-    // if (!params.fPowAllowDigishieldMinDifficultyBlocks)
-        return false;
-
-    // Allow for a minimum block time if the elapsed time > 2*nTargetSpacing
-    return (pblock->GetBlockTime() > pindexLast->GetBlockTime() + params.nPowTargetSpacing*2);*/
 }
 
 unsigned int CalculateEarthcoinNextWorkRequired(const CBlockIndex* pindexLast, int64_t nFirstBlockTime, const Consensus::Params& params)
 {
     // do not change retarget algo	
     return CalculateNextWorkRequired(pindexLast, nFirstBlockTime, params);
-   /* 
-    int nHeight = pindexLast->nHeight + 1;
-    bool fNewDifficultyProtocol = (nHeight >= 145000);
-    // bool fNewDifficultyProtocol = (nHeight >= params.GetDigiShieldForkBlock());
-    const int64_t retargetTimespan = fNewDifficultyProtocol ? 60 // params.DigiShieldTargetTimespan()
-                                                              :
-                                                              params.nPowTargetTimespan;
-
-    const int64_t nActualTimespan = pindexLast->GetBlockTime() - nFirstBlockTime;
-    int64_t nModulatedTimespan = nActualTimespan;
-    int64_t nMaxTimespan;
-    int64_t nMinTimespan;
-
-    if (fNewDifficultyProtocol) //DigiShield implementation - thanks to RealSolid & WDC for this code
-    {
-        // amplitude filter - thanks to daft27 for this code
-        nModulatedTimespan = retargetTimespan + (nModulatedTimespan - retargetTimespan) / 8;
-
-        nMinTimespan = retargetTimespan - (retargetTimespan / 4);
-        nMaxTimespan = retargetTimespan + (retargetTimespan / 2);
-    } else if (nHeight > 10000) {
-        nMinTimespan = retargetTimespan / 4;
-        nMaxTimespan = retargetTimespan * 4;
-    } else if (nHeight > 5000) {
-        nMinTimespan = retargetTimespan / 8;
-        nMaxTimespan = retargetTimespan * 4;
-    } else {
-        nMinTimespan = retargetTimespan / 16;
-        nMaxTimespan = retargetTimespan * 4;
-    }
-
-    // Limit adjustment step
-    if (nModulatedTimespan < nMinTimespan)
-        nModulatedTimespan = nMinTimespan;
-    else if (nModulatedTimespan > nMaxTimespan)
-        nModulatedTimespan = nMaxTimespan;
-
-    // Retarget
-    const arith_uint256 bnPowLimit = UintToArith256(params.powLimit);
-    arith_uint256 bnNew;
-    arith_uint256 bnOld;
-    bnNew.SetCompact(pindexLast->nBits);
-    bnOld = bnNew;
-    bnNew *= nModulatedTimespan;
-    bnNew /= retargetTimespan;
-
-    if (bnNew > bnPowLimit)
-        bnNew = bnPowLimit;
-
-    /// debug print
-    LogPrintf("GetNextWorkRequired RETARGET\n");
-    LogPrintf("params.nPowTargetTimespan = %d    nActualTimespan = %d\n", params.nPowTargetTimespan, nActualTimespan);
-    LogPrintf("Before: %08x  %s\n", pindexLast->nBits, bnOld.ToString());
-    LogPrintf("After:  %08x  %s\n", bnNew.GetCompact(), bnNew.ToString());
-
-    return bnNew.GetCompact();
-    */
 }
 
 bool CheckAuxPowProofOfWork(const CBlockHeader& block, const Consensus::Params& params)
 {
-    // check legacy blocks
-    if (!block.IsAuxpow()) {
+    // check legacy blocks and non-AUXPOW
+    if ( block.IsLegacy() || !block.IsAuxpow() ) {
         if (block.auxpow)
             return error("%s : legacy block with auxpow properties",
                          __func__);
