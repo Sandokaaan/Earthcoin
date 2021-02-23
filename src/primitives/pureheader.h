@@ -129,7 +129,8 @@ public:
      */
     inline bool IsAuxpow() const
     {
-        if (GetChainId() != AUXPOW_CHAIN_ID)
+        if ( ((GetChainId() & AUXPOW_CHAIN_ID) != AUXPOW_CHAIN_ID)
+            || ((nVersion & 0xff) < 4) ) 
             return false;
         return nVersion & VERSION_AUXPOW;
     }
