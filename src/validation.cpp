@@ -3263,8 +3263,9 @@ static bool ContextualCheckBlockHeader(const CBlockHeader& block, CValidationSta
     const int nHeight = pindexPrev->nHeight + 1;
 
     // SANDO: Disallow legacy blocks after legacy mining period ended.
+    // This means only block mined by upgraded nodes will be accepted	
     if ( (!Params().GetConsensus().AllowLegacyBlocks(nHeight))
-        && (!block.IsAuxpow()) )
+        && (block.IsLegacy()) )
         return state.DoS(100, error("%s : legacy block after auxpow start",
                                     __func__),
                          REJECT_INVALID, "late-legacy-block");
