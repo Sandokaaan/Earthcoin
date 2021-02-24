@@ -11,6 +11,7 @@
 #include <cstring>
 #include <errno.h>
 #include <limits>
+#include <base58.h>
 
 static const std::string CHARS_ALPHA_NUM = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789";
 
@@ -545,13 +546,28 @@ bool ParseFixedPoint(const std::string &val, int decimals, int64_t *amount_out)
     return true;
 }
 
+// Check, if txComment contain a valid base58-encoded string
+// Return pos of the separator or 0
+size_t FindIpfsIdseparator(const std::string& s) 
+{
+    int n = s.length();
+    if (n < 1)
+        return 0;    
+    size_t pos = s.find(':');
+    if (pos == std::string::npos)
+        return 0;
+    std::vector<unsigned char> data;	
+    return DecodeBase58Check(s.substr(0, pos), data) ? pos : 0;
+}
+
 // Check the unicode string and limit its size to TX_COMMENT_LIMIT bytes
 std::string ValidateUnicodeString(const std::string& s)
 {
     int n = s.length();
-    if (n > TX_COMMENT_LIMIT) 
+    int limit = FindIpfsIdseparator(s) ? TX_COMPOSED_COMMENT_LIMIT : TX_COMMENT_LIMIT;	
+    if (n > limit) 
     {
-        n = TX_COMMENT_LIMIT;
+        n = limit;
         while (n)
 	{
             unsigned char c = s[n-1];
