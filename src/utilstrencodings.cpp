@@ -556,8 +556,9 @@ size_t FindIpfsIdseparator(const std::string& s)
     size_t pos = s.find(':');
     if (pos == std::string::npos)
         return 0;
-    std::vector<unsigned char> data;	
-    return (DecodeBase58Check(s.substr(0, pos).c_str(), data)) ? pos : 0;
+    std::vector<unsigned char> data;
+    std::string part1 = s.substr(0, pos);	
+    return (DecodeBase58Check(part1, data)) ? pos : 0;
 }
 
 // Check the unicode string and limit its size to TX_COMMENT_LIMIT bytes
