@@ -24,6 +24,9 @@ const int TX_COMMENT_LIMIT = 252;
 const int TX_COMPOSED_COMMENT_LIMIT = 400;
 // Check txComment in UTF-8 and limit it to 252 bytes
 std::string ValidateUnicodeString(const std::string& input);
+// Check, if txComment contain a valid base58-encoded string
+// Return pos of the separator or 0
+size_t FindIpfsIdseparator(const std::string& s);
 
 /** Used by SanitizeString() */
 enum SafeChars
