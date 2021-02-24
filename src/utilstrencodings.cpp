@@ -12,6 +12,7 @@
 #include <errno.h>
 #include <limits>
 #include <base58.h>
+#include <vector>
 
 static const std::string CHARS_ALPHA_NUM = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789";
 
@@ -557,8 +558,7 @@ size_t FindIpfsIdseparator(const std::string& s)
     if (pos == std::string::npos)
         return 0;
     std::vector<unsigned char> data;
-    std::string part1 = s.substr(0, pos);	
-    return (DecodeBase58Check(part1, data)) ? pos : 0;
+    return (DecodeBase58Check(s.substr(0, pos), data)) ? pos : 0;
 }
 
 // Check the unicode string and limit its size to TX_COMMENT_LIMIT bytes
