@@ -236,8 +236,15 @@ void TxToUniv(const CTransaction& tx, const uint256& hashBlock, UniValue& entry,
         entry.pushKV("hex", EncodeHexTx(tx, serialize_flags)); // The hex-encoded transaction. Used the name "hex" to be consistent with the verbose output of "getrawtransaction".
     }
     
-    // SANDO txComment show
-    if ( (tx.nVersion == 2) && (tx.strTxComment.size()>0) ){
-        entry.pushKV("txComment", tx.strTxComment);
+    // SANDO txComment show + composed comments support
+    if ( (tx.nVersion == 2) && (tx.strTxComment.size()>0) ) {
+        size_t pos = FindIpfsIdseparator(tx.strTxComment);
+        if (pos) {
+            entry.pushKV("IPFS_CID", tx.strTxComment.substr(0, pos));
+            entry.pushKV("txComment", tx.strTxComment.substr(pos+1));
+        }
+        else
+            entry.pushKV("txComment", tx.strTxComment);
     }
+    
 }
