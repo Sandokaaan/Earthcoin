@@ -484,9 +484,9 @@ case $host in
          dnl add default macports paths
          CPPFLAGS="$CPPFLAGS -isystem /opt/local/include"
          LIBS="$LIBS -L/opt/local/lib"
-         if test -d /opt/local/include/db48; then
-           CPPFLAGS="$CPPFLAGS -I/opt/local/include/db48"
-           LIBS="$LIBS -L/opt/local/lib/db48"
+         if test -d /opt/local/include/db51; then
+           CPPFLAGS="$CPPFLAGS -I/opt/local/include/db51"
+           LIBS="$LIBS -L/opt/local/lib/db51"
          fi
        fi
 
