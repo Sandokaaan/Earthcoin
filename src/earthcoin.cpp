@@ -10,6 +10,11 @@
 #include <pow.h>
 #include <util.h>
 
+// As Earthcoin calculate block reward using trigonometric functions to follow the Earth rotation ...
+#ifndef M_PI
+    #define M_PI 3.14159265358979323846
+#endif
+
 int static generateMTRandom(unsigned int s, int range)
 {
     boost::mt19937 gen(s);
