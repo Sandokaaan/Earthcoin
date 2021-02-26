@@ -7,7 +7,7 @@
     <x>0</x>
     <y>0</y>
     <width>729</width>
-    <height>150</height>
+    <height>172</height>
    </rect>
   </property>
   <property name="focusPolicy">
@@ -36,47 +36,6 @@
     <property name="verticalSpacing">
      <number>8</number>
     </property>
-    <item row="2" column="2">
-     <layout class="QHBoxLayout" name="horizontalLayoutAmount" stretch="0,1,0">
-      <item>
-       <widget class="EarthcoinAmountField" name="payAmount"/>
-      </item>
-      <item>
-       <widget class="QCheckBox" name="checkboxSubtractFeeFromAmount">
-        <property name="toolTip">
-         <string>The fee will be deducted from the amount being sent. The recipient will receive less earthcoins than you enter in the amount field. If multiple recipients are selected, the fee is split equally.</string>
-        </property>
-        <property name="text">
-         <string>S&amp;ubtract fee from amount</string>
-        </property>
-       </widget>
-      </item>
-      <item>
-       <widget class="QPushButton" name="useAvailableBalanceButton">
-        <property name="text">
-         <string>Use available balance</string>
-        </property>
-       </widget>
-      </item>
-     </layout>
-    </item>
-    <item row="3" column="0">
-     <widget class="QLabel" name="messageLabel">
-      <property name="text">
-       <string>Message:</string>
-      </property>
-      <property name="alignment">
-       <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
-      </property>
-     </widget>
-    </item>
-    <item row="4" column="0" colspan="3">
-     <widget class="Line" name="line">
-      <property name="orientation">
-       <enum>Qt::Horizontal</enum>
-      </property>
-     </widget>
-    </item>
     <item row="0" column="0">
      <widget class="QLabel" name="payToLabel">
       <property name="text">
@@ -90,25 +49,18 @@
       </property>
      </widget>
     </item>
-    <item row="1" column="0">
-     <widget class="QLabel" name="labellLabel">
+    <item row="6" column="0">
+     <widget class="QLabel" name="messageLabel">
       <property name="text">
-       <string>&amp;Label:</string>
+       <string>Message:</string>
       </property>
       <property name="alignment">
        <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
       </property>
-      <property name="buddy">
-       <cstring>addAsLabel</cstring>
-      </property>
      </widget>
     </item>
-    <item row="1" column="2">
-     <widget class="QLineEdit" name="addAsLabel">
-      <property name="toolTip">
-       <string>Enter a label for this address to add it to the list of used addresses</string>
-      </property>
-     </widget>
+    <item row="6" column="2">
+     <widget class="QLineEdit" name="messageTextLabel"/>
     </item>
     <item row="0" column="2">
      <layout class="QHBoxLayout" name="payToLayout">
@@ -190,7 +142,7 @@
       </item>
      </layout>
     </item>
-    <item row="2" column="0">
+    <item row="3" column="0">
      <widget class="QLabel" name="amountLabel">
       <property name="text">
        <string>A&amp;mount:</string>
@@ -204,7 +156,86 @@
      </widget>
     </item>
     <item row="3" column="2">
-     <widget class="QLineEdit" name="messageTextLabel"/>
+     <layout class="QHBoxLayout" name="horizontalLayoutAmount" stretch="0,1,0">
+      <item>
+       <widget class="EarthcoinAmountField" name="payAmount"/>
+      </item>
+      <item>
+       <widget class="QCheckBox" name="checkboxSubtractFeeFromAmount">
+        <property name="toolTip">
+         <string>The fee will be deducted from the amount being sent. The recipient will receive less earthcoins than you enter in the amount field. If multiple recipients are selected, the fee is split equally.</string>
+        </property>
+        <property name="text">
+         <string>S&amp;ubtract fee from amount</string>
+        </property>
+       </widget>
+      </item>
+      <item>
+       <widget class="QPushButton" name="useAvailableBalanceButton">
+        <property name="text">
+         <string>Use available balance</string>
+        </property>
+       </widget>
+      </item>
+     </layout>
+    </item>
+    <item row="7" column="0">
+     <widget class="QLabel" name="cidLabel">
+      <property name="text">
+       <string>IPFS CID:</string>
+      </property>
+      <property name="alignment">
+       <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
+      </property>
+     </widget>
+    </item>
+    <item row="9" column="0" colspan="3">
+     <widget class="Line" name="line">
+      <property name="orientation">
+       <enum>Qt::Horizontal</enum>
+      </property>
+     </widget>
+    </item>
+    <item row="1" column="0">
+     <widget class="QLabel" name="labellLabel">
+      <property name="text">
+       <string>&amp;Label:</string>
+      </property>
+      <property name="alignment">
+       <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
+      </property>
+      <property name="buddy">
+       <cstring>addAsLabel</cstring>
+      </property>
+     </widget>
+    </item>
+    <item row="1" column="2">
+     <widget class="QLineEdit" name="addAsLabel">
+      <property name="toolTip">
+       <string>Enter a label for this address to add it to the list of used addresses</string>
+      </property>
+     </widget>
+    </item>
+    <item row="7" column="2">
+     <layout class="QHBoxLayout" name="horizontalLayoutMessageCID">
+      <item>
+       <widget class="QLineEdit" name="cidTextLabel">
+        <property name="enabled">
+         <bool>true</bool>
+        </property>
+       </widget>
+      </item>
+      <item>
+       <widget class="QCheckBox" name="checkBoxCID">
+        <property name="text">
+         <string/>
+        </property>
+        <property name="checked">
+         <bool>true</bool>
+        </property>
+       </widget>
+      </item>
+     </layout>
     </item>
    </layout>
   </widget>
@@ -1262,7 +1293,6 @@
   <tabstop>addressBookButton</tabstop>
   <tabstop>pasteButton</tabstop>
   <tabstop>deleteButton</tabstop>
-  <tabstop>addAsLabel</tabstop>
   <tabstop>payAmount</tabstop>
   <tabstop>payAmount_is</tabstop>
   <tabstop>deleteButton_is</tabstop>

@@ -46,6 +46,7 @@ SendCoinsEntry::SendCoinsEntry(const PlatformStyle *_platformStyle, QWidget *par
     connect(ui->deleteButton_is, SIGNAL(clicked()), this, SLOT(deleteClicked()));
     connect(ui->deleteButton_s, SIGNAL(clicked()), this, SLOT(deleteClicked()));
     connect(ui->useAvailableBalanceButton, SIGNAL(clicked()), this, SLOT(useAvailableBalanceClicked()));
+    connect(ui->checkBoxCID, SIGNAL(stateChanged(int)), this, SLOT(useCID(int)));
 }
 
 SendCoinsEntry::~SendCoinsEntry()
@@ -94,10 +95,15 @@ void SendCoinsEntry::clear(bool showMessage)
     ui->addAsLabel->clear();
     ui->payAmount->clear();
     ui->checkboxSubtractFeeFromAmount->setCheckState(Qt::Unchecked);
+    ui->checkBoxCID->setCheckState(Qt::Unchecked);
+    ui->cidTextLabel->setEnabled(false);
     ui->messageTextLabel->clear();
     if (!showMessage) {
         ui->messageTextLabel->hide();
         ui->messageLabel->hide();
+        ui->cidLabel->hide();
+        ui->cidTextLabel->hide();
+        ui->checkBoxCID->hide();
     }
     // clear UI elements for unauthenticated payment request
     ui->payTo_is->clear();
@@ -115,6 +121,11 @@ void SendCoinsEntry::clear(bool showMessage)
 void SendCoinsEntry::checkSubtractFeeFromAmount()
 {
     ui->checkboxSubtractFeeFromAmount->setChecked(true);
+}
+
+void SendCoinsEntry::useCID(int a)
+{
+    ui->cidTextLabel->setEnabled(ui->checkBoxCID->isChecked());
 }
 
 void SendCoinsEntry::deleteClicked()
@@ -176,7 +187,12 @@ SendCoinsRecipient SendCoinsEntry::getValue()
     recipient.address = ui->payTo->text();
     recipient.label = ui->addAsLabel->text();
     recipient.amount = ui->payAmount->value();
-    recipient.message = ui->messageTextLabel->text();
+    // SANDO - composed txComment set
+    QString cid = ui->cidTextLabel->text();
+    QString spr("\n");
+    QString msg = ui->messageTextLabel->text();
+    bool cmp = ui->checkBoxCID->isChecked();
+    recipient.message = cmp ? (cid + spr + msg) : msg;
     recipient.fSubtractFeeFromAmount = (ui->checkboxSubtractFeeFromAmount->checkState() == Qt::Checked);
 
     return recipient;

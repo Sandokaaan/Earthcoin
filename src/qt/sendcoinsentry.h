@@ -50,6 +50,7 @@ public:
 public Q_SLOTS:
     void clear(bool showMessage = true);
     void checkSubtractFeeFromAmount();
+    void useCID(int);
 
 Q_SIGNALS:
     void removeEntry(SendCoinsEntry *entry);

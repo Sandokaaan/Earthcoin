@@ -565,7 +565,7 @@ size_t FindIpfsIdseparator(const std::string& s)
     int n = s.length();
     if (n < 1)
         return 0;    
-    size_t pos = s.find(':');
+    size_t pos = s.find(0x0a);
     if (pos == std::string::npos)
         return 0;    
     return (IsBase58(s.substr(0, pos))) ? pos : 0;
