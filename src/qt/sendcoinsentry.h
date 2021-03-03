@@ -46,6 +46,7 @@ public:
     QWidget *setupTabChain(QWidget *prev);
 
     void setFocus();
+    void showMessageEdit();
 
 public Q_SLOTS:
     void clear(bool showMessage = true);

@@ -88,6 +88,16 @@ void SendCoinsEntry::setModel(WalletModel *_model)
     clear();
 }
 
+void SendCoinsEntry::showMessageEdit() 
+{
+    ui->messageTextLabel->show();
+    ui->messageLabel->show();
+    ui->cidLabel->show();
+    ui->cidTextLabel->show();
+    ui->checkBoxCID->show();
+    useCID(false);
+}
+
 void SendCoinsEntry::clear(bool showMessage)
 {
     // clear UI elements for normal payment

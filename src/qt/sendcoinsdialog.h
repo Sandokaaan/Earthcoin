@@ -49,7 +49,7 @@ public Q_SLOTS:
     void clear();
     void reject();
     void accept();
-    SendCoinsEntry *addEntry();
+    SendCoinsEntry *addEntry(bool showMessage = false);
     void updateTabsAndLabels();
     void setBalance(const interfaces::WalletBalances& balances);
 

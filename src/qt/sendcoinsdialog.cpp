@@ -416,7 +416,7 @@ void SendCoinsDialog::accept()
     clear();
 }
 
-SendCoinsEntry *SendCoinsDialog::addEntry()
+SendCoinsEntry *SendCoinsDialog::addEntry(bool showMessage)
 {
     SendCoinsEntry *entry = new SendCoinsEntry(platformStyle, this);
     entry->setModel(model);
@@ -427,7 +427,7 @@ SendCoinsEntry *SendCoinsDialog::addEntry()
     connect(entry, SIGNAL(subtractFeeFromAmountChanged()), this, SLOT(coinControlUpdateLabels()));
 
     // Focus the field, so that entry can start immediately
-    entry->clear(ui->entries->count() < 2);
+    entry->clear(showMessage || ui->entries->count() < 2);
     entry->setFocus();
     ui->scrollAreaWidgetContents->resize(ui->scrollAreaWidgetContents->sizeHint());
     qApp->processEvents();
@@ -451,7 +451,11 @@ void SendCoinsDialog::removeEntry(SendCoinsEntry* entry)
 
     // If the last entry is about to be removed add an empty one
     if (ui->entries->count() == 1)
-        addEntry();
+        addEntry(true);
+    else if (entry == qobject_cast<SendCoinsEntry*>(ui->entries->itemAt(0)->widget())) {
+        SendCoinsEntry * nextEntry = qobject_cast<SendCoinsEntry*>(ui->entries->itemAt(1)->widget());
+	nextEntry->showMessageEdit();
+    }
 
     entry->deleteLater();
 
