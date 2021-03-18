@@ -34,7 +34,7 @@ Install (optional)
 ------------------------------------------
 ```
 cd ~/Earthcoin/src
-make install
+sudo make install
 ```
 
 Run daemon
