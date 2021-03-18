@@ -28,5 +28,24 @@ strip earthcoind
 strip earthcoin-cli
 strip earthcoin-tx
 
+```
+
+Install (optional)
+------------------------------------------
+```
+cd ~/Earthcoin/src
+make install
+```
+
+Run daemon
+------------------------------------------
+```
 export LD_LIBRARY_PATH="$LD_LIBRARY_PATH:/usr/local/lib"
+earthcoind --daemon
+```
+
+Command-line client
+------------------------------------------
+```
+earthcoin-cli
 ```
