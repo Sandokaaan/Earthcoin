@@ -230,14 +230,15 @@ public:
 		{3250000, uint256S("0xabd8e4ee61f54bada412a4e02bc728bbe36cbd0c5516fbc015589e86207beced")},
 		{3300000, uint256S("0xd63e6e1680d276f71926ec6db989b4388fbac18932ebbf73d5d75660f02733aa")},
                 {3345000, uint256S("0x177b2488f6672af4142746a56fd1284bbece74cb59057ddfe90d8a6c19e292cf")},
+                {3400000, uint256S("0x571b854de74f4e23a014c3ef067f71c00036f00b06b9b2acee606f20b6f25330")},
             }
         };
 
         chainTxData = ChainTxData{
             // Data from rpc: getchaintxstats 4096 a601455787cb65ffc325dda4751a99cf01d1567799ec4b04f45bb05f9ef0cbde
-            /* nTime    */ 1612092307,
-            /* nTxCount */ 4788728,
-            /* dTxRate  */ 0.01701932830489543
+            /* nTime    */ 1615385933,
+            /* nTxCount */ 4855924,
+            /* dTxRate  */ 0.02362494363712593
         };
 
         /* disable fallback fee on mainnet */
