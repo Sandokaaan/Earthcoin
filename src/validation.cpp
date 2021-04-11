@@ -2056,8 +2056,12 @@ bool CChainState::ConnectBlock(const CBlock& block, CValidationState& state, CBl
             std::vector<CScriptCheck> vChecks;
             bool fCacheResults = fJustCheck; /* Don't cache results if we're actually connecting blocks (still consult the cache, though) */
             if (!CheckInputs(tx, state, view, fScriptChecks, flags, fCacheResults, fCacheResults, txdata[i], nScriptCheckThreads ? &vChecks : nullptr))
-                return error("ConnectBlock(): CheckInputs on %s failed with %s",
-                    tx.GetHash().ToString(), FormatStateMessage(state));
+	    {
+                // SANDO - exception for a legacy tx in block 2242244 to solve sync problem
+                if (tx.GetHash().ToString() != "d9c55dfdb4a4cf232aab54efd62e36aba9dfe796e62c6df5f3d0be9e9baf1a3a")
+                    return error("ConnectBlock(): CheckInputs on %s failed with %s",
+                        tx.GetHash().ToString(), FormatStateMessage(state));
+	    }	    
             control.Add(vChecks);
         }
 
