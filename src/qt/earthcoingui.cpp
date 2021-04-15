@@ -17,6 +17,7 @@
 #include <qt/platformstyle.h>
 #include <qt/rpcconsole.h>
 #include <qt/utilitydialog.h>
+#include <qt/multisigdialog.h>
 
 #ifdef ENABLE_WALLET
 #include <qt/walletframe.h>
@@ -326,10 +327,14 @@ void EarthcoinGUI::createActions()
     showHelpMessageAction->setMenuRole(QAction::NoRole);
     showHelpMessageAction->setStatusTip(tr("Show the %1 help message to get a list with possible Earthcoin command-line options").arg(tr(PACKAGE_NAME)));
 
+    multisigAction = new QAction(platformStyle->TextColorIcon(":/icons/multikey"), "Create", this);
+    multisigAction->setStatusTip(tr("Create multisig address"));
+
     connect(quitAction, SIGNAL(triggered()), qApp, SLOT(quit()));
     connect(aboutAction, SIGNAL(triggered()), this, SLOT(aboutClicked()));
     connect(aboutQtAction, SIGNAL(triggered()), qApp, SLOT(aboutQt()));
     connect(optionsAction, SIGNAL(triggered()), this, SLOT(optionsClicked()));
+    connect(multisigAction, SIGNAL(triggered()), this, SLOT(showMultisigDialog()));
     connect(toggleHideAction, SIGNAL(triggered()), this, SLOT(toggleHidden()));
     connect(showHelpMessageAction, SIGNAL(triggered()), this, SLOT(showHelpMessageClicked()));
     connect(openRPCConsoleAction, SIGNAL(triggered()), this, SLOT(showDebugWindow()));
@@ -387,6 +392,10 @@ void EarthcoinGUI::createMenuBar()
         settings->addSeparator();
     }
     settings->addAction(optionsAction);
+
+    // SANDO: multi-sig
+    QMenu *multisig = appMenuBar->addMenu("&Multisig");
+    multisig->addAction(multisigAction);
 
     QMenu *help = appMenuBar->addMenu(tr("&Help"));
     if(walletFrame)
@@ -641,6 +650,18 @@ void EarthcoinGUI::optionsClicked()
     OptionsDialog dlg(this, enableWallet);
     dlg.setModel(clientModel->getOptionsModel());
     dlg.exec();
+}
+
+// SANDO: multisig dialog
+void EarthcoinGUI::showMultisigDialog()
+{
+    if(!clientModel)
+        return;
+    MultisigDialog dlg(this);
+    dlg.exec();
+//    QMessageBox Msgbox;
+//    Msgbox.setText("Here multisig dialog will be");
+//    Msgbox.exec();
 }
 
 void EarthcoinGUI::aboutClicked()
