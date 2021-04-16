@@ -327,7 +327,7 @@ void EarthcoinGUI::createActions()
     showHelpMessageAction->setMenuRole(QAction::NoRole);
     showHelpMessageAction->setStatusTip(tr("Show the %1 help message to get a list with possible Earthcoin command-line options").arg(tr(PACKAGE_NAME)));
 
-    multisigAction = new QAction(platformStyle->TextColorIcon(":/icons/multikey"), "Create", this);
+    multisigAction = new QAction(platformStyle->TextColorIcon(":/icons/multikey"), "Create - experimental feature (use on your own risk)", this);
     multisigAction->setStatusTip(tr("Create multisig address"));
 
     connect(quitAction, SIGNAL(triggered()), qApp, SLOT(quit()));

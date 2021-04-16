@@ -38,6 +38,11 @@ void MultisigDialog::setKeysRequired()
     ui->setButton->setEnabled(false);
     nKeys = ui->spinBoxKeys->value();
     nRequired = ui->spinBoxRequired->value();
+    if (nRequired > nKeys)
+    {
+        nRequired = nKeys;
+        ui->spinBoxRequired->setValue(nRequired);
+    }
     ui->spinBoxKeys->setEnabled(false);
     ui->spinBoxRequired->setEnabled(false);
     for (int i=0; i<nKeys; i++)

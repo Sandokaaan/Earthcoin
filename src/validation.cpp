@@ -2056,12 +2056,8 @@ bool CChainState::ConnectBlock(const CBlock& block, CValidationState& state, CBl
             std::vector<CScriptCheck> vChecks;
             bool fCacheResults = fJustCheck; /* Don't cache results if we're actually connecting blocks (still consult the cache, though) */
             if (!CheckInputs(tx, state, view, fScriptChecks, flags, fCacheResults, fCacheResults, txdata[i], nScriptCheckThreads ? &vChecks : nullptr))
-	    {
-                // SANDO - exception for legacy transactions in some block version=2 to solve sync problem
-                if (!(block.IsLegacy()))
-                    return error("ConnectBlock(): CheckInputs on %s failed with %s",
-                        tx.GetHash().ToString(), FormatStateMessage(state));
-	    }	    
+                return error("ConnectBlock(): CheckInputs on %s failed with %s",
+                    tx.GetHash().ToString(), FormatStateMessage(state));
             control.Add(vChecks);
         }
 
@@ -2279,6 +2275,9 @@ void static UpdateTip(const CBlockIndex *pindexNew, const CChainParams& chainPar
         for (int bit = 0; bit < VERSIONBITS_NUM_BITS; bit++) {
             WarningBitsConditionChecker checker(bit);
             ThresholdState state = checker.GetStateFor(pindex, chainParams.GetConsensus(), warningcache[bit]);
+            // SANDO: disable warning for bit 22 - AUX-POW fork
+            if (bit ==22)
+                continue;
             if (state == ThresholdState::ACTIVE || state == ThresholdState::LOCKED_IN) {
                 const std::string strWarning = strprintf(_("Warning: unknown new rules activated (versionbit %i)"), bit);
                 if (state == ThresholdState::ACTIVE) {

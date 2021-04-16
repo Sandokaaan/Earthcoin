@@ -94,7 +94,7 @@ void ReceiveCoinsDialog::setModel(WalletModel *_model)
         // Last 2 columns are set by the columnResizingFixer, when the table geometry is ready.
         columnResizingFixer = new GUIUtil::TableViewLastColumnResizingFixer(tableView, AMOUNT_MINIMUM_COLUMN_WIDTH, DATE_COLUMN_WIDTH, this);
 
-        ui->useBech32->setEnabled(false);       // do not use until all nodes upgraded
+        ui->useBech32->setEnabled(true);       //SANDO: enabled 04/2021
         if (model->wallet().getDefaultAddressType() == OutputType::BECH32) {
             ui->useBech32->setCheckState(Qt::Checked);
         } else {

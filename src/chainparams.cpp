@@ -82,7 +82,7 @@ public:
         consensus.BIP16Exception = uint256();
         //consensus.BIP16Height = 0; // October 1, 2012 it was before EAC genesis // int64 nBIP16SwitchTime = 1349049600
         consensus.BIP34Height = 710000;      // EAC dev note: after this height only block version 2 are allowed;
-        consensus.BIP34Hash = uint256S("0xfa09d204a83a768ed5a7c8d441fa62f2043abf420cff1226c7b4329aeb9d51cf");
+        consensus.BIP34Hash = uint256S("0x1af636deb9ddd0da36c9a77752b8a9dcef374b9bc50d84488cffd932a94c7916");
         consensus.BIP65Height = 999999999; // EAC dev note: disabled for now     // OP_CHECKLOCKTIMEVERIFY
         consensus.BIP66Height = 999999999; // EAC dev note: disabled for now
         consensus.powLimit = uint256S("0x00000fffffffffffffffffffffffffffffffffffffffffffffffffffffffffff"); // ~uint256(0) >> 20;
@@ -231,14 +231,16 @@ public:
 		{3300000, uint256S("0xd63e6e1680d276f71926ec6db989b4388fbac18932ebbf73d5d75660f02733aa")},
                 {3345000, uint256S("0x177b2488f6672af4142746a56fd1284bbece74cb59057ddfe90d8a6c19e292cf")},
                 {3400000, uint256S("0x571b854de74f4e23a014c3ef067f71c00036f00b06b9b2acee606f20b6f25330")},
+                {3450000, uint256S("0xdd30ba919d885f408852fd92cd32a9ec6d05b2e2c6461dbcedb804d12c1ebf44")},
+                {3451000, uint256S("0x96311d2f6471d09d41356e19373956bea50986b424b299f8d584c48ef4ce78bc")},
             }
         };
 
         chainTxData = ChainTxData{
             // Data from rpc: getchaintxstats 4096 a601455787cb65ffc325dda4751a99cf01d1567799ec4b04f45bb05f9ef0cbde
-            /* nTime    */ 1615385933,
-            /* nTxCount */ 4855924,
-            /* dTxRate  */ 0.02362494363712593
+            /* nTime    */ 1618551602,
+            /* nTxCount */ 4917986,
+            /* dTxRate  */ 0.01680085506093089
         };
 
         /* disable fallback fee on mainnet */
