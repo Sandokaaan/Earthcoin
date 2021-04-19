@@ -20,7 +20,7 @@ class MultisigDialog : public QDialog
 public:
     explicit MultisigDialog(QWidget *parent = 0);
     ~MultisigDialog();
-    void addEntry();
+    void addEntry(int i);
 
 public Q_SLOTS:
     void setKeysRequired();

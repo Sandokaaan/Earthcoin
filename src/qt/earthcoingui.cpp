@@ -18,6 +18,7 @@
 #include <qt/rpcconsole.h>
 #include <qt/utilitydialog.h>
 #include <qt/multisigdialog.h>
+#include <qt/multisigsign.h>
 
 #ifdef ENABLE_WALLET
 #include <qt/walletframe.h>
@@ -327,14 +328,17 @@ void EarthcoinGUI::createActions()
     showHelpMessageAction->setMenuRole(QAction::NoRole);
     showHelpMessageAction->setStatusTip(tr("Show the %1 help message to get a list with possible Earthcoin command-line options").arg(tr(PACKAGE_NAME)));
 
-    multisigAction = new QAction(platformStyle->TextColorIcon(":/icons/multikey"), "Create - experimental feature (use on your own risk)", this);
-    multisigAction->setStatusTip(tr("Create multisig address"));
+    multisigCreateAction = new QAction(platformStyle->TextColorIcon(":/icons/multikey"), "Create multisig address", this);
+    multisigCreateAction->setStatusTip(tr("Create multisig address"));
+    multisigSignAction = new QAction(platformStyle->TextColorIcon(":/icons/edit"), "Sign multisig transaction", this);
+    multisigSignAction->setStatusTip(tr("Sign multisig transaction"));
 
     connect(quitAction, SIGNAL(triggered()), qApp, SLOT(quit()));
     connect(aboutAction, SIGNAL(triggered()), this, SLOT(aboutClicked()));
     connect(aboutQtAction, SIGNAL(triggered()), qApp, SLOT(aboutQt()));
     connect(optionsAction, SIGNAL(triggered()), this, SLOT(optionsClicked()));
-    connect(multisigAction, SIGNAL(triggered()), this, SLOT(showMultisigDialog()));
+    connect(multisigCreateAction, SIGNAL(triggered()), this, SLOT(showMultisigCreateDialog()));
+    connect(multisigSignAction, SIGNAL(triggered()), this, SLOT(showMultisigSignDialog()));
     connect(toggleHideAction, SIGNAL(triggered()), this, SLOT(toggleHidden()));
     connect(showHelpMessageAction, SIGNAL(triggered()), this, SLOT(showHelpMessageClicked()));
     connect(openRPCConsoleAction, SIGNAL(triggered()), this, SLOT(showDebugWindow()));
@@ -395,7 +399,8 @@ void EarthcoinGUI::createMenuBar()
 
     // SANDO: multi-sig
     QMenu *multisig = appMenuBar->addMenu("&Multisig");
-    multisig->addAction(multisigAction);
+    multisig->addAction(multisigCreateAction);
+    multisig->addAction(multisigSignAction);
 
     QMenu *help = appMenuBar->addMenu(tr("&Help"));
     if(walletFrame)
@@ -652,16 +657,22 @@ void EarthcoinGUI::optionsClicked()
     dlg.exec();
 }
 
+//SANDO:
+void EarthcoinGUI::showMultisigSignDialog()
+{
+    if(!clientModel)
+        return;
+    MultisigSign dlg(this);
+    dlg.exec();
+}
+
 // SANDO: multisig dialog
-void EarthcoinGUI::showMultisigDialog()
+void EarthcoinGUI::showMultisigCreateDialog()
 {
     if(!clientModel)
         return;
     MultisigDialog dlg(this);
     dlg.exec();
-//    QMessageBox Msgbox;
-//    Msgbox.setText("Here multisig dialog will be");
-//    Msgbox.exec();
 }
 
 void EarthcoinGUI::aboutClicked()

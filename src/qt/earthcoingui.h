@@ -115,7 +115,8 @@ private:
     QAction* receiveCoinsAction = nullptr;
     QAction* receiveCoinsMenuAction = nullptr;
     QAction* optionsAction = nullptr;
-    QAction* multisigAction = nullptr;
+    QAction* multisigCreateAction = nullptr;
+    QAction* multisigSignAction = nullptr;
     QAction* toggleHideAction = nullptr;
     QAction* encryptWalletAction = nullptr;
     QAction* backupWalletAction = nullptr;
@@ -249,7 +250,8 @@ private Q_SLOTS:
     /** Show help message dialog */
     void showHelpMessageClicked();
     /** Multisig dialog */
-    void showMultisigDialog();
+    void showMultisigCreateDialog();
+    void showMultisigSignDialog();
 #ifndef Q_OS_MAC
     /** Handle tray icon clicked */
     void trayIconActivated(QSystemTrayIcon::ActivationReason reason);

@@ -101,6 +101,7 @@ QT_FORMS_UI = \
   qt/forms/editaddressdialog.ui \
   qt/forms/multisigdialog.ui \
   qt/forms/multisigentry.ui \
+  qt/forms/multisigsign.ui \
   qt/forms/helpmessagedialog.ui \
   qt/forms/intro.ui \
   qt/forms/modaloverlay.ui \
@@ -131,6 +132,7 @@ QT_MOC_CPP = \
   qt/moc_csvmodelwriter.cpp \
   qt/moc_editaddressdialog.cpp \
   qt/moc_multisigdialog.cpp \
+  qt/moc_multisigsign.cpp \
   qt/moc_multisigentry.cpp \
   qt/moc_guiutil.cpp \
   qt/moc_intro.cpp \
@@ -202,6 +204,7 @@ EARTHCOIN_QT_H = \
   qt/csvmodelwriter.h \
   qt/editaddressdialog.h \
   qt/multisigdialog.h \
+  qt/multisigsign.h \
   qt/multisigentry.h \
   qt/guiconstants.h \
   qt/guiutil.h \
@@ -335,6 +338,7 @@ EARTHCOIN_QT_WALLET_CPP = \
   qt/coincontroltreewidget.cpp \
   qt/editaddressdialog.cpp \
   qt/multisigdialog.cpp \
+  qt/multisigsign.cpp \
   qt/multisigentry.cpp \
   qt/openuridialog.cpp \
   qt/overviewpage.cpp \

@@ -11,6 +11,7 @@
 #include <QDataWidgetMapper>
 #include <QMessageBox>
 #include <QClipboard>
+#include <QScrollBar>
 
 #include <rpc/util.h>
 #include <script/script.h>
@@ -46,14 +47,19 @@ void MultisigDialog::setKeysRequired()
     ui->spinBoxKeys->setEnabled(false);
     ui->spinBoxRequired->setEnabled(false);
     for (int i=0; i<nKeys; i++)
-        addEntry();
+        addEntry(i);
     ui->createButton->setEnabled(true);
 }
 
-void MultisigDialog::addEntry()
+void MultisigDialog::addEntry(int i)
 {
     MultisigEntry *entry = new MultisigEntry(this);
+    QString label = "Key ";
+    label += (49+i);
+    label += "     ";
+    entry->setLabel(label);
     ui->entries->addWidget(entry);
+    entry->clear();
 }
 
 void MultisigDialog::createMultisig()

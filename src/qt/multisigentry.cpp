@@ -104,3 +104,7 @@ void MultisigEntry::on_ownKey_clicked()
     ui->key->clearFocus();
 }
 
+void MultisigEntry::setLabel(QString &label) 
+{
+    ui->labelKey->setText(label);
+}

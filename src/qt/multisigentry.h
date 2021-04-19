@@ -37,6 +37,7 @@ public:
     ~MultisigEntry();
     QString getValue() const;
     bool isValid() const;
+    void setLabel(QString &label);
 
 public Q_SLOTS:
     void clear();

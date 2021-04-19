@@ -7,61 +7,69 @@
     <x>0</x>
     <y>0</y>
     <width>727</width>
-    <height>75</height>
+    <height>50</height>
    </rect>
+  </property>
+  <property name="minimumSize">
+   <size>
+    <width>727</width>
+    <height>50</height>
+   </size>
+  </property>
+  <property name="maximumSize">
+   <size>
+    <width>727</width>
+    <height>50</height>
+   </size>
   </property>
   <property name="windowTitle">
    <string>Form</string>
   </property>
-  <widget class="QFrame" name="MultisigKeyFrame">
-   <property name="geometry">
-    <rect>
-     <x>0</x>
-     <y>0</y>
-     <width>721</width>
-     <height>71</height>
-    </rect>
+  <layout class="QVBoxLayout" name="verticalLayout">
+   <property name="leftMargin">
+    <number>5</number>
    </property>
-   <property name="frameShape">
-    <enum>QFrame::StyledPanel</enum>
+   <property name="topMargin">
+    <number>5</number>
    </property>
-   <property name="frameShadow">
-    <enum>QFrame::Raised</enum>
+   <property name="rightMargin">
+    <number>5</number>
    </property>
-   <widget class="QWidget" name="layoutWidget">
-    <property name="geometry">
-     <rect>
-      <x>10</x>
-      <y>10</y>
-      <width>701</width>
-      <height>41</height>
-     </rect>
-    </property>
+   <property name="bottomMargin">
+    <number>5</number>
+   </property>
+   <item>
     <layout class="QHBoxLayout" name="payToLayout">
      <property name="spacing">
       <number>0</number>
      </property>
      <item>
       <widget class="QLabel" name="labelKey">
+       <property name="font">
+        <font>
+         <weight>75</weight>
+         <bold>true</bold>
+        </font>
+       </property>
        <property name="text">
-        <string>Key  </string>
+        <string>Key X  </string>
        </property>
       </widget>
      </item>
      <item>
       <widget class="QValidatedLineEdit" name="key">
        <property name="toolTip">
-        <string>The Earthcoin address to send the payment to</string>
+        <string>A public key to create a multisig address</string>
        </property>
        <property name="clearButtonEnabled">
-        <bool>true</bool>
+        <bool>false</bool>
        </property>
       </widget>
      </item>
      <item>
       <widget class="QToolButton" name="pasteButton">
        <property name="toolTip">
-        <string>Paste public key from clipboard</string>
+        <string>Paste address from clipboard</string>
        </property>
        <property name="text">
         <string/>
@@ -84,7 +92,7 @@
      <item>
       <widget class="QToolButton" name="ownKey">
        <property name="toolTip">
-        <string>Generate new key</string>
+        <string>Generate new key - for test purposes only! Key is not stored in the wallet.</string>
        </property>
        <property name="text">
         <string/>
@@ -102,21 +110,15 @@
       </widget>
      </item>
     </layout>
-   </widget>
-   <widget class="Line" name="line">
-    <property name="geometry">
-     <rect>
-      <x>0</x>
-      <y>60</y>
-      <width>716</width>
-      <height>3</height>
-     </rect>
-    </property>
-    <property name="orientation">
-     <enum>Qt::Horizontal</enum>
-    </property>
-   </widget>
-  </widget>
+   </item>
+   <item>
+    <widget class="Line" name="line">
+     <property name="orientation">
+      <enum>Qt::Horizontal</enum>
+     </property>
+    </widget>
+   </item>
+  </layout>
  </widget>
  <customwidgets>
   <customwidget>
