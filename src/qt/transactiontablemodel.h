@@ -74,6 +74,8 @@ public:
         StatusRole,
         /** Unprocessed icon */
         RawDecorationRole,
+        /** IPFS */
+        IPFSRole,
     };
 
     int rowCount(const QModelIndex &parent) const;
@@ -82,6 +84,7 @@ public:
     QVariant headerData(int section, Qt::Orientation orientation, int role) const;
     QModelIndex index(int row, int column, const QModelIndex & parent = QModelIndex()) const;
     bool processingQueuedTransactions() const { return fProcessingQueuedTransactions; }
+    QString IPFS;
 
 private:
     WalletModel *walletModel;

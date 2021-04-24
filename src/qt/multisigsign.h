@@ -27,7 +27,9 @@ public Q_SLOTS:
     void on_pasteRedeemScript_clicked();
     void on_pastePrivateKeyButton_clicked();
     void signTransaction();
-//    void on_copyScriptButton_clicked();
+    void on_copyTransactionButton_clicked();
+    void sendTransaction();
+    void on_copyTxidButton_clicked();
 
 private:
     Ui::MultisigSign *ui;

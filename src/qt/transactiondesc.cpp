@@ -258,15 +258,18 @@ QString TransactionDesc::toHTML(interfaces::Node& node, interfaces::Wallet& wall
         if (pos) {
 	    strHTML += "<b>" + tr("IPFS_CID") + ":</b> " + GUIUtil::HtmlEscape(sMsg.substr(0, pos)) + "<br>";
 	    strHTML += "<b>" + tr("Transaction comment") + ":</b> " + GUIUtil::HtmlEscape(sMsg.substr(pos+1)) + "<br>";
+            IPFS = QString::fromStdString(sMsg.substr(0, pos));
         }
-        else
+        else {
             strHTML += "<b>" + tr("Transaction comment") + ":</b> " + GUIUtil::HtmlEscape(sMsg) + "<br>";
+            IPFS = "";
+        }
     }
 
     // Message from normal earthcoin:URI (earthcoin:123...?message=example)
-    for (const std::pair<std::string, std::string>& r : orderForm)
-        if (r.first == "Message")
-            strHTML += "<br><b>" + tr("Message") + ":</b><br>" + GUIUtil::HtmlEscape(r.second, true) + "<br>";
+    // for (const std::pair<std::string, std::string>& r : orderForm)
+    //    if (r.first == "Message")
+    //        strHTML += "<br><b>" + tr("Message") + ":</b><br>" + GUIUtil::HtmlEscape(r.second, true) + "<br>";
 
     //
     // PaymentRequest info:

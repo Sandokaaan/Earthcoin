@@ -2,6 +2,8 @@
 // Distributed under the MIT software license, see the accompanying
 // file COPYING or http://www.opensource.org/licenses/mit-license.php.
 
+#include <rpc/server.h>
+
 #ifndef EARTHCOIN_RPC_RAWTRANSACTION_H
 #define EARTHCOIN_RPC_RAWTRANSACTION_H
 
@@ -14,5 +16,8 @@ UniValue SignTransaction(CMutableTransaction& mtx, const UniValue& prevTxs, CBas
 
 /** Create a transaction from univalue parameters */
 CMutableTransaction ConstructTransaction(const UniValue& inputs_in, const UniValue& outputs_in, const UniValue& locktime, const UniValue& rbf);
+
+// SANDO: for multisig transactions
+UniValue sendrawtransaction(const JSONRPCRequest& request);
 
 #endif // EARTHCOIN_RPC_RAWTRANSACTION_H

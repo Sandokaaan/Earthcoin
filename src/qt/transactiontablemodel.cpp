@@ -202,7 +202,10 @@ public:
 
     QString describe(interfaces::Node& node, interfaces::Wallet& wallet, TransactionRecord *rec, int unit)
     {
-        return TransactionDesc::toHTML(node, wallet, rec, unit);
+        TransactionDesc txds;
+        QString rts = txds.toHTML(node, wallet, rec, unit);
+        parent->IPFS = txds.getIPFS();
+        return rts;
     }
 
     QString getTxHex(interfaces::Wallet& wallet, TransactionRecord *rec)
@@ -578,6 +581,8 @@ QVariant TransactionTableModel::data(const QModelIndex &index, int role) const
         return txWatchonlyDecoration(rec);
     case LongDescriptionRole:
         return priv->describe(walletModel->node(), walletModel->wallet(), rec, walletModel->getOptionsModel()->getDisplayUnit());
+    case IPFSRole:
+        return IPFS; 
     case AddressRole:
         return QString::fromStdString(rec->address);
     case LabelRole:

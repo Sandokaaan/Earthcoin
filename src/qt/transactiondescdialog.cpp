@@ -8,6 +8,8 @@
 #include <qt/transactiontablemodel.h>
 
 #include <QModelIndex>
+#include <QDesktopServices>
+#include <QUrl>
 
 TransactionDescDialog::TransactionDescDialog(const QModelIndex &idx, QWidget *parent) :
     QDialog(parent),
@@ -16,10 +18,19 @@ TransactionDescDialog::TransactionDescDialog(const QModelIndex &idx, QWidget *pa
     ui->setupUi(this);
     setWindowTitle(tr("Details for %1").arg(idx.data(TransactionTableModel::TxHashRole).toString()));
     QString desc = idx.data(TransactionTableModel::LongDescriptionRole).toString();
+    IPFS = idx.data(TransactionTableModel::IPFSRole).toString();
     ui->detailText->setHtml(desc);
+    if (IPFS.length() < 1)
+        ui->openIPFSButton->hide();
 }
 
 TransactionDescDialog::~TransactionDescDialog()
 {
     delete ui;
+}
+
+void TransactionDescDialog::on_openIPFSButton_clicked()
+{
+    QString URL = "https://ipfs.io/ipfs/" + IPFS;
+    QDesktopServices::openUrl(QUrl(URL));
 }

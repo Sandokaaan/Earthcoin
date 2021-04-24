@@ -6,6 +6,7 @@
 #define EARTHCOIN_QT_TRANSACTIONDESCDIALOG_H
 
 #include <QDialog>
+#include <QString>
 
 namespace Ui {
     class TransactionDescDialog;
@@ -24,8 +25,12 @@ public:
     explicit TransactionDescDialog(const QModelIndex &idx, QWidget *parent = 0);
     ~TransactionDescDialog();
 
+public Q_SLOTS:
+    void on_openIPFSButton_clicked();
+
 private:
     Ui::TransactionDescDialog *ui;
+    QString IPFS;
 };
 
 #endif // EARTHCOIN_QT_TRANSACTIONDESCDIALOG_H

@@ -19,6 +19,7 @@
 #include <key_io.h>
 #include <core_io.h>
 #include <validation.h>
+#include <rpc/rawtransaction.h>
 #include <primitives/transaction.h>
 
 MultisigSign::MultisigSign(QWidget *parent) :
@@ -28,7 +29,7 @@ MultisigSign::MultisigSign(QWidget *parent) :
     ui->setupUi(this);
     connect(ui->decodeTransactionButton, SIGNAL(clicked()), this, SLOT(decodeTransaction()));
     connect(ui->signTransactionButton, SIGNAL(clicked()), this, SLOT(signTransaction()));
-//    ui->createButton->setEnabled(false);
+    connect(ui->sendTransactionButton, SIGNAL(clicked()), this, SLOT(sendTransaction()));
 }
 
 MultisigSign::~MultisigSign()
@@ -51,14 +52,22 @@ void MultisigSign::on_pastePrivateKeyButton_clicked()
     ui->lineEditPrivateKey->setText(QApplication::clipboard()->text());
 }
 
+void MultisigSign::on_copyTransactionButton_clicked()
+{
+    QApplication::clipboard()->setText(ui->lineEditSignedTransaction->toPlainText());
+}
+
+void MultisigSign::on_copyTxidButton_clicked()
+{
+    QApplication::clipboard()->setText(ui->lineEditSendStatus->text());
+}
 
 void MultisigSign::decodeTransaction()
 {
-    QString rawTx = ui->lineEditUnsignedTransaction->toPlainText();
-    const char *csRawTx = rawTx.toLatin1().data();
+    std::string rawTx = ui->lineEditUnsignedTransaction->toPlainText().toStdString();
     CMutableTransaction mtx;
     bool decodeOK = false;
-    if (DecodeHexTx(mtx, csRawTx, true, true))
+    if (DecodeHexTx(mtx, rawTx, true, true))
     {
         if (mtx.vin.size() == mtx.vout.size() == 1)
         {
@@ -99,5 +108,114 @@ void MultisigSign::decodeTransaction()
 
 void MultisigSign::signTransaction()
 {
-    
+    QString signStatus = "OK";
+    bool signOK = true, complete;
+    std::string csKey = ui->lineEditPrivateKey->text().toStdString();
+    CKey privKey = DecodeSecret(csKey);
+    if (!(privKey.IsValid()))
+    {
+        signOK = false;
+        signStatus = "Invalid private key";
+    }
+    if (signOK)
+    {
+        std::string redeemScript = ui->lineEditRedeemScript->toPlainText().toStdString();
+        if (!(IsHex(redeemScript)))
+        {
+            signOK = false;
+            signStatus = "Invalid redeem script";
+        }
+        else
+        {
+            CBasicKeyStore keystore;
+            keystore.AddKey(privKey);
+            CMutableTransaction mtx;
+            std::string rawTx = ui->lineEditUnsignedTransaction->toPlainText().toStdString();
+            if (!DecodeHexTx(mtx, rawTx, true, true)) 
+            {
+                signOK = false;
+                signStatus = "Invalid transaction";
+            }
+            else
+            {
+                std::string txid = ui->lineEditSourceTXID->text().toStdString();
+                std::string scriptPubKey = ui->lineEditScriptPubKey->text().toStdString();
+                UniValue source(UniValue::VOBJ);
+                source.pushKV("txid", txid);
+                source.pushKV("vout", (int)(mtx.vin[0].prevout.n));
+                source.pushKV("scriptPubKey", scriptPubKey);
+                source.pushKV("redeemScript", redeemScript);
+                UniValue prevTxUnival(UniValue::VARR); 
+                prevTxUnival.push_back(source);
+                UniValue rts;
+                try {
+                    rts = SignTransaction(mtx, prevTxUnival, &keystore, true, "ALL");
+                }
+                catch(std::exception& e) {
+                    signOK = false;
+                    ui->lineEditSignedTransaction->setPlainText(QString::fromStdString(e.what()));
+                }
+                if (signOK && rts.exists("complete"))
+                {
+                    complete = rts["complete"].get_bool();
+                    signStatus = (complete ? "Complete" : "Partial - next key sign required");
+                    if (rts.exists("errors") && rts["errors"][0].exists("error"))
+                    {
+                        std::string error = rts["errors"][0]["error"].get_str();
+                        if (error.find("CHECK(MULTI)SIG") == std::string::npos) 
+                        { 
+                            signStatus = "Sig error - bad key";
+                            signOK = false;
+                        }
+                    }
+                    ui->lineEditSignedTransaction->setPlainText(QString::fromStdString(rts["hex"].get_str()));
+                }
+                else
+                    signStatus = "Sign error";
+            }
+        }
+    }
+    ui->lineEditSignStatus->setText(signStatus);
+    if (signOK) {
+        ui->signTransactionButton->setEnabled(false);
+        ui->lineEditRedeemScript->setEnabled(false);
+        ui->lineEditPrivateKey->setEnabled(false);
+        ui->pasteRedeemScript->setEnabled(false);
+        ui->pastePrivateKeyButton->setEnabled(false);
+        ui->copyTransactionButton->setEnabled(true);
+        if (complete)
+            ui->sendTransactionButton->setEnabled(true);
+    }
+}
+
+void MultisigSign::sendTransaction()
+{
+    ui->copyTransactionButton->setEnabled(false);
+    ui->sendTransactionButton->setEnabled(false);
+    ui->copyTxidButton->setEnabled(true);
+    CMutableTransaction mtx;
+    std::string rawTx = ui->lineEditSignedTransaction->toPlainText().toStdString();
+    if (!DecodeHexTx(mtx, rawTx, true, true)) 
+    {
+        ui->lineEditSendStatus->setText("Invalid transaction");
+    }
+    else
+    {
+        try {
+            JSONRPCRequest request;
+            request.params = UniValue(UniValue::VARR);
+            request.params.push_back(rawTx);
+            UniValue rts = sendrawtransaction(request);
+            ui->lineEditSendStatus->setText(QString::fromStdString(rts.write()));
+        }
+        catch(std::exception& e) {
+            ui->lineEditSendStatus->setText(QString::fromStdString(e.what()));
+        }
+        catch(UniValue& e) {
+            ui->lineEditSendStatus->setText(QString::fromStdString(e.write()));
+        }
+        catch(...) {
+            ui->lineEditSendStatus->setText("Unknown error");
+        }
+    }
 }

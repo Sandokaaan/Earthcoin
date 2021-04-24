@@ -24,12 +24,15 @@ class TransactionDesc: public QObject
     Q_OBJECT
 
 public:
-    static QString toHTML(interfaces::Node& node, interfaces::Wallet& wallet, TransactionRecord *rec, int unit);
+    TransactionDesc() {}
+    ~TransactionDesc() {}
+    QString toHTML(interfaces::Node& node, interfaces::Wallet& wallet, TransactionRecord *rec, int unit);
+    const QString& getIPFS() const { return IPFS; }
 
 private:
-    TransactionDesc() {}
 
-    static QString FormatTxStatus(const interfaces::WalletTx& wtx, const interfaces::WalletTxStatus& status, bool inMempool, int numBlocks, int64_t adjustedTime);
+    QString IPFS;
+    QString FormatTxStatus(const interfaces::WalletTx& wtx, const interfaces::WalletTxStatus& status, bool inMempool, int numBlocks, int64_t adjustedTime);
 };
 
 #endif // EARTHCOIN_QT_TRANSACTIONDESC_H
