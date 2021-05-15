@@ -23,6 +23,7 @@ class TransactionDescDialog : public QDialog
 
 public:
     explicit TransactionDescDialog(const QModelIndex &idx, QWidget *parent = 0);
+    void setIpfsUrlPrefix(QString * urlPrefix) {ipfsUrlPrefix = urlPrefix;}
     ~TransactionDescDialog();
 
 public Q_SLOTS:
@@ -31,6 +32,7 @@ public Q_SLOTS:
 private:
     Ui::TransactionDescDialog *ui;
     QString IPFS;
+    QString * ipfsUrlPrefix;
 };
 
 #endif // EARTHCOIN_QT_TRANSACTIONDESCDIALOG_H

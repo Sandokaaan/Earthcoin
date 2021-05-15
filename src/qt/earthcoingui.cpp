@@ -18,6 +18,7 @@
 #include <qt/rpcconsole.h>
 #include <qt/utilitydialog.h>
 #include <qt/multisigdialog.h>
+#include <qt/multicontroldialog.h>
 #include <qt/multisigsign.h>
 
 #ifdef ENABLE_WALLET
@@ -72,7 +73,8 @@ const std::string EarthcoinGUI::DEFAULT_UIPLATFORM =
 EarthcoinGUI::EarthcoinGUI(interfaces::Node& node, const PlatformStyle *_platformStyle, const NetworkStyle *networkStyle, QWidget *parent) :
     QMainWindow(parent),
     m_node(node),
-    platformStyle(_platformStyle)
+    platformStyle(_platformStyle),
+    ipfsUrlPrefix("")
 {
     QSettings settings;
     if (!restoreGeometry(settings.value("MainWindowGeometry").toByteArray())) {
@@ -81,9 +83,15 @@ EarthcoinGUI::EarthcoinGUI(interfaces::Node& node, const PlatformStyle *_platfor
     }
 
     QString windowTitle = tr(PACKAGE_NAME) + " - ";
+
+
 #ifdef ENABLE_WALLET
     enableWallet = WalletModel::isWalletEnabled();
 #endif // ENABLE_WALLET
+
+    // load ipfs config
+    loadIpfsConfig(ipfsUrlPrefix);
+
     if(enableWallet)
     {
         windowTitle += tr("Wallet");
@@ -106,6 +114,7 @@ EarthcoinGUI::EarthcoinGUI(interfaces::Node& node, const PlatformStyle *_platfor
     {
         /** Create wallet frame and make it the central widget */
         walletFrame = new WalletFrame(_platformStyle, this);
+        walletFrame->setIpfsPrefix(&ipfsUrlPrefix);
         setCentralWidget(walletFrame);
     } else
 #endif // ENABLE_WALLET
@@ -330,6 +339,8 @@ void EarthcoinGUI::createActions()
 
     multisigCreateAction = new QAction(platformStyle->TextColorIcon(":/icons/multikey"), "Create multisig address", this);
     multisigCreateAction->setStatusTip(tr("Create multisig address"));
+    multisigSpentAction = new QAction(platformStyle->TextColorIcon(":/icons/send"), "Prepare multisig transaction", this);
+    multisigSpentAction->setStatusTip(tr("Prepare multisig transaction"));
     multisigSignAction = new QAction(platformStyle->TextColorIcon(":/icons/edit"), "Sign multisig transaction", this);
     multisigSignAction->setStatusTip(tr("Sign multisig transaction"));
 
@@ -338,6 +349,7 @@ void EarthcoinGUI::createActions()
     connect(aboutQtAction, SIGNAL(triggered()), qApp, SLOT(aboutQt()));
     connect(optionsAction, SIGNAL(triggered()), this, SLOT(optionsClicked()));
     connect(multisigCreateAction, SIGNAL(triggered()), this, SLOT(showMultisigCreateDialog()));
+    connect(multisigSpentAction, SIGNAL(triggered()), this, SLOT(showMultisigSpentDialog()));
     connect(multisigSignAction, SIGNAL(triggered()), this, SLOT(showMultisigSignDialog()));
     connect(toggleHideAction, SIGNAL(triggered()), this, SLOT(toggleHidden()));
     connect(showHelpMessageAction, SIGNAL(triggered()), this, SLOT(showHelpMessageClicked()));
@@ -400,6 +412,7 @@ void EarthcoinGUI::createMenuBar()
     // SANDO: multi-sig
     QMenu *multisig = appMenuBar->addMenu("&Multisig");
     multisig->addAction(multisigCreateAction);
+    multisig->addAction(multisigSpentAction);
     multisig->addAction(multisigSignAction);
 
     QMenu *help = appMenuBar->addMenu(tr("&Help"));
@@ -528,7 +541,7 @@ bool EarthcoinGUI::addWallet(WalletModel *walletModel)
         m_wallet_selector_action->setVisible(true);
     }
     rpcConsole->addWallet(walletModel);
-    return walletFrame->addWallet(walletModel);
+    return walletFrame->addWallet(walletModel);    
 }
 
 bool EarthcoinGUI::removeWallet(WalletModel* walletModel)
@@ -652,7 +665,7 @@ void EarthcoinGUI::optionsClicked()
     if(!clientModel || !clientModel->getOptionsModel())
         return;
 
-    OptionsDialog dlg(this, enableWallet);
+    OptionsDialog dlg(this, enableWallet, ipfsUrlPrefix);
     dlg.setModel(clientModel->getOptionsModel());
     dlg.exec();
 }
@@ -665,6 +678,17 @@ void EarthcoinGUI::showMultisigSignDialog()
     MultisigSign dlg(this);
     dlg.exec();
 }
+
+//SANDO:
+void EarthcoinGUI::showMultisigSpentDialog()
+{
+    if(!clientModel)
+        return;
+    MultiControlDialog dlg(platformStyle, this);
+    //MultisigSpentDialog dlg(platformStyle, this);
+    dlg.exec();
+}
+
 
 // SANDO: multisig dialog
 void EarthcoinGUI::showMultisigCreateDialog()

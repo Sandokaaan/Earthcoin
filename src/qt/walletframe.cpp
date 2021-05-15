@@ -17,7 +17,8 @@
 WalletFrame::WalletFrame(const PlatformStyle *_platformStyle, EarthcoinGUI *_gui) :
     QFrame(_gui),
     gui(_gui),
-    platformStyle(_platformStyle)
+    platformStyle(_platformStyle),
+    ipfsUrlPrefix(NULL)
 {
     // Leave HBox hook for adding a list view later
     QHBoxLayout *walletFrameLayout = new QHBoxLayout(this);
@@ -52,6 +53,7 @@ bool WalletFrame::addWallet(WalletModel *walletModel)
     }
 
     WalletView *walletView = new WalletView(platformStyle, this);
+    walletView->setIpfsPrefix(ipfsUrlPrefix);
     walletView->setEarthcoinGUI(gui);
     walletView->setClientModel(clientModel);
     walletView->setWalletModel(walletModel);

@@ -14,11 +14,12 @@
 #include <QApplication>
 #include <QClipboard>
 
-SendCoinsEntry::SendCoinsEntry(const PlatformStyle *_platformStyle, QWidget *parent) :
+SendCoinsEntry::SendCoinsEntry(const PlatformStyle *_platformStyle, QWidget *parent, bool multi) :
     QStackedWidget(parent),
     ui(new Ui::SendCoinsEntry),
     model(0),
-    platformStyle(_platformStyle)
+    platformStyle(_platformStyle),
+    showAsMulti(multi)
 {
     ui->setupUi(this);
 
@@ -33,6 +34,13 @@ SendCoinsEntry::SendCoinsEntry(const PlatformStyle *_platformStyle, QWidget *par
     if (platformStyle->getUseExtraSpacing())
         ui->payToLayout->setSpacing(4);
     ui->addAsLabel->setPlaceholderText(tr("Enter a label for this address to add it to your address book"));
+    if (showAsMulti) // hide some elements for the multisig form
+    {
+        ui->addAsLabel->hide();
+        ui->labellLabel->hide();
+        ui->checkboxSubtractFeeFromAmount->hide();
+        ui->addressBookButton->hide();
+    }
 
     // normal earthcoin address field
     GUIUtil::setupAddressWidget(ui->payTo, this);

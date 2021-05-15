@@ -63,7 +63,7 @@ static void TxToJSON(const CTransaction& tx, const uint256 hashBlock, UniValue& 
     }
 }
 
-static UniValue getrawtransaction(const JSONRPCRequest& request)
+UniValue getrawtransaction(const JSONRPCRequest& request)
 {
     if (request.fHelp || request.params.size() < 1 || request.params.size() > 3)
         throw std::runtime_error(
@@ -504,7 +504,7 @@ static UniValue createrawtransaction(const JSONRPCRequest& request)
     return EncodeHexTx(rawTx);
 }
 
-static UniValue decoderawtransaction(const JSONRPCRequest& request)
+UniValue decoderawtransaction(const JSONRPCRequest& request)
 {
     if (request.fHelp || request.params.size() < 1 || request.params.size() > 2)
         throw std::runtime_error(
@@ -580,7 +580,7 @@ static UniValue decoderawtransaction(const JSONRPCRequest& request)
     return result;
 }
 
-static UniValue decodescript(const JSONRPCRequest& request)
+UniValue decodescript(const JSONRPCRequest& request)
 {
     if (request.fHelp || request.params.size() != 1)
         throw std::runtime_error(

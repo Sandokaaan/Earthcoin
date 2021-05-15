@@ -34,7 +34,8 @@ WalletView::WalletView(const PlatformStyle *_platformStyle, QWidget *parent):
     QStackedWidget(parent),
     clientModel(0),
     walletModel(0),
-    platformStyle(_platformStyle)
+    platformStyle(_platformStyle),
+    ipfsUrlPrefix(NULL)
 {
     // Create tabs
     overviewPage = new OverviewPage(platformStyle);
@@ -42,7 +43,7 @@ WalletView::WalletView(const PlatformStyle *_platformStyle, QWidget *parent):
     transactionsPage = new QWidget(this);
     QVBoxLayout *vbox = new QVBoxLayout();
     QHBoxLayout *hbox_buttons = new QHBoxLayout();
-    transactionView = new TransactionView(platformStyle, this);
+    transactionView = new TransactionView(platformStyle, this);    
     vbox->addWidget(transactionView);
     QPushButton *exportButton = new QPushButton(tr("&Export"), this);
     exportButton->setToolTip(tr("Export the data in the current tab to a file"));
@@ -110,6 +111,7 @@ void WalletView::setEarthcoinGUI(EarthcoinGUI *gui)
         // Connect HD enabled state signal
         connect(this, SIGNAL(hdEnabledStatusChanged()), gui, SLOT(updateWalletStatus()));
     }
+    transactionView->setIpfsPrefix(ipfsUrlPrefix);
 }
 
 void WalletView::setClientModel(ClientModel *_clientModel)

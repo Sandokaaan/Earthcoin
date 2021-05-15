@@ -62,7 +62,7 @@ public:
     /** Set the client model.
         The client model represents the part of the core that communicates with the P2P network, and is wallet-agnostic.
     */
-    void setClientModel(ClientModel *clientModel);
+    void setClientModel(ClientModel *clientModel);    
 
 #ifdef ENABLE_WALLET
     /** Set the wallet model.
@@ -84,6 +84,7 @@ protected:
     bool eventFilter(QObject *object, QEvent *event);
 
 private:
+    QString ipfsUrlPrefix;
     interfaces::Node& m_node;
     std::unique_ptr<interfaces::Handler> m_handler_message_box;
     std::unique_ptr<interfaces::Handler> m_handler_question;
@@ -116,6 +117,7 @@ private:
     QAction* receiveCoinsMenuAction = nullptr;
     QAction* optionsAction = nullptr;
     QAction* multisigCreateAction = nullptr;
+    QAction* multisigSpentAction = nullptr;
     QAction* multisigSignAction = nullptr;
     QAction* toggleHideAction = nullptr;
     QAction* encryptWalletAction = nullptr;
@@ -252,6 +254,7 @@ private Q_SLOTS:
     /** Multisig dialog */
     void showMultisigCreateDialog();
     void showMultisigSignDialog();
+    void showMultisigSpentDialog();
 #ifndef Q_OS_MAC
     /** Handle tray icon clicked */
     void trayIconActivated(QSystemTrayIcon::ActivationReason reason);

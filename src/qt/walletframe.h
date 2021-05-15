@@ -44,6 +44,7 @@ public:
     bool handlePaymentRequest(const SendCoinsRecipient& recipient);
 
     void showOutOfSyncWarning(bool fShow);
+    void setIpfsPrefix(QString * prefix) {ipfsUrlPrefix = prefix;}
 
 Q_SIGNALS:
     /** Notify that the user has requested more information about the out-of-sync warning */
@@ -54,6 +55,7 @@ private:
     EarthcoinGUI *gui;
     ClientModel *clientModel;
     QMap<QString, WalletView*> mapWalletViews;
+    QString * ipfsUrlPrefix;
 
     bool bOutOfSync;
 

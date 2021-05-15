@@ -67,9 +67,35 @@
       </widget>
      </item>
      <item>
+      <widget class="QToolButton" name="copyKeyButton">
+       <property name="enabled">
+        <bool>false</bool>
+       </property>
+       <property name="toolTip">
+        <string>Copy public key to clipboard</string>
+       </property>
+       <property name="text">
+        <string/>
+       </property>
+       <property name="icon">
+        <iconset resource="../earthcoin.qrc">
+         <normaloff>:/icons/editcopy</normaloff>:/icons/editcopy</iconset>
+       </property>
+       <property name="iconSize">
+        <size>
+         <width>22</width>
+         <height>22</height>
+        </size>
+       </property>
+       <property name="shortcut">
+        <string>Alt+P</string>
+       </property>
+      </widget>
+     </item>
+     <item>
       <widget class="QToolButton" name="pasteButton">
        <property name="toolTip">
-        <string>Paste address from clipboard</string>
+        <string>Paste public key from clipboard</string>
        </property>
        <property name="text">
         <string/>
@@ -92,7 +118,7 @@
      <item>
       <widget class="QToolButton" name="ownKey">
        <property name="toolTip">
-        <string>Generate new key - for test purposes only! Key is not stored in the wallet.</string>
+        <string>Generate a new key</string>
        </property>
        <property name="text">
         <string/>

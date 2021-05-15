@@ -39,6 +39,8 @@ public:
 
     void setModel(WalletModel *model);
 
+    void setIpfsPrefix(QString * prefix) {ipfsUrlPrefix = prefix;}
+
     // Date ranges for filter
     enum DateEnum
     {
@@ -64,6 +66,8 @@ private:
     WalletModel *model;
     TransactionFilterProxy *transactionProxyModel;
     QTableView *transactionView;
+
+    QString * ipfsUrlPrefix;
 
     QComboBox *dateWidget;
     QComboBox *typeWidget;

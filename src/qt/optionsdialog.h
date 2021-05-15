@@ -31,13 +31,15 @@ public:
     State validate(QString &input, int &pos) const;
 };
 
+int loadIpfsConfig(QString & ipfsUrlPrefix);
+
 /** Preferences dialog. */
 class OptionsDialog : public QDialog
 {
     Q_OBJECT
 
 public:
-    explicit OptionsDialog(QWidget *parent, bool enableWallet);
+    explicit OptionsDialog(QWidget *parent, bool enableWallet, QString & prefix);
     ~OptionsDialog();
 
     void setModel(OptionsModel *model);
@@ -59,6 +61,8 @@ private Q_SLOTS:
     void updateProxyValidationState();
     /* query the networks, for which the default proxy is used */
     void updateDefaultProxyNets();
+    void on_ipfsHelpBT_clicked();
+    void changeIpfsGate(int i);
 
 Q_SIGNALS:
     void proxyIpChecks(QValidatedLineEdit *pUiProxyIp, int nProxyPort);
@@ -67,6 +71,8 @@ private:
     Ui::OptionsDialog *ui;
     OptionsModel *model;
     QDataWidgetMapper *mapper;
+    QString & ipfsUrlPrefix;
+    void saveIpfsConfig(int i);
 };
 
 #endif // EARTHCOIN_QT_OPTIONSDIALOG_H

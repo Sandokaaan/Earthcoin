@@ -10,10 +10,12 @@
 #include <QModelIndex>
 #include <QDesktopServices>
 #include <QUrl>
+#include <QMessageBox>
 
 TransactionDescDialog::TransactionDescDialog(const QModelIndex &idx, QWidget *parent) :
     QDialog(parent),
-    ui(new Ui::TransactionDescDialog)
+    ui(new Ui::TransactionDescDialog),
+    ipfsUrlPrefix(NULL)
 {
     ui->setupUi(this);
     setWindowTitle(tr("Details for %1").arg(idx.data(TransactionTableModel::TxHashRole).toString()));
@@ -31,6 +33,10 @@ TransactionDescDialog::~TransactionDescDialog()
 
 void TransactionDescDialog::on_openIPFSButton_clicked()
 {
-    QString URL = "https://ipfs.io/ipfs/" + IPFS;
+    /*QString URL = "https://dweb.link/ipfs/";
+    if (ipfsUrlPrefix)
+        URL = (*ipfsUrlPrefix);*/
+    QString URL = (ipfsUrlPrefix ? (*ipfsUrlPrefix) : "https://dweb.link/ipfs/") + IPFS;
+    //URL += IPFS;
     QDesktopServices::openUrl(QUrl(URL));
 }

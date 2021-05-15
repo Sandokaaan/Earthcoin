@@ -594,7 +594,7 @@ static UniValue sendtoaddress(const JSONRPCRequest& request)
     return tx->GetHash().GetHex();
 }
 
-static UniValue listaddressgroupings(const JSONRPCRequest& request)
+UniValue listaddressgroupings(const JSONRPCRequest& request)
 {
     std::shared_ptr<CWallet> const wallet = GetWalletForJSONRPCRequest(request);
     CWallet* const pwallet = wallet.get();
@@ -3293,7 +3293,7 @@ static UniValue resendwallettransactions(const JSONRPCRequest& request)
     return result;
 }
 
-static UniValue listunspent(const JSONRPCRequest& request)
+UniValue listunspent(const JSONRPCRequest& request)
 {
     std::shared_ptr<CWallet> const wallet = GetWalletForJSONRPCRequest(request);
     CWallet* const pwallet = wallet.get();
@@ -4269,7 +4269,7 @@ UniValue getaddressinfo(const JSONRPCRequest& request)
     return ret;
 }
 
-static UniValue getaddressesbylabel(const JSONRPCRequest& request)
+UniValue getaddressesbylabel(const JSONRPCRequest& request)
 {
     std::shared_ptr<CWallet> const wallet = GetWalletForJSONRPCRequest(request);
     CWallet* const pwallet = wallet.get();
@@ -4314,7 +4314,7 @@ static UniValue getaddressesbylabel(const JSONRPCRequest& request)
     return ret;
 }
 
-static UniValue listlabels(const JSONRPCRequest& request)
+UniValue listlabels(const JSONRPCRequest& request)
 {
     std::shared_ptr<CWallet> const wallet = GetWalletForJSONRPCRequest(request);
     CWallet* const pwallet = wallet.get();

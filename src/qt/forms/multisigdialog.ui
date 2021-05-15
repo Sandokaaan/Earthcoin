@@ -7,7 +7,7 @@
     <x>0</x>
     <y>0</y>
     <width>805</width>
-    <height>560</height>
+    <height>557</height>
    </rect>
   </property>
   <property name="minimumSize">
@@ -27,7 +27,50 @@
   </property>
   <layout class="QVBoxLayout" name="verticalLayout">
    <item>
-    <widget class="QLabel" name="label">
+    <widget class="QLabel" name="riskLB">
+     <property name="maximumSize">
+      <size>
+       <width>16777215</width>
+       <height>20</height>
+      </size>
+     </property>
+     <property name="palette">
+      <palette>
+       <active>
+        <colorrole role="WindowText">
+         <brush brushstyle="SolidPattern">
+          <color alpha="255">
+           <red>255</red>
+           <green>0</green>
+           <blue>0</blue>
+          </color>
+         </brush>
+        </colorrole>
+       </active>
+       <inactive>
+        <colorrole role="WindowText">
+         <brush brushstyle="SolidPattern">
+          <color alpha="255">
+           <red>255</red>
+           <green>0</green>
+           <blue>0</blue>
+          </color>
+         </brush>
+        </colorrole>
+       </inactive>
+       <disabled>
+        <colorrole role="WindowText">
+         <brush brushstyle="SolidPattern">
+          <color alpha="255">
+           <red>120</red>
+           <green>120</green>
+           <blue>120</blue>
+          </color>
+         </brush>
+        </colorrole>
+       </disabled>
+      </palette>
+     </property>
      <property name="font">
       <font>
        <weight>75</weight>
@@ -52,6 +95,39 @@
       <number>4</number>
      </property>
      <item>
+      <widget class="QLabel" name="labelLabel">
+       <property name="font">
+        <font>
+         <weight>75</weight>
+         <bold>true</bold>
+        </font>
+       </property>
+       <property name="text">
+        <string>Label 🏷</string>
+       </property>
+      </widget>
+     </item>
+     <item>
+      <widget class="QLineEdit" name="lineEditLabel">
+       <property name="toolTip">
+        <string>A label for the multisig account (optional). If not set, a random label will be generated. </string>
+       </property>
+      </widget>
+     </item>
+     <item>
+      <spacer name="horizontalSpacer_4">
+       <property name="orientation">
+        <enum>Qt::Horizontal</enum>
+       </property>
+       <property name="sizeHint" stdset="0">
+        <size>
+         <width>40</width>
+         <height>20</height>
+        </size>
+       </property>
+      </spacer>
+     </item>
+     <item>
       <widget class="QLabel" name="labelKeys">
        <property name="font">
         <font>
@@ -60,12 +136,15 @@
         </font>
        </property>
        <property name="text">
-        <string>Count of Keys</string>
+        <string> Keys 🔑</string>
        </property>
       </widget>
      </item>
      <item>
       <widget class="QSpinBox" name="spinBoxKeys">
+       <property name="toolTip">
+        <string>Total count of keys used in the multisig account</string>
+       </property>
        <property name="minimum">
         <number>2</number>
        </property>
@@ -99,12 +178,15 @@
         </font>
        </property>
        <property name="text">
-        <string>Required Keys</string>
+        <string>Required Keys 🔒</string>
        </property>
       </widget>
      </item>
      <item>
       <widget class="QSpinBox" name="spinBoxRequired">
+       <property name="toolTip">
+        <string>Count of keys required for spent fund from the multisig account</string>
+       </property>
        <property name="minimum">
         <number>1</number>
        </property>
@@ -131,6 +213,9 @@
      </item>
      <item>
       <widget class="QPushButton" name="setButton">
+       <property name="toolTip">
+        <string>Set up the type of multisig account. Please set Keys and Required before.</string>
+       </property>
        <property name="text">
         <string>Set Keys / Required</string>
        </property>
@@ -151,6 +236,9 @@
      </item>
      <item>
       <widget class="QPushButton" name="createButton">
+       <property name="toolTip">
+        <string>Create a multisig address from chosen public keys</string>
+       </property>
        <property name="text">
         <string>Create Multisig</string>
        </property>
@@ -256,6 +344,12 @@
          <height>90</height>
         </size>
        </property>
+       <property name="toolTip">
+        <string>Multisig redeem script. Please, backup it on a safe place. Without the redeem script the funds received to a multisig address cannot be spent.</string>
+       </property>
+       <property name="readOnly">
+        <bool>true</bool>
+       </property>
       </widget>
      </item>
      <item row="0" column="0">
@@ -267,7 +361,7 @@
         </font>
        </property>
        <property name="text">
-        <string>Address</string>
+        <string>Address 👛</string>
        </property>
       </widget>
      </item>
@@ -292,7 +386,7 @@
         </font>
        </property>
        <property name="text">
-        <string>Redeem Script</string>
+        <string>Redeem Script   🖉</string>
        </property>
        <property name="wordWrap">
         <bool>true</bool>
@@ -324,6 +418,9 @@
      </item>
      <item row="0" column="1">
       <widget class="QLineEdit" name="lineEditAddress">
+       <property name="toolTip">
+        <string>Generated multisig address to receive funds</string>
+       </property>
        <property name="readOnly">
         <bool>true</bool>
        </property>

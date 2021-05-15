@@ -19,5 +19,8 @@ CMutableTransaction ConstructTransaction(const UniValue& inputs_in, const UniVal
 
 // SANDO: for multisig transactions
 UniValue sendrawtransaction(const JSONRPCRequest& request);
+UniValue decoderawtransaction(const JSONRPCRequest& request);
+UniValue getrawtransaction(const JSONRPCRequest& request);
+UniValue decodescript(const JSONRPCRequest& request);
 
 #endif // EARTHCOIN_RPC_RAWTRANSACTION_H

@@ -6,6 +6,7 @@
 #define EARTHCOIN_QT_MULTISIGDIALOG_H
 
 #include <QDialog>
+#include <QString>
 
 namespace Ui {
     class MultisigDialog;
@@ -32,6 +33,7 @@ private:
     Ui::MultisigDialog *ui;
     int nKeys;
     int nRequired;
+    QString label;
 };
 
 #endif // EARTHCOIN_QT_MULTISIGDIALOG_H

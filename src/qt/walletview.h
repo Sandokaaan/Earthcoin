@@ -55,9 +55,13 @@ public:
 
     void showOutOfSyncWarning(bool fShow);
 
+    void setIpfsPrefix(QString * prefix) {ipfsUrlPrefix = prefix;}
+
 private:
     ClientModel *clientModel;
     WalletModel *walletModel;
+
+    QString * ipfsUrlPrefix;
 
     OverviewPage *overviewPage;
     QWidget *transactionsPage;

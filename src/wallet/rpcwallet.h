@@ -31,4 +31,8 @@ bool EnsureWalletIsAvailable(CWallet *, bool avoidException);
 UniValue getaddressinfo(const JSONRPCRequest& request);
 UniValue signrawtransactionwithwallet(const JSONRPCRequest& request);
 bool FillPSBT(const CWallet* pwallet, PartiallySignedTransaction& psbtx, int sighash_type = 1 /* SIGHASH_ALL */, bool sign = true, bool bip32derivs = false);
+UniValue listaddressgroupings(const JSONRPCRequest& request);
+UniValue listunspent(const JSONRPCRequest& request);
+UniValue listlabels(const JSONRPCRequest& request);
+UniValue getaddressesbylabel(const JSONRPCRequest& request);
 #endif //EARTHCOIN_WALLET_RPCWALLET_H

@@ -12,6 +12,7 @@
 class CBlock;
 class CBlockIndex;
 class UniValue;
+class JSONRPCRequest;
 
 static constexpr int NUM_GETBLOCKSTATS_PERCENTILES = 5;
 
@@ -41,5 +42,7 @@ UniValue blockheaderToJSON(const CBlockIndex* blockindex);
 
 /** Used by getblockstats to get feerates at different percentiles by weight  */
 void CalculatePercentilesByWeight(CAmount result[NUM_GETBLOCKSTATS_PERCENTILES], std::vector<std::pair<CAmount, int64_t>>& scores, int64_t total_weight);
+
+UniValue scantxoutset(const JSONRPCRequest& request);
 
 #endif

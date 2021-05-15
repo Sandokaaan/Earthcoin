@@ -20,7 +20,7 @@
    <item>
     <widget class="QTabWidget" name="tabWidget">
      <property name="currentIndex">
-      <number>0</number>
+      <number>2</number>
      </property>
      <widget class="QWidget" name="tabMain">
       <attribute name="title">
@@ -51,20 +51,20 @@
         </spacer>
        </item>
        <item>
-       <layout class="QHBoxLayout" name="horizontalLayout_Main_Prune">
-        <item>
-         <widget class="QCheckBox" name="prune">
-          <property name="toolTip">
-           <string>Disables some advanced features but all blocks will still be fully validated. Reverting this setting requires re-downloading the entire blockchain. Actual disk usage may be somewhat higher.</string>
-          </property>
-          <property name="text">
-           <string>Prune &amp;block storage to</string>
-          </property>
-         </widget>
-        </item>
-        <item>
-         <widget class="QSpinBox" name="pruneSize"/>
-        </item>
+        <layout class="QHBoxLayout" name="horizontalLayout_Main_Prune">
+         <item>
+          <widget class="QCheckBox" name="prune">
+           <property name="toolTip">
+            <string>Disables some advanced features but all blocks will still be fully validated. Reverting this setting requires re-downloading the entire blockchain. Actual disk usage may be somewhat higher.</string>
+           </property>
+           <property name="text">
+            <string>Prune &amp;block storage to</string>
+           </property>
+          </widget>
+         </item>
+         <item>
+          <widget class="QSpinBox" name="pruneSize"/>
+         </item>
          <item>
           <widget class="QLabel" name="pruneSizeUnitLabel">
            <property name="text">
@@ -709,6 +709,263 @@
    <item>
     <widget class="QFrame" name="frame">
      <layout class="QVBoxLayout" name="verticalLayout_Bottom">
+      <item>
+       <layout class="QHBoxLayout" name="horizontalLayout_2">
+        <item>
+         <widget class="QLabel" name="ipfsLB">
+          <property name="maximumSize">
+           <size>
+            <width>80</width>
+            <height>16777215</height>
+           </size>
+          </property>
+          <property name="text">
+           <string>IPFS gate</string>
+          </property>
+         </widget>
+        </item>
+        <item>
+         <widget class="QComboBox" name="ipfsCB">
+          <property name="toolTip">
+           <string>Select a IPFS gate</string>
+          </property>
+          <item>
+           <property name="text">
+            <string>ipfs://</string>
+           </property>
+          </item>
+          <item>
+           <property name="text">
+            <string>https://dweb.link/ipfs/</string>
+           </property>
+          </item>
+          <item>
+           <property name="text">
+            <string>https://ipfs.io/ipfs/</string>
+           </property>
+          </item>
+          <item>
+           <property name="text">
+            <string>https://gateway.ipfs.io/ipfs/</string>
+           </property>
+          </item>
+          <item>
+           <property name="text">
+            <string>https://trusted-setup.filecoin.io/ipfs/</string>
+           </property>
+          </item>
+          <item>
+           <property name="text">
+            <string>https://10.via0.com/ipfs/</string>
+           </property>
+          </item>
+          <item>
+           <property name="text">
+            <string>https://ipfs.yt/ipfs/</string>
+           </property>
+          </item>
+          <item>
+           <property name="text">
+            <string>https://gateway.pinata.cloud/ipfs/</string>
+           </property>
+          </item>
+          <item>
+           <property name="text">
+            <string>https://ipfs.scalaproject.io/ipfs/</string>
+           </property>
+          </item>
+          <item>
+           <property name="text">
+            <string>https://ipfs.sloppyta.co/ipfs/</string>
+           </property>
+          </item>
+          <item>
+           <property name="text">
+            <string>https://ipfs.taxi/ipfs/</string>
+           </property>
+          </item>
+          <item>
+           <property name="text">
+            <string>https://ipfs.eternum.io/ipfs/</string>
+           </property>
+          </item>
+          <item>
+           <property name="text">
+            <string>https://hardbin.com/ipfs/</string>
+           </property>
+          </item>
+          <item>
+           <property name="text">
+            <string>https://cloudflare-ipfs.com/ipfs/</string>
+           </property>
+          </item>
+          <item>
+           <property name="text">
+            <string>https://ipfs.eth.aragon.network/ipfs/</string>
+           </property>
+          </item>
+          <item>
+           <property name="text">
+            <string>https://ipfs.2read.net/ipfs/</string>
+           </property>
+          </item>
+          <item>
+           <property name="text">
+            <string>https://ninetailed.ninja/ipfs/</string>
+           </property>
+          </item>
+          <item>
+           <property name="text">
+            <string>https://cf-ipfs.com/ipfs/</string>
+           </property>
+          </item>
+          <item>
+           <property name="text">
+            <string>https://bin.d0x.to/ipfs/</string>
+           </property>
+          </item>
+          <item>
+           <property name="text">
+            <string>https://birds-are-nice.me/ipfs/</string>
+           </property>
+          </item>
+          <item>
+           <property name="text">
+            <string>https://video.oneloveipfs.com/ipfs/</string>
+           </property>
+          </item>
+          <item>
+           <property name="text">
+            <string>https://ipfs.itargo.io/ipfs/</string>
+           </property>
+          </item>
+          <item>
+           <property name="text">
+            <string>https://ipfs.overpi.com/ipfs/</string>
+           </property>
+          </item>
+          <item>
+           <property name="text">
+            <string>https://astyanax.io/ipfs/</string>
+           </property>
+          </item>
+          <item>
+           <property name="text">
+            <string>https://search.ipfsgate.com/ipfs/</string>
+           </property>
+          </item>
+          <item>
+           <property name="text">
+            <string>https://ipfs.noormohammed.tech/ipfs/</string>
+           </property>
+          </item>
+          <item>
+           <property name="text">
+            <string>https://ipfs.denarius.io/ipfs/</string>
+           </property>
+          </item>
+          <item>
+           <property name="text">
+            <string>https://ipfs.greyh.at/ipfs/</string>
+           </property>
+          </item>
+          <item>
+           <property name="text">
+            <string>https://ipfs.azurewebsites.net/ipfs/</string>
+           </property>
+          </item>
+          <item>
+           <property name="text">
+            <string>https://robotizing.net/ipfs/</string>
+           </property>
+          </item>
+          <item>
+           <property name="text">
+            <string>https://ipfs.decoo.io/ipfs/</string>
+           </property>
+          </item>
+          <item>
+           <property name="text">
+            <string>https://ipfs.mihir.ch/ipfs/</string>
+           </property>
+          </item>
+          <item>
+           <property name="text">
+            <string>https://ipfs.fleek.co/ipfs/</string>
+           </property>
+          </item>
+          <item>
+           <property name="text">
+            <string>https://gateway.originprotocol.com/ipfs/</string>
+           </property>
+          </item>
+          <item>
+           <property name="text">
+            <string>https://ipfs.drink.cafe/ipfs/</string>
+           </property>
+          </item>
+          <item>
+           <property name="text">
+            <string>https://bluelight.link/ipfs/</string>
+           </property>
+          </item>
+          <item>
+           <property name="text">
+            <string>https://ipfs.telos.miami/ipfs/</string>
+           </property>
+          </item>
+          <item>
+           <property name="text">
+            <string>https://ipfs.stibarc.com/ipfs/</string>
+           </property>
+          </item>
+          <item>
+           <property name="text">
+            <string>https://ipfs.infura.io/ipfs/</string>
+           </property>
+          </item>
+          <item>
+           <property name="text">
+            <string>https://crustwebsites.net/ipfs/</string>
+           </property>
+          </item>
+          <item>
+           <property name="text">
+            <string>https://ipfs.foxgirl.dev/ipfs/</string>
+           </property>
+          </item>
+          <item>
+           <property name="text">
+            <string>https://ipfs.jbb.one/ipfs/</string>
+           </property>
+          </item>
+         </widget>
+        </item>
+        <item>
+         <widget class="QPushButton" name="ipfsHelpBT">
+          <property name="maximumSize">
+           <size>
+            <width>20</width>
+            <height>16777215</height>
+           </size>
+          </property>
+          <property name="toolTip">
+           <string>Check avaiability of IPFS gates online </string>
+          </property>
+          <property name="text">
+           <string>?</string>
+          </property>
+         </widget>
+        </item>
+       </layout>
+      </item>
+      <item>
+       <widget class="Line" name="line">
+        <property name="orientation">
+         <enum>Qt::Horizontal</enum>
+        </property>
+       </widget>
+      </item>
       <item>
        <layout class="QHBoxLayout" name="horizontalLayout_Bottom">
         <item>

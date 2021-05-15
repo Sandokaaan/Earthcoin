@@ -38,10 +38,12 @@ public:
     QString getValue() const;
     bool isValid() const;
     void setLabel(QString &label);
+    void disableChanges();
 
 public Q_SLOTS:
     void clear();
     void on_pasteButton_clicked();
+    void on_copyKeyButton_clicked();
     void on_ownKey_clicked();
 
 private:

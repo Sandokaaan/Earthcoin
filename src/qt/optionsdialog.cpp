@@ -24,12 +24,21 @@
 #include <QLocale>
 #include <QMessageBox>
 #include <QTimer>
+#include <QDesktopServices>
+#include <QString>
+#include <QUrl>
 
-OptionsDialog::OptionsDialog(QWidget *parent, bool enableWallet) :
+//#include <boost/filesystem/fstream.hpp>
+//#include <iostream>
+//#include <fstream>
+//#include <string>
+
+OptionsDialog::OptionsDialog(QWidget *parent, bool enableWallet, QString & prefix) :
     QDialog(parent),
     ui(new Ui::OptionsDialog),
     model(0),
-    mapper(0)
+    mapper(0),
+    ipfsUrlPrefix(prefix)
 {
     ui->setupUi(this);
 
@@ -126,6 +135,9 @@ OptionsDialog::OptionsDialog(QWidget *parent, bool enableWallet) :
     connect(ui->proxyIpTor, SIGNAL(validationDidChange(QValidatedLineEdit *)), this, SLOT(updateProxyValidationState()));
     connect(ui->proxyPort, SIGNAL(textChanged(const QString&)), this, SLOT(updateProxyValidationState()));
     connect(ui->proxyPortTor, SIGNAL(textChanged(const QString&)), this, SLOT(updateProxyValidationState()));
+    int ifsGateIndex = loadIpfsConfig(ipfsUrlPrefix);
+    ui->ipfsCB->setCurrentIndex(ifsGateIndex);
+    connect(ui->ipfsCB,SIGNAL(activated(int)),this,SLOT(changeIpfsGate(int)));
 }
 
 OptionsDialog::~OptionsDialog()
@@ -356,4 +368,61 @@ QValidator::State ProxyAddressValidator::validate(QString &input, int &pos) cons
         return QValidator::Acceptable;
 
     return QValidator::Invalid;
+}
+
+void OptionsDialog::on_ipfsHelpBT_clicked()
+{
+    QString URL = "https://ipfs.github.io/public-gateway-checker/";
+    QDesktopServices::openUrl(QUrl(URL));
+}
+
+void OptionsDialog::changeIpfsGate(int i)
+{
+    try {
+        ipfsUrlPrefix = ui->ipfsCB->currentText();
+        saveIpfsConfig(i);
+    } catch(...){
+        return;
+    }
+}
+
+// non-member function
+int loadIpfsConfig(QString & ipfsUrlPrefix)
+{
+    try {
+        fs::path ipfsConfig = GetDataDir() / "ipfs.conf";
+        if ((fs::exists(ipfsConfig)))
+        {
+            fs::ifstream ifs{ipfsConfig};
+            std::string line1, line2;
+            if (getline(ifs, line1) && getline(ifs, line2)) {
+                QString qline = QString::fromStdString(line1);
+                ipfsUrlPrefix = QString::fromStdString(line2);
+                return qline.toInt();
+            }
+        }
+        else
+        {
+            fs::ofstream ofs{ipfsConfig};
+            ofs << "1\nhttps://dweb.link/ipfs/";
+            ipfsUrlPrefix = "https://dweb.link/ipfs/";
+            return 1;
+        }
+    } catch(...) {
+        ipfsUrlPrefix = "https://dweb.link/ipfs/";
+        return 1;   // default ipfs gate
+    }
+}
+
+void OptionsDialog::saveIpfsConfig(int i)
+{
+    try {
+        fs::path ipfsConfig = GetDataDir() / "ipfs.conf";
+        if ((fs::exists(ipfsConfig)))
+            fs::remove(ipfsConfig);
+        fs::ofstream ofs{ipfsConfig};
+        ofs << i << "\n" << ipfsUrlPrefix.toStdString();
+    } catch(...) {
+        loadIpfsConfig(ipfsUrlPrefix);
+    }
 }

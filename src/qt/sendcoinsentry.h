@@ -26,7 +26,7 @@ class SendCoinsEntry : public QStackedWidget
     Q_OBJECT
 
 public:
-    explicit SendCoinsEntry(const PlatformStyle *platformStyle, QWidget *parent = 0);
+    explicit SendCoinsEntry(const PlatformStyle *platformStyle, QWidget *parent = 0, bool multi=false);
     ~SendCoinsEntry();
 
     void setModel(WalletModel *model);
@@ -72,6 +72,7 @@ private:
     Ui::SendCoinsEntry *ui;
     WalletModel *model;
     const PlatformStyle *platformStyle;
+    bool showAsMulti;
 
     bool updateLabel(const QString &address);
 };

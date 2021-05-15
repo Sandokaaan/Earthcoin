@@ -17,6 +17,8 @@
 
 #include <keystore.h>
 #include <key.h>
+#include <wallet/wallet.h>
+#include <validation.h>
 
 PubKeyValidator::PubKeyValidator(QObject * parrent)
   : QValidator(parrent) {}
@@ -42,8 +44,8 @@ QValidator::State PubKeyValidator::validate(QString &input, int &pos) const
         }
         if (n == maxLen) 
         {
-	    const char *c_str2 = input.toLatin1().data();
-            CPubKey vchPubKey(ParseHex(c_str2));
+            std::string strKey = input.toStdString();
+            CPubKey vchPubKey(ParseHex(strKey));
             if (vchPubKey.IsFullyValid())
                 return QValidator::Acceptable;
             else
@@ -88,20 +90,54 @@ void MultisigEntry::on_pasteButton_clicked()
     ui->key->setFocus();
     ui->key->setText(QApplication::clipboard()->text());
     ui->key->clearFocus();
+    ui->copyKeyButton->setEnabled(isValid());
+}
+
+void MultisigEntry::on_copyKeyButton_clicked()
+{
+    QApplication::clipboard()->setText(ui->key->text());
 }
 
 void MultisigEntry::on_ownKey_clicked()
 {
-    CBasicKeyStore keystore;
-    CKey xkey;
-    xkey.MakeNewKey(true);
-    keystore.AddKey(xkey);
-    const CPubKey pkey = xkey.GetPubKey();
-    std::string sk = HexStr(pkey.begin(), pkey.end());
-    QString s = QString::fromStdString(sk);
+    QString s;
+    CWallet* const pwallet = (GetWallets().size()>0) ? 
+                            (GetWallets()[0] ? GetWallets()[0].get() : nullptr) :
+                            nullptr;
+    if (!pwallet || pwallet->IsWalletFlagSet(WALLET_FLAG_DISABLE_PRIVATE_KEYS))
+        s = "Error - wallet can not get a key";
+    else
+    {
+        LOCK2(cs_main, pwallet->cs_wallet);
+        std::string label = "MULTI_PRIV_KEYS";
+        OutputType ot = pwallet->m_default_address_type;
+        if (!pwallet->IsLocked())
+            pwallet->TopUpKeyPool();
+        CPubKey newKey;
+        if (!pwallet->GetKeyFromPool(newKey))
+            s =  "Error - keygen failed";
+        else
+        {
+            pwallet->LearnRelatedScripts(newKey, ot);
+            CTxDestination dest = GetDestinationForKey(newKey, ot);
+            pwallet->SetAddressBook(dest, label, "keystore");
+            std::string sk = HexStr(newKey.begin(), newKey.end());
+            s = QString::fromStdString(sk);
+        }
+    }
     ui->key->setFocus();
     ui->key->setText(s);
     ui->key->clearFocus();
+    if (isValid())
+        disableChanges();
+}
+
+void MultisigEntry::disableChanges() 
+{
+    ui->key->setEnabled(false);
+    ui->pasteButton->setEnabled(false);
+    ui->ownKey->setEnabled(false);
+    ui->copyKeyButton->setEnabled(true);
 }
 
 void MultisigEntry::setLabel(QString &label) 

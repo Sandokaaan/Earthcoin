@@ -38,7 +38,8 @@
 
 TransactionView::TransactionView(const PlatformStyle *platformStyle, QWidget *parent) :
     QWidget(parent), model(0), transactionProxyModel(0),
-    transactionView(0), abandonAction(0), bumpFeeAction(0), columnResizingFixer(0)
+    transactionView(0), abandonAction(0), bumpFeeAction(0), columnResizingFixer(0),
+    ipfsUrlPrefix(NULL)
 {
     // Build filter row
     setContentsMargins(0,0,0,0);
@@ -518,6 +519,7 @@ void TransactionView::showDetails()
     if(!selection.isEmpty())
     {
         TransactionDescDialog *dlg = new TransactionDescDialog(selection.at(0));
+        dlg->setIpfsUrlPrefix(ipfsUrlPrefix);
         dlg->setAttribute(Qt::WA_DeleteOnClose);
         dlg->show();
     }
