@@ -21,7 +21,6 @@
 #include <policy/policy.h>
 #include <core_io.h>
 #include <rpc/server.h>
-//#include <wallet/rpcwallet.h> - vratit zpet zmeny
 
 #include <stdint.h>
 #include <string>
