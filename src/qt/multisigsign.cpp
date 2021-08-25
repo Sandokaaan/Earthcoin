@@ -54,9 +54,9 @@ MultisigSign::~MultisigSign()
 void MultisigSign::on_pasteTransactionButton_clicked()
 {
     ui->lineEditPrivateKey->clear();
-    ui->lineEditSignedTransaction->clear();
+    ui->rawTxLineEdit->clear();
     ui->lineEditSendStatus->clear();
-    ui->lineEditUnsignedTransaction->setPlainText(QApplication::clipboard()->text());
+    ui->rawTxLineEdit->setPlainText(QApplication::clipboard()->text());
     decodeTransaction();
 }
 
@@ -75,7 +75,7 @@ void MultisigSign::on_pastePrivateKeyButton_clicked()
 
 void MultisigSign::on_copyTransactionButton_clicked()
 {
-    QApplication::clipboard()->setText(ui->lineEditSignedTransaction->toPlainText());
+    QApplication::clipboard()->setText(ui->rawTxLineEdit->toPlainText());
 }
 
 void MultisigSign::on_copyTxidButton_clicked()
@@ -262,7 +262,7 @@ void MultisigSign::useExtPrivKey(int i)
 void MultisigSign::decodeTransaction()
 {
     try {
-        std::string rawTx = ui->lineEditUnsignedTransaction->toPlainText().toStdString();
+        std::string rawTx = ui->rawTxLineEdit->toPlainText().toStdString();
         JSONRPCRequest request;
         request.params = UniValue(UniValue::VARR);
         request.params.push_back(rawTx);
@@ -330,7 +330,7 @@ void MultisigSign::signWithKey()
     CBasicKeyStore keystore;
     keystore.AddKey(privKey);
     CMutableTransaction mtx;
-    std::string rawTx = ui->lineEditUnsignedTransaction->toPlainText().toStdString();
+    std::string rawTx = ui->rawTxLineEdit->toPlainText().toStdString();
     if (!DecodeHexTx(mtx, rawTx, true, true))
     {
         ui->lineEditSendStatus->setText("❌ Invalid transaction");
@@ -371,13 +371,14 @@ void MultisigSign::showSignResult(const UniValue & rts)
                     return;
                 }
             }
-            ui->lineEditSignedTransaction->setPlainText(QString::fromStdString(rts["hex"].get_str()));
+            ui->rawTxLineEdit->setPlainText(QString::fromStdString(rts["hex"].get_str()));
             ui->sendTransactionButton->setEnabled(complete);
             ui->pastePrivateKeyButton->setEnabled(false);
             ui->exprivkeyCB->setEnabled(false);
             ui->lineEditPrivateKey->setEnabled(false);
             ui->signTransactionButton->setEnabled(false);
             ui->copyTransactionButton->setEnabled(true);
+            ui->pasteTransactionButton->setEnabled(false);
         }
         else
         {
@@ -386,14 +387,14 @@ void MultisigSign::showSignResult(const UniValue & rts)
         }
     }
     catch(std::exception& e) {
-        ui->lineEditSignedTransaction->setPlainText(QString::fromStdString(e.what()));
+        ui->rawTxLineEdit->setPlainText(QString::fromStdString(e.what()));
         return;
     }
 }
 
 void MultisigSign::signWithWallet()
 {
-    std::string rawTx = ui->lineEditUnsignedTransaction->toPlainText().toStdString();
+    std::string rawTx = ui->rawTxLineEdit->toPlainText().toStdString();
     try {
         JSONRPCRequest request;
         request.params = UniValue(UniValue::VARR);
@@ -423,7 +424,7 @@ void MultisigSign::sendTransaction()
     ui->sendTransactionButton->setEnabled(false);
     ui->copyTxidButton->setEnabled(true);
     CMutableTransaction mtx;
-    std::string rawTx = ui->lineEditSignedTransaction->toPlainText().toStdString();
+    std::string rawTx = ui->rawTxLineEdit->toPlainText().toStdString();
     if (!DecodeHexTx(mtx, rawTx, true, true)) 
     {
         ui->lineEditSendStatus->setText("❌ Invalid transaction");

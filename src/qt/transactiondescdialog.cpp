@@ -33,10 +33,6 @@ TransactionDescDialog::~TransactionDescDialog()
 
 void TransactionDescDialog::on_openIPFSButton_clicked()
 {
-    /*QString URL = "https://dweb.link/ipfs/";
-    if (ipfsUrlPrefix)
-        URL = (*ipfsUrlPrefix);*/
     QString URL = (ipfsUrlPrefix ? (*ipfsUrlPrefix) : "https://dweb.link/ipfs/") + IPFS;
-    //URL += IPFS;
     QDesktopServices::openUrl(QUrl(URL));
 }

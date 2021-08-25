@@ -19,6 +19,9 @@
 #include <wallet/db.h>
 #include <wallet/wallet.h>
 #include <policy/policy.h>
+#include <core_io.h>
+#include <rpc/server.h>
+//#include <wallet/rpcwallet.h> - vratit zpet zmeny
 
 #include <stdint.h>
 #include <string>
@@ -43,6 +46,48 @@ QString TransactionDesc::FormatTxStatus(const interfaces::WalletTx& wtx, const i
             return tr("%1/unconfirmed").arg(nDepth);
         else
             return tr("%1 confirmations").arg(nDepth);
+    }
+}
+
+QString getSourceAddresses(interfaces::Node& node, interfaces::Wallet& wallet, TransactionRecord *rec)
+{
+    try {
+        QString rts = "";
+        CTransactionRef tmpTx = wallet.getTx(rec->hash);
+        std::string rawTx = EncodeHexTx(*tmpTx, RPCSerializationFlags());
+        UniValue params;
+        params = UniValue(UniValue::VARR);
+        params.push_back(rawTx);
+        UniValue decodedTx = node.executeRpc("decoderawtransaction", params, "");
+        const UniValue & inputs = decodedTx["vin"].get_array();
+        int nVin = inputs.size();
+        QStringList adrList = {};
+        for (int i=0; i<nVin; i++)
+        {
+            const UniValue & input = inputs[i];
+            const UniValue & scriptSig = input["scriptSig"];
+            QString sigAsm = QString::fromStdString(scriptSig["asm"].get_str());
+            QStringList sigList = sigAsm.split(" ");
+            QString qstrPubKey = sigList[sigList.size()-1];
+            std::string strPubKey = qstrPubKey.toStdString();
+            std::vector<unsigned char> bufKey = ParseHex(strPubKey);
+            CPubKey pubKey(bufKey);
+            if (pubKey.IsFullyValid())
+                adrList.append(QString::fromStdString(EncodeDestination(GetDestinationForKey(pubKey, OutputType::LEGACY))));
+            else
+            {
+                UniValue params;
+                params = UniValue(UniValue::VARR);
+                params.push_back(strPubKey);
+                UniValue decodedScript = node.executeRpc("decodescript", params, "");
+                adrList.append(QString::fromStdString(decodedScript["p2sh"].get_str()));
+            }
+        }
+        rts = adrList.join(", ");
+        return rts;
+    }
+    catch(...) {
+        return "unknown";
     }
 }
 
@@ -94,7 +139,7 @@ QString TransactionDesc::toHTML(interfaces::Node& node, interfaces::Wallet& wall
                 isminetype ismine;
                 if (wallet.getAddress(address, &name, &ismine, /* purpose= */ nullptr))
                 {
-                    strHTML += "<b>" + tr("From") + ":</b> " + tr("unknown") + "<br>";
+                    strHTML += "<b>" + tr("From") + ":</b> " + getSourceAddresses(node, wallet, rec) + "<br>";
                     strHTML += "<b>" + tr("To") + ":</b> ";
                     strHTML += GUIUtil::HtmlEscape(rec->address);
                     QString addressOwned = ismine == ISMINE_SPENDABLE ? tr("own address") : tr("watch-only");
@@ -338,7 +383,6 @@ QString TransactionDesc::toHTML(interfaces::Node& node, interfaces::Wallet& wall
 
         strHTML += "</ul>";
     }
-
     strHTML += "</font></html>";
     return strHTML;
 }
