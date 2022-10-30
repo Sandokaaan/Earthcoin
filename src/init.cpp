@@ -68,6 +68,8 @@
 #include <zmq/zmqrpc.h>
 #endif
 
+using boost::bind;   // a build-fix for new compillers
+
 bool fFeeEstimatesInitialized = false;
 static const bool DEFAULT_PROXYRANDOMIZE = true;
 static const bool DEFAULT_REST_ENABLE = false;
