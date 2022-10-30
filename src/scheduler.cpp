@@ -11,6 +11,8 @@
 #include <boost/bind.hpp>
 #include <utility>
 
+using boost::bind;   // a build-fix for new compillers
+
 CScheduler::CScheduler() : nThreadsServicingQueue(0), stopRequested(false), stopWhenEmpty(false)
 {
 }
