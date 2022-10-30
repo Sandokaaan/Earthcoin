@@ -23,6 +23,8 @@
 #include <signal.h>
 #include <future>
 
+#include <deque>       // a hotfix for new compilers
+
 #include <event2/thread.h>
 #include <event2/buffer.h>
 #include <event2/bufferevent.h>
