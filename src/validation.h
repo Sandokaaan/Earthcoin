@@ -31,6 +31,9 @@
 
 #include <atomic>
 
+#include <boost/bind.hpp>
+using boost::bind;   // a build-fix for new compillers
+
 class CBlockIndex;
 class CBlockTreeDB;
 class CChainParams;
