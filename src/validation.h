@@ -32,7 +32,7 @@
 #include <atomic>
 
 #include <boost/bind/bind.hpp>
-using boost::bind;   // a build-fix for new compillers
+using namespace boost::bind;   // a build-fix for new compillers
 
 class CBlockIndex;
 class CBlockTreeDB;
