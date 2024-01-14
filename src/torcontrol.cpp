@@ -27,7 +27,7 @@
 #include <event2/event.h>
 #include <event2/thread.h>
 
-using namespace boost::bind;   // a build-fix for new compillers
+using namespace boost::placeholders;   // a build-fix for new compillers
 
 /** Default control port */
 const std::string DEFAULT_TOR_CONTROL = "127.0.0.1:9051";
