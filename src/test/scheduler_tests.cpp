@@ -7,9 +7,11 @@
 
 #include <test/test_earthcoin.h>
 
-#include <boost/bind.hpp>
+#include <boost/bind/bind.hpp>
 #include <boost/thread.hpp>
 #include <boost/test/unit_test.hpp>
+
+using namespace boost::bind;   // a build-fix for new compillers
 
 BOOST_AUTO_TEST_SUITE(scheduler_tests)
 
