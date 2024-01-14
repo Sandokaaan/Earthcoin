@@ -23,7 +23,7 @@
 #include <memory> // for unique_ptr
 #include <unordered_map>
 
-using namespace boost::bind;   // a build-fix for new compillers
+using namespace boost::placeholders;   // a build-fix for new compillers
 
 static CCriticalSection cs_rpcWarmup;
 static bool fRPCRunning = false;
