@@ -4,5 +4,5 @@
 # file COPYING or http://www.opensource.org/licenses/mit-license.php.
 
 ./autogen.sh
-./configure --with_incompatible_bdb
+./configure --with-incompatible-bdb
 make
