@@ -65,22 +65,22 @@ BOOST_AUTO_TEST_CASE(subsidy_limit_test)
     const auto chainParams = CreateChainParams(CBaseChainParams::MAIN);
     const auto params = chainParams->GetConsensus();
     CAmount nSum = 0;
-    uint256 prevHash = uint256S("0");
+    // uint256 prevHash = uint256S("0");     // Sando: not required for GetEarthcoinBlockSubsidy()
 
     for (nHeight = 0; nHeight <= 100000; nHeight++) {
-        CAmount nSubsidy = GetEarthcoinBlockSubsidy(nHeight, params, prevHash);
+        CAmount nSubsidy = GetEarthcoinBlockSubsidy(nHeight, params);
         BOOST_CHECK(MoneyRange(nSubsidy));
         BOOST_CHECK(nSubsidy <= 1000000 * COIN);
         nSum += nSubsidy * nStepSize;
     }
     for (; nHeight <= 145000; nHeight++) {
-        CAmount nSubsidy = GetEarthcoinBlockSubsidy(nHeight, params, prevHash);
+        CAmount nSubsidy = GetEarthcoinBlockSubsidy(nHeight, params);
         BOOST_CHECK(MoneyRange(nSubsidy));
         BOOST_CHECK(nSubsidy <= 500000 * COIN);
         nSum += nSubsidy * nStepSize;
     }
     for (; nHeight < 600000; nHeight++) {
-        CAmount nSubsidy = GetEarthcoinBlockSubsidy(nHeight, params, prevHash);
+        CAmount nSubsidy = GetEarthcoinBlockSubsidy(nHeight, params);
         CAmount nExpectedSubsidy = (500000 >> (nHeight / 100000)) * COIN;
         BOOST_CHECK(MoneyRange(nSubsidy));
         BOOST_CHECK_EQUAL(nSubsidy, nExpectedSubsidy);
@@ -95,10 +95,10 @@ BOOST_AUTO_TEST_CASE(subsidy_limit_test)
     BOOST_CHECK(nSum >= lowerlimit);
 
     // Test reward at 600k+ is constant
-    CAmount nConstantSubsidy = GetEarthcoinBlockSubsidy(600000, params, prevHash);
+    CAmount nConstantSubsidy = GetEarthcoinBlockSubsidy(600000, params);
     BOOST_CHECK_EQUAL(nConstantSubsidy, 10000 * COIN);
 
-    nConstantSubsidy = GetEarthcoinBlockSubsidy(700000, params, prevHash);
+    nConstantSubsidy = GetEarthcoinBlockSubsidy(700000, params);
     BOOST_CHECK_EQUAL(nConstantSubsidy, 10000 * COIN);
 }
 
