@@ -6,3 +6,10 @@
 ./autogen.sh
 ./configure --with-incompatible-bdb
 make
+cd src
+strip earthcoind
+strip earthcoin-cli
+strip earthcoin-tx
+cp earthcoind ../../earthcoind
+cp earthcoin-cli ../../earthcoin-cli
+cp earthcoin-tx ../../earthcoin-tx
