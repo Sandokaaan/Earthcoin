@@ -31,7 +31,7 @@
 
 #include <atomic>
 
-#include <boost/bind.hpp>
+#include <boost/bind/bind.hpp>
 using boost::bind;   // a build-fix for new compillers
 
 class CBlockIndex;
