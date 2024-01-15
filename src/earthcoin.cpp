@@ -15,12 +15,12 @@
     #define M_PI 3.14159265358979323846
 #endif
 
-int static generateMTRandom(unsigned int s, int range)
+/* int static generateMTRandom(unsigned int s, int range)
 {
     boost::mt19937 gen(s);
     boost::uniform_int<> dist(1, range);
     return dist(gen);
-}
+} */           // Sando: not used any more, so do not compile
 
 // Earthcoin: Normally minimum difficulty blocks can only occur in between
 // retarget blocks. However, once we introduce Digishield every block is
