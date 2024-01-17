@@ -87,8 +87,8 @@ CMessageHeader::CMessageHeader(const MessageStartChars& pchMessageStartIn)
 CMessageHeader::CMessageHeader(const MessageStartChars& pchMessageStartIn, const char* pszCommand, unsigned int nMessageSizeIn)
 {
     memcpy(pchMessageStart, pchMessageStartIn, MESSAGE_START_SIZE);
-    memset(pchCommand, 0, sizeof(pchCommand));
-    strncpy(pchCommand, pszCommand, COMMAND_SIZE);
+    memset(pchCommand, 0, COMMAND_SIZE);              // Sando: The same as memset(pchCommand, 0, sizeof(pchCommand)); but easier to understand. 
+    strncpy(pchCommand, pszCommand, COMMAND_SIZE-1);  // Sando: No pchCommand is longer that 11 bytes. Fix a compiler warning.
     nMessageSize = nMessageSizeIn;
     memset(pchChecksum, 0, CHECKSUM_SIZE);
 }
