@@ -346,8 +346,9 @@ public:
         if (!m_provider->GetPubKey(pos, arg, key)) return false;
         CKeyID keyid = key.GetID();
         {
-            CScript p2pk = GetScriptForRawPubKey(key);
-            CScript p2pkh = GetScriptForDestination(keyid);
+            CScript p2pk, p2pkh;                // Sando: Fix a compiler warning - initialize variables, than asign
+            p2pk = GetScriptForRawPubKey(key);
+            p2pkh = GetScriptForDestination(keyid);
             output_scripts = std::vector<CScript>{std::move(p2pk), std::move(p2pkh)};
             out.pubkeys.emplace(keyid, key);
         }
