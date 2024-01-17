@@ -229,7 +229,7 @@ public:
                 fail_reason, coin_control, sign)) {
             return {};
         }
-        return std::move(pending);
+        return pending;       // Sando: return std::move(pending); caused a compiler warning (redundant move in return statement)
     }
     bool transactionCanBeAbandoned(const uint256& txid) override { return m_wallet.TransactionCanBeAbandoned(txid); }
     bool abandonTransaction(const uint256& txid) override
