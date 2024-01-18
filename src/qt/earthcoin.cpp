@@ -357,7 +357,7 @@ void EarthcoinApplication::createWindow(const NetworkStyle *networkStyle)
 
 void EarthcoinApplication::createSplashScreen(const NetworkStyle *networkStyle)
 {
-    SplashScreen *splash = new SplashScreen(m_node, 0, networkStyle);
+    SplashScreen *splash = new SplashScreen(m_node, Qt::WindowFlags(), networkStyle);   // Sando: Fix a compiler warning
     // We don't hold a direct pointer to the splash screen after creation, but the splash
     // screen will take care of deleting itself when slotFinish happens.
     splash->show();
