@@ -72,9 +72,9 @@ const std::string EarthcoinGUI::DEFAULT_UIPLATFORM =
 
 EarthcoinGUI::EarthcoinGUI(interfaces::Node& node, const PlatformStyle *_platformStyle, const NetworkStyle *networkStyle, QWidget *parent) :
     QMainWindow(parent),
+    ipfsUrlPrefix(""),               // Sando: Fix initialization order to hide a compiler warning
     m_node(node),
-    platformStyle(_platformStyle),
-    ipfsUrlPrefix("")
+    platformStyle(_platformStyle)    
 {
     QSettings settings;
     if (!restoreGeometry(settings.value("MainWindowGeometry").toByteArray())) {
