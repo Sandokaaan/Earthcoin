@@ -99,7 +99,7 @@ public:
 
             const QFontMetrics fm(fontMetrics());
             int h = lineEdit()->minimumSizeHint().height();
-            //int w = fm.width(EarthcoinUnits::format(EarthcoinUnits::EAC, EarthcoinUnits::maxMoney(), false, EarthcoinUnits::separatorAlways));
+            // Sando: obsolete fm.width() replaced by fm.horizontalAdvance() 
             int w = fm.horizontalAdvance(EarthcoinUnits::format(EarthcoinUnits::EAC, EarthcoinUnits::maxMoney(), false, EarthcoinUnits::separatorAlways));
             w += 2; // cursor blinking space
 
@@ -172,7 +172,7 @@ protected:
         if (text().isEmpty()) // Allow step-up with empty field
             return StepUpEnabled;
 
-        StepEnabled rv = StepEnabled();  // Sando: used default constructor instead of 0
+        StepEnabled rv = StepEnabled();  // Sando: used default constructor instead of 0 to fix compiler warning
         bool valid = false;
         CAmount val = value(&valid);
         if(valid)
