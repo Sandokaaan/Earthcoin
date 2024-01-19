@@ -90,13 +90,15 @@ public:
         }
         // qLowerBound() and qUpperBound() require our cachedAddressTable list to be sorted in asc order
         // Even though the map is already sorted this re-sorting step is needed because the originating map
-        // is sorted by binary address, not by base58() address.
+        // is sorted by binary address, not by base58() address. 
+        /// Sando: qSort() is obsolete -> changed to std::sort()
         std::sort(cachedAddressTable.begin(), cachedAddressTable.end(), AddressTableEntryLessThan());
     }
 
     void updateEntry(const QString &address, const QString &label, bool isMine, const QString &purpose, int status)
     {
         // Find address / label in model
+        /// Sando: changed to std:: functions included in <algorithm>
         QList<AddressTableEntry>::iterator lower = std::lower_bound(
             cachedAddressTable.begin(), cachedAddressTable.end(), address, AddressTableEntryLessThan());
         QList<AddressTableEntry>::iterator upper = std::upper_bound(
@@ -302,7 +304,7 @@ QVariant AddressTableModel::headerData(int section, Qt::Orientation orientation,
 Qt::ItemFlags AddressTableModel::flags(const QModelIndex &index) const
 {
     if(!index.isValid())
-        return Qt::ItemFlags();
+        return Qt::ItemFlags();   // Sando: originally 'return 0;' caused a warning on new compilers
     AddressTableEntry *rec = static_cast<AddressTableEntry*>(index.internalPointer());
 
     Qt::ItemFlags retval = Qt::ItemIsSelectable | Qt::ItemIsEnabled;
