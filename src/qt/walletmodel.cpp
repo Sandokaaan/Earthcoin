@@ -29,7 +29,7 @@
 
 #include <boost/bind/placeholders.hpp>   // Sando: fix a new compiler error
 
-using namespace boost::placeholders;
+using namespace boost::placeholders;     // Sando: enable placeholders short names (_1, _2 etc)
 
 
 WalletModel::WalletModel(std::unique_ptr<interfaces::Wallet> wallet, interfaces::Node& node, const PlatformStyle *platformStyle, OptionsModel *_optionsModel, QObject *parent) :
