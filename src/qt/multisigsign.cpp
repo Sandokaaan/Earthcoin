@@ -254,7 +254,7 @@ void MultisigSign::useExtPrivKey(int i)
 {
     ui->lineEditPrivateKey->setEnabled(allInputsValid && i);
     ui->pastePrivateKeyButton->setEnabled(allInputsValid && i);
-    ui->signTransactionButton->setEnabled( allInputsValid && (!i && ownPrivkey) || (i && extPrivkeyValid()) );
+    ui->signTransactionButton->setEnabled( allInputsValid && ( (!i && ownPrivkey) || (i && extPrivkeyValid()) ) );  // Sando: fix parentheses
     if (allInputsValid && ui->lineEditPrivateKey->text().isEmpty())
         ui->lineEditPrivateKey->setPlaceholderText(i ? "Enter private key here ..." : "");
 }

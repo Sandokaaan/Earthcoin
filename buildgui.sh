@@ -11,4 +11,4 @@ strip earthcoind
 strip earthcoin-cli
 strip earthcoin-tx
 cd qt
-# strip earthcoin.gui
+strip earthcoin-qt

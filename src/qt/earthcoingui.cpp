@@ -1310,7 +1310,7 @@ UnitDisplayStatusBarControl::UnitDisplayStatusBarControl(const PlatformStyle *pl
     const QFontMetrics fm(font());
     for (const EarthcoinUnits::Unit unit : units)
     {
-        max_width = qMax(max_width, fm.width(EarthcoinUnits::longName(unit)));
+        max_width = qMax(max_width, fm.horizontalAdvance(EarthcoinUnits::longName(unit)));   // Sando: fm.width() is deprecated
     }
     setMinimumSize(max_width, 0);
     setAlignment(Qt::AlignRight | Qt::AlignVCenter);

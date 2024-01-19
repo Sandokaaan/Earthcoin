@@ -57,8 +57,8 @@ QValidator::State PubKeyValidator::validate(QString &input, int &pos) const
 
 MultisigEntry::MultisigEntry(QWidget *parent) :
     QWidget(parent),
-    model(0),
-    ui(new Ui::MultisigEntry)
+    ui(new Ui::MultisigEntry),
+    model(0)					// Sando: order of initialization fix
 {
     ui->setupUi(this);
     ui->key->setValidator(new PubKeyValidator(this));

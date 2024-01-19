@@ -39,6 +39,7 @@
 #include <QTime>
 #include <QTimer>
 #include <QStringList>
+#include <QScreen>       // Sando: for QGuiApplication::screen()
 
 // TODO: add a scrollback limit, as there is currently none
 // TODO: make it possible to filter out categories (esp debug messages when implemented)
@@ -458,7 +459,8 @@ RPCConsole::RPCConsole(interfaces::Node& node, const PlatformStyle *_platformSty
     QSettings settings;
     if (!restoreGeometry(settings.value("RPCConsoleWindowGeometry").toByteArray())) {
         // Restore failed (perhaps missing setting), center the window
-        move(QApplication::desktop()->availableGeometry().center() - frameGeometry().center());
+        auto screen = QGuiApplication::screens().at(0);                        // Sando: fix a compiler warning
+        move(screen->availableGeometry().center() - frameGeometry().center());
     }
 
     ui->openDebugLogfileButton->setToolTip(ui->openDebugLogfileButton->toolTip().arg(tr(PACKAGE_NAME)));

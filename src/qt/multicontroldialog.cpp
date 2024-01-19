@@ -52,13 +52,13 @@ bool CMultiControlWidgetItem::operator<(const QTreeWidgetItem &other) const {
 MultiControlDialog::MultiControlDialog(const PlatformStyle *_platformStyle, QWidget *parent) :
     QDialog(parent),
     ui(new Ui::MultiControlDialog),
-    hideZero(true),
-    freeze(false),
+    platformStyle(_platformStyle),
     nAvaiableAmount(0),
     nPayAmount(0),
-    nPayFee(0),
     nChange(0),
-    platformStyle(_platformStyle)
+    nPayFee(0),
+    freeze(false),
+    hideZero(true)            // Sando: updated initialization order to fix a compiler warning
 {
     ui->setupUi(this);
 
@@ -135,7 +135,7 @@ void MultiControlDialog::disableOtherChecks()
     int donotDisable = -1;
     ui->lineEditChange->setText("");
     bool oneChecked = false;
-    Qt::CheckState state = Qt::Checked;
+    //  Qt::CheckState state = Qt::Checked;     // Sando: unused variable
     for (int i = 0; i < ui->treeWidget->topLevelItemCount(); i++)
     {
         if (ui->treeWidget->topLevelItem(i)->checkState(COLUMN_CHECKBOX) != Qt::Unchecked)
@@ -471,9 +471,9 @@ void MultiControlDialog::updateLabels(QDialog* dialog)
     sendButtonColor("lightGray", "unsigned transaction");
     nChange = 0;
     unsigned int nBytes = 0;
-    unsigned int nBytesInputs = 0;
+    // unsigned int nBytesInputs = 0;       // Sando: unused variable
     unsigned int nQuantity = 0;
-    bool fWitness = false;
+    // bool fWitness = false;               // Sando: unused variable
     bool fDust = false;
     CAmount nAmount = calcAmount(nQuantity);
     nChange = 0;
