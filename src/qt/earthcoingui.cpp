@@ -59,6 +59,11 @@
 #include <QToolBar>
 #include <QUrlQuery>
 #include <QVBoxLayout>
+#include <QGuiApplication>  // Sando: for QGuiApplication::screen()
+#include <QScreen>
+#include <boost/bind/placeholders.hpp>
+
+using namespace boost::placeholders;
 
 const std::string EarthcoinGUI::DEFAULT_UIPLATFORM =
 #if defined(Q_OS_MAC)
@@ -79,7 +84,9 @@ EarthcoinGUI::EarthcoinGUI(interfaces::Node& node, const PlatformStyle *_platfor
     QSettings settings;
     if (!restoreGeometry(settings.value("MainWindowGeometry").toByteArray())) {
         // Restore failed (perhaps missing setting), center the window
-        move(QApplication::desktop()->availableGeometry().center() - frameGeometry().center());
+        // move(QApplication::desktop()->availableGeometry().center() - frameGeometry().center());
+        auto screen = QGuiApplication::screens().at(0);
+        move(screen->availableGeometry().center() - frameGeometry().center());
     }
 
     QString windowTitle = tr(PACKAGE_NAME) + " - ";
@@ -1167,7 +1174,8 @@ void EarthcoinGUI::updateProxyIcon()
     bool proxy_enabled = clientModel->getProxyInfo(ip_port);
 
     if (proxy_enabled) {
-        if (labelProxyIcon->pixmap() == 0) {
+        // if (labelProxyIcon->pixmap() == 0) {
+        if (labelProxyIcon->pixmap(Qt::ReturnByValue).isNull()) {
             QString ip_port_q = QString::fromStdString(ip_port);
             labelProxyIcon->setPixmap(platformStyle->SingleColorIcon(":/icons/proxy").pixmap(STATUSBAR_ICONSIZE, STATUSBAR_ICONSIZE));
             labelProxyIcon->setToolTip(tr("Proxy is <b>enabled</b>: %1").arg(ip_port_q));

@@ -15,6 +15,8 @@
 #include <QDebug>
 #include <QList>
 
+#include <algorithm>
+
 bool BannedNodeLessThan::operator()(const CCombinedBan& left, const CCombinedBan& right) const
 {
     const CCombinedBan* pLeft = &left;
@@ -63,7 +65,8 @@ public:
 
         if (sortColumn >= 0)
             // sort cachedBanlist (use stable sort to prevent rows jumping around unnecessarily)
-            qStableSort(cachedBanlist.begin(), cachedBanlist.end(), BannedNodeLessThan(sortColumn, sortOrder));
+            //qStableSort(cachedBanlist.begin(), cachedBanlist.end(), BannedNodeLessThan(sortColumn, sortOrder));
+            std::stable_sort(cachedBanlist.begin(), cachedBanlist.end(), BannedNodeLessThan(sortColumn, sortOrder));
     }
 
     int size() const
@@ -148,7 +151,7 @@ QVariant BanTableModel::headerData(int section, Qt::Orientation orientation, int
 Qt::ItemFlags BanTableModel::flags(const QModelIndex &index) const
 {
     if(!index.isValid())
-        return 0;
+        return Qt::ItemFlags();
 
     Qt::ItemFlags retval = Qt::ItemIsSelectable | Qt::ItemIsEnabled;
     return retval;

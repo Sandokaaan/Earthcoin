@@ -10,6 +10,8 @@
 #include <QColor>
 #include <QTimer>
 
+#include <QPainterPath>   // Sando: fix a new compiler error
+
 #include <cmath>
 
 #define DESIRED_SAMPLES         800
