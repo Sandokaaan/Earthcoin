@@ -34,8 +34,8 @@ WalletView::WalletView(const PlatformStyle *_platformStyle, QWidget *parent):
     QStackedWidget(parent),
     clientModel(0),
     walletModel(0),
-    platformStyle(_platformStyle),
-    ipfsUrlPrefix(NULL)
+    ipfsUrlPrefix(NULL),
+    platformStyle(_platformStyle)                 // Sando: fix initialization order
 {
     // Create tabs
     overviewPage = new OverviewPage(platformStyle);

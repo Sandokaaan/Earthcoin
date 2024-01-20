@@ -12,3 +12,9 @@ strip earthcoin-cli
 strip earthcoin-tx
 cd qt
 strip earthcoin-qt
+cp earthcoin-qt ../../
+cd ..
+cp earthcoin-tx ../
+cp earthcoin-cli ../
+cp earthcoind ../
+cd ..

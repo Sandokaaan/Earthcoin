@@ -412,6 +412,7 @@ int loadIpfsConfig(QString & ipfsUrlPrefix)
         ipfsUrlPrefix = "https://dweb.link/ipfs/";
         return 1;   // default ipfs gate
     }
+    return 0;    // Sando: Should never step here, but compiler requires some return value.
 }
 
 void OptionsDialog::saveIpfsConfig(int i)

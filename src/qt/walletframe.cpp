@@ -17,8 +17,8 @@
 WalletFrame::WalletFrame(const PlatformStyle *_platformStyle, EarthcoinGUI *_gui) :
     QFrame(_gui),
     gui(_gui),
-    platformStyle(_platformStyle),
-    ipfsUrlPrefix(NULL)
+    ipfsUrlPrefix(NULL),
+    platformStyle(_platformStyle)         // Sando: fix initialization order
 {
     // Leave HBox hook for adding a list view later
     QHBoxLayout *walletFrameLayout = new QHBoxLayout(this);
