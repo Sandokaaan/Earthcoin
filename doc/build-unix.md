@@ -74,7 +74,7 @@ Build requirements:
 
 BerkeleyDB is required for the wallet.
 
-    sudo apt-get install libdb5.1-dev libdb5.1++-dev
+    sudo apt-get install libdb libdb-dev libdb++-dev
 
        Note that if you have Berkeley DB 4.8 packages installed (i.e. for other
        wallet software), they are incompatible with the packages for 5.1. You
