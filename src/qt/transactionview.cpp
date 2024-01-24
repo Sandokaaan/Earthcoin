@@ -37,8 +37,8 @@
 #include <QVBoxLayout>
 
 TransactionView::TransactionView(const PlatformStyle *platformStyle, QWidget *parent) :
-    QWidget(parent), model(0), transactionProxyModel(0), transactionView(0), 
-        ipfsUrlPrefix(NULL), abandonAction(0), bumpFeeAction(0), columnResizingFixer(0)    // Sando: fix initialization order
+    QWidget(parent), model(0), transactionProxyModel(0), transactionView(0),
+    ipfsUrlPrefix(NULL), abandonAction(0), bumpFeeAction(0), columnResizingFixer(0)    // Sando: fix initialization order
 {
     // Build filter row
     setContentsMargins(0,0,0,0);
@@ -233,7 +233,7 @@ void TransactionView::setModel(WalletModel *_model)
         if (_model->getOptionsModel())
         {
             // Add third party transaction URLs to context menu
-            QStringList listUrls = _model->getOptionsModel()->getThirdPartyTxUrls().split("|", Qt::SkipEmptyParts);   // Sando: fix a compiler warning
+            QStringList listUrls = _model->getOptionsModel()->getThirdPartyTxUrls().split("|", QString::SkipEmptyParts);
             for (int i = 0; i < listUrls.size(); ++i)
             {
                 QString host = QUrl(listUrls[i].trimmed(), QUrl::StrictMode).host();
@@ -271,29 +271,30 @@ void TransactionView::chooseDate(int idx)
         break;
     case Today:
         transactionProxyModel->setDateRange(
-                current.startOfDay(),                                        // Sando: fix a compiler warning
+                QDateTime(current),
                 TransactionFilterProxy::MAX_DATE);
         break;
     case ThisWeek: {
         // Find last Monday
+        QDate startOfWeek = current.addDays(-(current.dayOfWeek()-1));
         transactionProxyModel->setDateRange(
-                current.addDays(-(current.dayOfWeek()-1)).startOfDay(),      // Sando: fix a compiler warning
+                QDateTime(startOfWeek),
                 TransactionFilterProxy::MAX_DATE);
 
         } break;
     case ThisMonth:
         transactionProxyModel->setDateRange(
-                QDate(current.year(), current.month(), 1).startOfDay(),      // Sando: fix a compiler warning
+                QDateTime(QDate(current.year(), current.month(), 1)),
                 TransactionFilterProxy::MAX_DATE);
         break;
     case LastMonth:
-        transactionProxyModel->setDateRange(                                 // Sando: fix a compiler warning
-                QDate(current.year(), current.month(), 1).addMonths(-1).startOfDay(),
-                QDate(current.year(), current.month(), 1).startOfDay());
+        transactionProxyModel->setDateRange(
+                QDateTime(QDate(current.year(), current.month(), 1).addMonths(-1)),
+                QDateTime(QDate(current.year(), current.month(), 1)));
         break;
     case ThisYear:
         transactionProxyModel->setDateRange(
-                QDate(current.year(), 1, 1).startOfDay(),                     // Sando: fix a compiler warning
+                QDateTime(QDate(current.year(), 1, 1)),
                 TransactionFilterProxy::MAX_DATE);
         break;
     case Range:
@@ -573,8 +574,8 @@ void TransactionView::dateRangeChanged()
     if(!transactionProxyModel)
         return;
     transactionProxyModel->setDateRange(
-            dateFrom->date().startOfDay(),                // Sando: fix a compiler warning
-            dateTo->date().addDays(1).startOfDay());
+            QDateTime(dateFrom->date()),
+            QDateTime(dateTo->date()).addDays(1));
 }
 
 void TransactionView::focusTransaction(const QModelIndex &idx)

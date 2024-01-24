@@ -45,7 +45,7 @@ class ShutdownWindow : public QWidget
     Q_OBJECT
 
 public:
-    explicit ShutdownWindow(QWidget *parent=nullptr, Qt::WindowFlags f=Qt::WindowFlags());  // Sando: Fix a compile warning
+    explicit ShutdownWindow(QWidget *parent=0, Qt::WindowFlags f=0);
     static QWidget *showShutdownWindow(EarthcoinGUI *window);
 
 protected:

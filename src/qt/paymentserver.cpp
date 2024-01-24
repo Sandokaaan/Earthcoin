@@ -43,8 +43,6 @@
 #include <QTextDocument>
 #include <QUrlQuery>
 
-#include <QSslConfiguration>   // Sando: required to fix a compiler warning
-
 const int EARTHCOIN_IPC_CONNECT_TIMEOUT = 1000; // milliseconds
 const QString EARTHCOIN_IPC_PREFIX("earthcoin:");
 // BIP70 payment protocol messages
@@ -131,14 +129,10 @@ void PaymentServer::LoadRootCAs(X509_STORE* _store)
             qDebug() << QString("PaymentServer::%1: Using \"%2\" as trusted root certificate.").arg(__func__).arg(certFile);
 
         certList = QSslCertificate::fromPath(certFile);
-        // Sando: a new way to set certificates
-        QSslConfiguration config = QSslConfiguration::defaultConfiguration();
-        config.addCaCertificates(certList);
-        QSslConfiguration::setDefaultConfiguration(config);
         // Use those certificates when fetching payment requests, too:
-        //QSslSocket::setDefaultCaCertificates(certList);
+        QSslSocket::setDefaultCaCertificates(certList);
     } else
-        certList = QSslConfiguration::systemCaCertificates();
+        certList = QSslSocket::systemCaCertificates();
 
     int nRootCerts = 0;
     const QDateTime currentTime = QDateTime::currentDateTime();
@@ -412,7 +406,7 @@ void PaymentServer::handleURIOrFile(const QString& s)
         if (uri.hasQueryItem("r")) // payment request URI
         {
             QByteArray temp;
-            temp.append(uri.queryItemValue("r").toUtf8());     // Sando: fix a compiler warning
+            temp.append(uri.queryItemValue("r"));
             QString decoded = QUrl::fromPercentEncoding(temp);
             QUrl fetchUrl(decoded, QUrl::StrictMode);
 
@@ -654,7 +648,7 @@ void PaymentServer::fetchPaymentACK(WalletModel* walletModel, const SendCoinsRec
         qWarning() << "PaymentServer::fetchPaymentACK: Error getting refund key, refund_to not set";
     }
 
-    qulonglong length = payment.ByteSizeLong();     // Sando: fix a compiler warning
+    int length = payment.ByteSize();
     netRequest.setHeader(QNetworkRequest::ContentLengthHeader, length);
     QByteArray serData(length, '\0');
     if (payment.SerializeToArray(serData.data(), length)) {

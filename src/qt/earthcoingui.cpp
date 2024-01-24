@@ -59,11 +59,6 @@
 #include <QToolBar>
 #include <QUrlQuery>
 #include <QVBoxLayout>
-#include <QGuiApplication>                  // Sando: for QGuiApplication::screen()
-#include <QScreen>
-#include <boost/bind/placeholders.hpp>
-
-using namespace boost::placeholders;        // Sondo: up to here fix errors of new compilers
 
 const std::string EarthcoinGUI::DEFAULT_UIPLATFORM =
 #if defined(Q_OS_MAC)
@@ -77,15 +72,14 @@ const std::string EarthcoinGUI::DEFAULT_UIPLATFORM =
 
 EarthcoinGUI::EarthcoinGUI(interfaces::Node& node, const PlatformStyle *_platformStyle, const NetworkStyle *networkStyle, QWidget *parent) :
     QMainWindow(parent),
-    ipfsUrlPrefix(""),               // Sando: Fix initialization order to hide a compiler warning
+    ipfsUrlPrefix(""),
     m_node(node),
-    platformStyle(_platformStyle)    
+    platformStyle(_platformStyle)      // Sando: fix initialization order
 {
     QSettings settings;
     if (!restoreGeometry(settings.value("MainWindowGeometry").toByteArray())) {
         // Restore failed (perhaps missing setting), center the window
-        auto screen = QGuiApplication::screens().at(0);        // Sando: fix a compiler warning
-        move(screen->availableGeometry().center() - frameGeometry().center());
+        move(QApplication::desktop()->availableGeometry().center() - frameGeometry().center());
     }
 
     QString windowTitle = tr(PACKAGE_NAME) + " - ";
@@ -1173,8 +1167,7 @@ void EarthcoinGUI::updateProxyIcon()
     bool proxy_enabled = clientModel->getProxyInfo(ip_port);
 
     if (proxy_enabled) {
-        // fix a compiler warning --- 'if (labelProxyIcon->pixmap() == 0)' is obsolete
-        if (labelProxyIcon->pixmap(Qt::ReturnByValue).isNull()) {
+        if (labelProxyIcon->pixmap() == 0) {
             QString ip_port_q = QString::fromStdString(ip_port);
             labelProxyIcon->setPixmap(platformStyle->SingleColorIcon(":/icons/proxy").pixmap(STATUSBAR_ICONSIZE, STATUSBAR_ICONSIZE));
             labelProxyIcon->setToolTip(tr("Proxy is <b>enabled</b>: %1").arg(ip_port_q));
@@ -1310,7 +1303,7 @@ UnitDisplayStatusBarControl::UnitDisplayStatusBarControl(const PlatformStyle *pl
     const QFontMetrics fm(font());
     for (const EarthcoinUnits::Unit unit : units)
     {
-        max_width = qMax(max_width, fm.horizontalAdvance(EarthcoinUnits::longName(unit)));   // Sando: fm.width() is deprecated
+        max_width = qMax(max_width, fm.width(EarthcoinUnits::longName(unit)));
     }
     setMinimumSize(max_width, 0);
     setAlignment(Qt::AlignRight | Qt::AlignVCenter);

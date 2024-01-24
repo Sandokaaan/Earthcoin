@@ -24,12 +24,6 @@
 #include <QPainter>
 #include <QRadialGradient>
 
-#include <QGuiApplication>                 // Sando: for screen()
-#include <QScreen>
-#include <boost/bind/placeholders.hpp>
-
-using namespace boost::placeholders;       // Sando: up to here fix placeholders compile errors on new compilers
-
 SplashScreen::SplashScreen(interfaces::Node& node, Qt::WindowFlags f, const NetworkStyle *networkStyle) :
     QWidget(0, f), curAlignment(0), m_node(node)
 {
@@ -83,21 +77,21 @@ SplashScreen::SplashScreen(interfaces::Node& node, Qt::WindowFlags f, const Netw
     // check font size and drawing with
     pixPaint.setFont(QFont(font, 33*fontFactor));
     QFontMetrics fm = pixPaint.fontMetrics();
-    int titleTextWidth = fm.horizontalAdvance(titleText);   // Sando: Fix a deprecated function call - 'fm.width()' is obsolete
+    int titleTextWidth = fm.width(titleText);
     if (titleTextWidth > 176) {
         fontFactor = fontFactor * 176 / titleTextWidth;
     }
 
     pixPaint.setFont(QFont(font, 33*fontFactor));
     fm = pixPaint.fontMetrics();
-    titleTextWidth  = fm.horizontalAdvance(titleText);      // Sando: Fix a deprecated function call - 'fm.width()' is obsolete
+    titleTextWidth  = fm.width(titleText);
     pixPaint.drawText(pixmap.width()/devicePixelRatio-titleTextWidth-paddingRight,paddingTop,titleText);
 
     pixPaint.setFont(QFont(font, 13*fontFactor));
 
     // if the version string is too long, reduce size
     fm = pixPaint.fontMetrics();
-    int versionTextWidth  = fm.horizontalAdvance(versionText);   // Sando: Fix a deprecated function call - 'fm.width()' is obsolete
+    int versionTextWidth  = fm.width(versionText);
     if(versionTextWidth > titleTextWidth+paddingRight-10) {
         pixPaint.setFont(QFont(font, 12*fontFactor));
         titleVersionVSpace -= 5;
@@ -119,7 +113,7 @@ SplashScreen::SplashScreen(interfaces::Node& node, Qt::WindowFlags f, const Netw
         boldFont.setWeight(QFont::Bold);
         pixPaint.setFont(boldFont);
         fm = pixPaint.fontMetrics();
-        int titleAddTextWidth  = fm.horizontalAdvance(titleAddText);        // Sando: Fix a deprecated function call - 'fm.width()' is obsolete
+        int titleAddTextWidth  = fm.width(titleAddText);
         pixPaint.drawText(pixmap.width()/devicePixelRatio-titleAddTextWidth-10,15,titleAddText);
     }
 
@@ -132,10 +126,8 @@ SplashScreen::SplashScreen(interfaces::Node& node, Qt::WindowFlags f, const Netw
     QRect r(QPoint(), QSize(pixmap.size().width()/devicePixelRatio,pixmap.size().height()/devicePixelRatio));
     resize(r.size());
     setFixedSize(r.size());
-    // Sando: 'QApplication::desktop()' is obsolete, fix a compiler warning
-    QScreen * screen = QGuiApplication::screens().at(0);
-    move(screen->geometry().center() - r.center());
-    
+    move(QApplication::desktop()->screenGeometry().center() - r.center());
+
     subscribeToCoreSignals();
     installEventFilter(this);
 }

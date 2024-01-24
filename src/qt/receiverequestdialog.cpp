@@ -39,15 +39,14 @@ QRImageWidget::QRImageWidget(QWidget *parent):
 
 QImage QRImageWidget::exportImage()
 {
-    QPixmap pixmapVal = pixmap(Qt::ReturnByValue);   // Sando: fix a compiler warning
-    if(pixmapVal.isNull())
+    if(!pixmap())
         return QImage();
-    return pixmapVal.toImage();
+    return pixmap()->toImage();
 }
 
 void QRImageWidget::mousePressEvent(QMouseEvent *event)
 {
-    if(event->button() == Qt::LeftButton && !(pixmap(Qt::ReturnByValue).isNull()))   // Sando: fix a compiler warning
+    if(event->button() == Qt::LeftButton && pixmap())
     {
         event->accept();
         QMimeData *mimeData = new QMimeData;
@@ -63,7 +62,7 @@ void QRImageWidget::mousePressEvent(QMouseEvent *event)
 
 void QRImageWidget::saveImage()
 {
-    if(pixmap(Qt::ReturnByValue).isNull())		// Sando: fix a compiler warning
+    if(!pixmap())
         return;
     QString fn = GUIUtil::getSaveFileName(this, tr("Save QR Code"), QString(), tr("PNG Image (*.png)"), nullptr);
     if (!fn.isEmpty())
@@ -74,14 +73,14 @@ void QRImageWidget::saveImage()
 
 void QRImageWidget::copyImage()
 {
-    if(pixmap(Qt::ReturnByValue).isNull())		// Sando: fix a compiler warning
+    if(!pixmap())
         return;
     QApplication::clipboard()->setImage(exportImage());
 }
 
 void QRImageWidget::contextMenuEvent(QContextMenuEvent *event)
 {
-    if(pixmap(Qt::ReturnByValue).isNull())			// Sando: fix a compiler warning
+    if(!pixmap())
         return;
     contextMenu->exec(event->globalPos());
 }
@@ -195,7 +194,7 @@ void ReceiveRequestDialog::update()
             painter.drawText(paddedRect, Qt::AlignBottom|Qt::AlignCenter, info.address);
             painter.end();
 
-            ui->lblQRCode->setPixmap(QPixmap::fromImage(qrAddrImage));		// Sando: fix a compiler warning
+            ui->lblQRCode->setPixmap(QPixmap::fromImage(qrAddrImage));
             ui->btnSaveAs->setEnabled(true);
         }
     }
