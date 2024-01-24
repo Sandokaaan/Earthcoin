@@ -60,6 +60,10 @@
 #include <QUrlQuery>
 #include <QVBoxLayout>
 
+#include <boost/bind/placeholders.hpp>
+
+using namespace boost::placeholders;        // Sondo: up to here fix errors of new compilers
+
 const std::string EarthcoinGUI::DEFAULT_UIPLATFORM =
 #if defined(Q_OS_MAC)
         "macosx"

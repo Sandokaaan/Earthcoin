@@ -24,6 +24,10 @@
 #include <QPainter>
 #include <QRadialGradient>
 
+#include <boost/bind/placeholders.hpp>
+
+using namespace boost::placeholders;       // Sando: up to here fix placeholders compile errors on new compilers
+
 SplashScreen::SplashScreen(interfaces::Node& node, Qt::WindowFlags f, const NetworkStyle *networkStyle) :
     QWidget(0, f), curAlignment(0), m_node(node)
 {
