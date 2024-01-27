@@ -5,7 +5,7 @@
 
 ./autogen.sh
 ./configure --with-incompatible-bdb --with-gui
-make
+make -j$(nproc)
 cd src
 strip earthcoind
 strip earthcoin-cli
