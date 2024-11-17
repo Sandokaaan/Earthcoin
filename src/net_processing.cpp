@@ -30,6 +30,7 @@
 #include <utilstrencodings.h>
 
 #include <memory>
+#include <array>
 
 #if defined(NDEBUG)
 # error "Earthcoin cannot be compiled without assertions."
