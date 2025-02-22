@@ -227,8 +227,13 @@ inline void UnserializeTransaction(TxType& tx, Stream& s) {
         throw std::ios_base::failure("Unknown transaction optional data");
     }
     s >> tx.nLockTime;
-    if (tx.nVersion > 1)         // SANDO: need an additional condition?
-	    s >> tx.strTxComment;
+    if (tx.nVersion > 1) {        // SANDO: need an additional condition?
+        try {
+            s >> tx.strTxComment;
+        } catch (const std::ios_base::failure& e) {
+            tx.strTxComment.clear();                 // a bad empty txComment in tx of nVersion > 1
+        }
+    }
 }
 
 template<typename Stream, typename TxType>
