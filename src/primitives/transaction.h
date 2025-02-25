@@ -228,11 +228,12 @@ inline void UnserializeTransaction(TxType& tx, Stream& s) {
     }
     s >> tx.nLockTime;
     if (tx.nVersion > 1) {        // SANDO: need an additional condition?
-        try {
-            s >> tx.strTxComment;
-        } catch (const std::ios_base::failure& e) {
-            tx.strTxComment.clear();                 // a bad empty txComment in tx of nVersion > 1
-        }
+        bool detectCoinbase = false;
+        if ( tx.vin.size() == 1 )
+            if ( tx.vin[0].prevout.ToString() == "0000000000000000000000000000000000000000000000000000000000000000" )
+                detectCoinbase = true;
+        if (!detectCoinbase)         // disable txMessage for coinbase tx 
+            s >> tx.strTxComment;	
     }
 }
 
@@ -263,8 +264,14 @@ inline void SerializeTransaction(const TxType& tx, Stream& s) {
         }
     }
     s << tx.nLockTime;
-    if (tx.nVersion > 1)
+    if (tx.nVersion > 1) {        // SANDO: need an additional condition?
+        bool detectCoinbase = false;
+        if ( tx.vin.size() == 1 )
+            if ( tx.vin[0].prevout.ToString() == "0000000000000000000000000000000000000000000000000000000000000000" )
+                detectCoinbase = true;
+        if (!detectCoinbase)         // disable txMessage for coinbase tx 
 	    s << tx.strTxComment;
+    }
 }
 
 
