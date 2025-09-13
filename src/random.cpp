@@ -44,8 +44,7 @@
 #include <cpuid.h>
 #endif
 
-#include <openssl/err.h>
-#include <openssl/rand.h>
+#include "support/os_random.h"
 
 [[noreturn]] static void RandFailure()
 {
@@ -130,50 +129,12 @@ static bool GetHWRand(unsigned char* ent32) {
 
 void RandAddSeed()
 {
-    // Seed with CPU performance counter
-    int64_t nCounter = GetPerformanceCounter();
-    RAND_add(&nCounter, sizeof(nCounter), 1.5);
-    memory_cleanse((void*)&nCounter, sizeof(nCounter));
+    // Seed with CPU performance counter -- do nothing, not needed in modern OS
 }
 
 static void RandAddSeedPerfmon()
 {
     RandAddSeed();
-
-#ifdef WIN32
-    // Don't need this on Linux, OpenSSL automatically uses /dev/urandom
-    // Seed with the entire set of perfmon data
-
-    // This can take up to 2 seconds, so only do it every 10 minutes
-    static int64_t nLastPerfmon;
-    if (GetTime() < nLastPerfmon + 10 * 60)
-        return;
-    nLastPerfmon = GetTime();
-
-    std::vector<unsigned char> vData(250000, 0);
-    long ret = 0;
-    unsigned long nSize = 0;
-    const size_t nMaxSize = 10000000; // Bail out at more than 10MB of performance data
-    while (true) {
-        nSize = vData.size();
-        ret = RegQueryValueExA(HKEY_PERFORMANCE_DATA, "Global", nullptr, nullptr, vData.data(), &nSize);
-        if (ret != ERROR_MORE_DATA || vData.size() >= nMaxSize)
-            break;
-        vData.resize(std::max((vData.size() * 3) / 2, nMaxSize)); // Grow size of buffer exponentially
-    }
-    RegCloseKey(HKEY_PERFORMANCE_DATA);
-    if (ret == ERROR_SUCCESS) {
-        RAND_add(vData.data(), nSize, nSize / 100.0);
-        memory_cleanse(vData.data(), nSize);
-        LogPrint(BCLog::RAND, "%s: %lu bytes\n", __func__, nSize);
-    } else {
-        static bool warned = false; // Warn only once
-        if (!warned) {
-            LogPrintf("%s: Warning: RegQueryValueExA(HKEY_PERFORMANCE_DATA) failed with code %i\n", __func__, ret);
-            warned = true;
-        }
-    }
-#endif
 }
 
 #ifndef WIN32
@@ -273,8 +234,8 @@ void GetOSRand(unsigned char *ent32)
 
 void GetRandBytes(unsigned char* buf, int num)
 {
-    if (RAND_bytes(buf, num) != 1) {
-        RandFailure();
+    if (!GetOSRand(buf, (size_t)num)) {
+        RandFailure(); // nebo throw, jak to tam máš
     }
 }
 
@@ -445,10 +406,6 @@ bool Random_SanityCheck()
     std::this_thread::sleep_for(std::chrono::milliseconds(1));
     uint64_t stop = GetPerformanceCounter();
     if (stop == start) return false;
-
-    // We called GetPerformanceCounter. Use it as entropy.
-    RAND_add((const unsigned char*)&start, sizeof(start), 1);
-    RAND_add((const unsigned char*)&stop, sizeof(stop), 1);
 
     return true;
 }
